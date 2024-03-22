@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Rotator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 5px;
+        }
+        #text-rotator {
+            font-size: 58px;
+            color: blue;
+            text-align: center; /* Center justify text */
+        }
+    </style>
+</head>
+<body>
+    <div id="text-rotator"></div>
+    <script>
+        var textRotator = document.getElementById('text-rotator');
+        var texts = ['Clock in to ALL Jobs', 'Complete your write-ups as you go!', 'Check your email through out the day','Do Not flag extra time without prior approval!','Be very clear when specifying parts and include part numbers when possible','Add Notes when clocking in and out on diag jobs in so we know where you left off if it goes to another tech.']; // Add your desired texts here
+        var index = 0;
+
+        function rotateText() {
+            textRotator.textContent = texts[index];
+            index = (index + 1) % texts.length;
+        }
+
+        setInterval(rotateText, 5000); // Change text every 2 seconds (2000 milliseconds)
+    </script>
+</body>
+</html>
