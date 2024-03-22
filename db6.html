@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Dashboard</title>
+    <style>
+        .iframe-container {
+            width: 50%;
+            height: 50vh; /* Adjust the height as needed */
+            float: left;
+            /*border: 2px solid black; /* Add black border */
+        }
+        iframe {
+            width: calc(100% - 4px); /* Adjust width to account for border */
+            height: calc(100% - 4px); /* Adjust height to account for border */
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        <iframe src="https://radar.weather.gov/?settings=v1_eyJhZ2VuZGEiOnsiaWQiOm51bGwsImNlbnRlciI6Wy03OS45OSw0MC45NTRdLCJsb2NhdGlvbiI6bnVsbCwiem9vbSI6Ni4zMzY4NjA1NzkwNzM5MjQ1fSwiYW5pbWF0aW5nIjp0cnVlLCJiYXNlIjoic3RhbmRhcmQiLCJhcnRjYyI6ZmFsc2UsImNvdW50eSI6ZmFsc2UsImN3YSI6ZmFsc2UsInJmYyI6ZmFsc2UsInN0YXRlIjpmYWxzZSwibWVudSI6dHJ1ZSwic2hvcnRGdXNlZE9ubHkiOmZhbHNlLCJvcGFjaXR5Ijp7ImFsZXJ0cyI6MC44LCJsb2NhbCI6MC42LCJsb2NhbFN0YXRpb25zIjowLjgsIm5hdGlvbmFsIjowLjZ9fQ%3D%3D" frameborder="0"></iframe>
+    </div>
+	<div class="iframe-container">
+        <iframe src="https://www.tickcounter.com/widget/countdown/4470979" frameborder="0"></iframe>
+    </div>
+    <div class="iframe-container">
+        <iframe src="https://sawdustguru.github.io/dashboard.github.io/" frameborder="0"></iframe>
+    </div>
+    <div class="iframe-container">
+        <iframe src="text_rotator.html" frameborder="0"></iframe> <!-- Assuming text_rotator.html contains the text rotator -->
+    </div>
+</body>
+</html>
