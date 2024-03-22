@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bar Graph</title>
+    <title>Horizontal Bar Graph</title>
     <style>
         .bar-container {
             margin: 20px;
         }
         .bar {
             display: inline-block;
-            width: 20px;
-            margin-right: 10px;
-            height: 200px; /* Maximum height of the bar */
-            background: linear-gradient(to bottom, red, yellow, green);
+            height: 30px; /* Height of each bar */
+            margin-bottom: 10px;
+            background: linear-gradient(to right, red, yellow, green);
         }
     </style>
 </head>
@@ -49,7 +48,7 @@
 
                 const bar = document.createElement('div');
                 bar.className = 'bar';
-                bar.style.height = (value * 2) + 'px'; // Adjusting height based on value
+                bar.style.width = value + '%'; // Adjusting width based on value
 
                 bars.appendChild(bar);
             }
