@@ -9,8 +9,8 @@
             margin: 20px 0;
         }
         .bar {
-            height: 30px; /* Height of each bar */
-            width: 200px; /* Fixed width for all bars */
+            height: 15px; /* Height of each bar */
+            width: 100px; /* Fixed width for all bars */
             display: inline-block;
             margin: 5px 0; /* Adjusted margin for vertical spacing */
             vertical-align: middle; /* Align with the text */
@@ -63,9 +63,9 @@
                 const bar = document.createElement('div');
                 bar.className = 'bar';
                 // Color coding based on value
-                if (value < 50) {
+                if (value < 20) {
                     bar.style.backgroundColor = 'red';
-                } else if (value >= 50 && value <= 75) {
+                } else if (value >= 20 && value <= 30) {
                     bar.style.backgroundColor = 'yellow';
                 } else {
                     bar.style.backgroundColor = 'green';
