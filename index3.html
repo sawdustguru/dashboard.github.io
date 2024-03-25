@@ -85,20 +85,20 @@
                 const segment4 = document.createElement('div');
                 segment4.className = 'segment segment4';
                 
-                if (value < 25) {
-                    segment1.style.width = value + '%';
-                } else if (value < 50) {
-                    segment1.style.width = '25%';
-                    segment2.style.width = (value - 25) + '%';
-                } else if (value < 75) {
-                    segment1.style.width = '25%';
-                    segment2.style.width = '25%';
-                    segment3.style.width = (value - 50) + '%';
+                if (value < 20) {
+                    segment1.style.width = 50px;
+                } else if (value < 25) {
+                    segment1.style.width = 50px;
+                    segment2.style.width = 50px;
+                } else if (value < 32) {
+                    segment1.style.width = 50px;
+                    segment2.style.width = 50px;
+                    segment3.style.width = 50px;
                 } else {
-                    segment1.style.width = '25%';
-                    segment2.style.width = '25%';
-                    segment3.style.width = '25%';
-                    segment4.style.width = (value - 75) + '%';
+                    segment1.style.width = 50px;
+                    segment2.style.width = 50px;
+                    segment3.style.width = 50px;
+                    segment4.style.width = 50px;
                 }
                 
                 bar.appendChild(segment1);
