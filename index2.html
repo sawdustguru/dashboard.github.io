@@ -7,8 +7,8 @@
     <style>
         .bar {
             height: 12px;
-            width: 50px; /* Fixed width for bars */
-            margin: 5px 0;
+            width: 100px; /* Fixed width for bars */
+            margin: 2px 0;
             border-radius: 5px;
             transition: width 0.5s ease;
             display: inline-block; /* Ensure bars are displayed inline */
@@ -57,11 +57,11 @@
             }
             
             function setColorClass(element, value) {
-                if (value < 50) {
+                if (value < 18) {
                     element.classList.add('red');
-                } else if (value < 75) {
+                } else if (value < 24) {
                     element.classList.add('yellow');
-                } else if (value < 90) {
+                } else if (value < 34) {
                     element.classList.add('orange');
                 } else {
                     element.classList.add('green');
