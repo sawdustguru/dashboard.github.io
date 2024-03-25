@@ -17,12 +17,11 @@
         .segment {
             height: 100%;
             float: left; /* Float segments left */
-            width: 50px; /* Fixed width for segments */
         }
-        .segment1 { background-color: red; }
-        .segment2 { background-color: yellow; }
-        .segment3 { background-color: orange; }
-        .segment4 { background-color: green; }
+        .segment1 { width: 50px; background-color: red; }
+        .segment2 { width: 50px; background-color: yellow; }
+        .segment3 { width: 50px; background-color: orange; }
+        .segment4 { width: 50px; background-color: green; }
         .column1 { width: 200px; }
         .column2 { width: 200px; }
     </style>
@@ -77,36 +76,41 @@
             
             // Function to set color segments based on value
             function setColorSegments(bar, value) {
-                const segment1 = document.createElement('div');
-                segment1.className = 'segment segment1';
-                const segment2 = document.createElement('div');
-                segment2.className = 'segment segment2';
-                const segment3 = document.createElement('div');
-                segment3.className = 'segment segment3';
-                const segment4 = document.createElement('div');
-                segment4.className = 'segment segment4';
-                
-                if (value < 25) {
-                    // Set segment width to 50px
-                    segment1.style.width = '50px';
-                } else if (value < 50) {
-                    segment1.style.width = '50px';
-                    segment2.style.width = '50px';
-                } else if (value < 75) {
-                    segment1.style.width = '50px';
-                    segment2.style.width = '50px';
-                    segment3.style.width = '50px';
-                } else {
-                    segment1.style.width = '50px';
-                    segment2.style.width = '50px';
-                    segment3.style.width = '50px';
-                    segment4.style.width = '50px';
+                if (value >= 0 && value < 19) {
+                    const segment1 = document.createElement('div');
+                    segment1.className = 'segment segment1';
+                    bar.appendChild(segment1);
+                } else if (value >= 20 && value < 27) {
+                    const segment1 = document.createElement('div');
+                    segment1.className = 'segment segment1';
+                    bar.appendChild(segment1);
+                    const segment2 = document.createElement('div');
+                    segment2.className = 'segment segment2';
+                    bar.appendChild(segment2);
+                } else if (value >= 27 && value < 32) {
+                    const segment1 = document.createElement('div');
+                    segment1.className = 'segment segment1';
+                    bar.appendChild(segment1);
+                    const segment2 = document.createElement('div');
+                    segment2.className = 'segment segment2';
+                    bar.appendChild(segment2);
+                    const segment3 = document.createElement('div');
+                    segment3.className = 'segment segment3';
+                    bar.appendChild(segment3);
+                } else if (value >= 33 && value <= 100) {
+                    const segment1 = document.createElement('div');
+                    segment1.className = 'segment segment1';
+                    bar.appendChild(segment1);
+                    const segment2 = document.createElement('div');
+                    segment2.className = 'segment segment2';
+                    bar.appendChild(segment2);
+                    const segment3 = document.createElement('div');
+                    segment3.className = 'segment segment3';
+                    bar.appendChild(segment3);
+                    const segment4 = document.createElement('div');
+                    segment4.className = 'segment segment4';
+                    bar.appendChild(segment4);
                 }
-                
-                bar.appendChild(segment1);
-                bar.appendChild(segment2);
-                bar.appendChild(segment3);
-                bar.appendChild(segment4);
             }
             
             // Load CSV data on page load
@@ -115,7 +119,7 @@
     </script>
 </head>
 <body>
-    <p>Weekly Tech Performance Gauge</p>
+    <p>Performance Gauge</p></p>
     <table id="dataTable" border="1"></table>
 </body>
 </html>
