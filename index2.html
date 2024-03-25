@@ -11,6 +11,7 @@
             margin: 5px 0;
             border-radius: 5px;
             transition: width 0.5s ease;
+            display: inline-block; /* Ensure bars are displayed inline */
         }
         .red { background-color: red; }
         .yellow { background-color: yellow; }
@@ -40,26 +41,27 @@
                 table.innerHTML = ''; // Clear existing table content
                 lines.forEach(function(line) {
                     const rowData = line.split(',');
-                    const row = document.createElement('tr');
-                    const cell = document.createElement('td');
-                    row.appendChild(cell);
-                    if (rowData[0]) {
+                    if (rowData[0]) { // Check if data exists
+                        const row = document.createElement('tr');
+                        const cell = document.createElement('td');
                         const bar = document.createElement('div');
                         bar.className = 'bar';
                         bar.style.width = (parseInt(rowData[1]) * 2) + 'px'; // Adjust multiplier as needed
                         setColorClass(bar, parseInt(rowData[1]));
+                        cell.textContent = rowData[0]; // Display value of column 1
                         cell.appendChild(bar);
+                        row.appendChild(cell);
+                        table.appendChild(row);
                     }
-                    table.appendChild(row);
                 });
             }
             
             function setColorClass(element, value) {
-                if (value < 15) {
+                if (value < 50) {
                     element.classList.add('red');
-                } else if (value < 25) {
+                } else if (value < 75) {
                     element.classList.add('yellow');
-                } else if (value < 30) {
+                } else if (value < 90) {
                     element.classList.add('orange');
                 } else {
                     element.classList.add('green');
