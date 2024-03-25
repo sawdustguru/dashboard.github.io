@@ -17,13 +17,14 @@
         .segment {
             height: 100%;
             float: left; /* Float segments left */
+            width: 50px; /* Fixed width for segments */
         }
-        .segment1 { width: 25%; background-color: red; }
-        .segment2 { width: 25%; background-color: yellow; }
-        .segment3 { width: 25%; background-color: orange; }
-        .segment4 { width: 25%; background-color: green; }
-        .column1 { width: 50px; }
-        .column2 { width: 100px; }
+        .segment1 { background-color: red; }
+        .segment2 { background-color: yellow; }
+        .segment3 { background-color: orange; }
+        .segment4 { background-color: green; }
+        .column1 { width: 200px; }
+        .column2 { width: 200px; }
     </style>
     <script>
         window.onload = function() {
@@ -85,20 +86,21 @@
                 const segment4 = document.createElement('div');
                 segment4.className = 'segment segment4';
                 
-                if (value < 20) {
-                    segment1.style.width = 50px;
-                } else if (value < 25) {
-                    segment1.style.width = 50px;
-                    segment2.style.width = 50px;
-                } else if (value < 32) {
-                    segment1.style.width = 50px;
-                    segment2.style.width = 50px;
-                    segment3.style.width = 50px;
+                if (value < 25) {
+                    // Set segment width to 50px
+                    segment1.style.width = '50px';
+                } else if (value < 50) {
+                    segment1.style.width = '50px';
+                    segment2.style.width = '50px';
+                } else if (value < 75) {
+                    segment1.style.width = '50px';
+                    segment2.style.width = '50px';
+                    segment3.style.width = '50px';
                 } else {
-                    segment1.style.width = 50px;
-                    segment2.style.width = 50px;
-                    segment3.style.width = 50px;
-                    segment4.style.width = 50px;
+                    segment1.style.width = '50px';
+                    segment2.style.width = '50px';
+                    segment3.style.width = '50px';
+                    segment4.style.width = '50px';
                 }
                 
                 bar.appendChild(segment1);
@@ -113,7 +115,7 @@
     </script>
 </head>
 <body>
-    <p>This is a text block above the table.</p>
+    <p>Weekly Tech Performance Gauge</p>
     <table id="dataTable" border="1"></table>
 </body>
 </html>
