@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Data Display</title>
+    <script>
+        window.onload = function() {
+            const fileInput = document.getElementById('csvFile');
+            const table = document.getElementById('dataTable');
+
+            fileInput.addEventListener('change', function() {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const lines = e.target.result.split('\n');
+                    table.innerHTML = ''; // Clear existing table content
+                    lines.forEach(function(line) {
+                        const rowData = line.split(',');
+                        const row = document.createElement('tr');
+                        rowData.forEach(function(cellData) {
+                            const cell = document.createElement('td');
+                            cell.textContent = cellData;
+                            row.appendChild(cell);
+                        });
+                        table.appendChild(row);
+                    });
+                };
+
+                reader.readAsText(file);
+            });
+        };
+    </script>
+</head>
+<body>
+    <input type="file" id="csvFile" accept=".csv">
+    <table id="dataTable" border="1"></table>
+</body>
+</html>
