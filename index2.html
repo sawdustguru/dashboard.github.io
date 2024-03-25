@@ -7,8 +7,9 @@
     <style>
         .bar {
             height: 12px;
-            margin: 3px 0;
-            border-radius: 0px;
+            width: 50px; /* Fixed width for bars */
+            margin: 5px 0;
+            border-radius: 5px;
             transition: width 0.5s ease;
         }
         .red { background-color: red; }
@@ -40,28 +41,25 @@
                 lines.forEach(function(line) {
                     const rowData = line.split(',');
                     const row = document.createElement('tr');
-                    rowData.forEach(function(cellData, index) {
-                        const cell = document.createElement('td');
-                        cell.textContent = cellData;
-                        row.appendChild(cell);
-                        if (index > 0) { // Skip the first column (assuming it's a label)
-                            const bar = document.createElement('div');
-                            bar.className = 'bar';
-                            bar.style.width = (parseInt(cellData) * 10) + 'px'; // Adjust multiplier as needed
-                            setColorClass(bar, parseInt(cellData));
-                            cell.appendChild(bar);
-                        }
-                    });
+                    const cell = document.createElement('td');
+                    row.appendChild(cell);
+                    if (rowData[0]) {
+                        const bar = document.createElement('div');
+                        bar.className = 'bar';
+                        bar.style.width = (parseInt(rowData[1]) * 2) + 'px'; // Adjust multiplier as needed
+                        setColorClass(bar, parseInt(rowData[1]));
+                        cell.appendChild(bar);
+                    }
                     table.appendChild(row);
                 });
             }
             
             function setColorClass(element, value) {
-                if (value < 20) {
+                if (value < 15) {
                     element.classList.add('red');
-                } else if (value < 28) {
+                } else if (value < 25) {
                     element.classList.add('yellow');
-                } else if (value < 32) {
+                } else if (value < 30) {
                     element.classList.add('orange');
                 } else {
                     element.classList.add('green');
@@ -71,6 +69,6 @@
     </script>
 </head>
 <body>
-    <table id="dataTable" border="1"></table>
+    <table id="dataTable" border="0"></table>
 </body>
 </html>
