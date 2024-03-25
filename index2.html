@@ -7,7 +7,7 @@
     <style>
         .bar {
             height: 12px;
-            width: 195px; /* Fixed width for bars */
+            width: 50px; /* Fixed width for bars */
             margin: 5px 0;
             border-radius: 5px;
             transition: width 0.5s ease;
@@ -59,7 +59,7 @@
                         const cell2 = document.createElement('td');
                         const bar = document.createElement('div');
                         bar.className = 'bar';
-                        bar.style.width = (parseInt(rowData[1]) * 2) + 'px'; // Adjust multiplier as needed
+                        bar.style.width = '50px'; // Fixed width for each color
                         setColorClass(bar, parseInt(rowData[1]));
                         cell2.appendChild(bar);
                         cell2.classList.add('column2');
@@ -76,7 +76,7 @@
                     element.classList.add('red');
                 } else if (value < 25) {
                     element.classList.add('yellow');
-                } else if (value < 30) {
+                } else if (value < 32) {
                     element.classList.add('orange');
                 } else {
                     element.classList.add('green');
@@ -89,7 +89,7 @@
     </script>
 </head>
 <body>
-    <p>Weekly Performance Gauge:</p>
+    <p>Weekly Tech Performance Gauge.</p>
     <table id="dataTable" border="1"></table>
 </body>
 </html>
