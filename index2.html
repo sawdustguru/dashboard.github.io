@@ -14,22 +14,27 @@
                 const reader = new FileReader();
 
                 reader.onload = function(e) {
-                    const lines = e.target.result.split('\n');
-                    table.innerHTML = ''; // Clear existing table content
-                    lines.forEach(function(line) {
-                        const rowData = line.split(',');
-                        const row = document.createElement('tr');
-                        rowData.forEach(function(cellData) {
-                            const cell = document.createElement('td');
-                            cell.textContent = cellData;
-                            row.appendChild(cell);
-                        });
-                        table.appendChild(row);
-                    });
+                    const csvData = e.target.result;
+                    parseCSV(csvData);
                 };
 
                 reader.readAsText(file);
             });
+
+            function parseCSV(csvData) {
+                const lines = csvData.split('\n');
+                table.innerHTML = ''; // Clear existing table content
+                lines.forEach(function(line) {
+                    const rowData = line.split(',');
+                    const row = document.createElement('tr');
+                    rowData.forEach(function(cellData) {
+                        const cell = document.createElement('td');
+                        cell.textContent = cellData;
+                        row.appendChild(cell);
+                    });
+                    table.appendChild(row);
+                });
+            }
         };
     </script>
 </head>
