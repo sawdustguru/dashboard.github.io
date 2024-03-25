@@ -6,21 +6,22 @@
     <title>CSV Data Display</title>
     <script>
         window.onload = function() {
-            const fileInput = document.getElementById('csvFile');
             const table = document.getElementById('dataTable');
-
-            fileInput.addEventListener('change', function() {
-                const file = fileInput.files[0];
-                const reader = new FileReader();
-
-                reader.onload = function(e) {
-                    const csvData = e.target.result;
-                    parseCSV(csvData);
-                };
-
-                reader.readAsText(file);
-            });
-
+            
+            // AJAX request to load the CSV file
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        parseCSV(xhr.responseText);
+                    } else {
+                        console.error('Failed to load CSV file');
+                    }
+                }
+            };
+            xhr.open('GET', 'hours.csv');
+            xhr.send();
+            
             function parseCSV(csvData) {
                 const lines = csvData.split('\n');
                 table.innerHTML = ''; // Clear existing table content
@@ -39,7 +40,6 @@
     </script>
 </head>
 <body>
-    <input type="file" id="csvFile" accept=".csv">
     <table id="dataTable" border="1"></table>
 </body>
 </html>
