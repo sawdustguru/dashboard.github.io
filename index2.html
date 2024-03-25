@@ -17,27 +17,30 @@
         .yellow { background-color: yellow; }
         .orange { background-color: orange; }
         .green { background-color: green; }
-        .column1 { width: 100px; }
-        .column2 { width: 200px; }
+        .column1 { width: 50px; }
+        .column2 { width: 100px; }
     </style>
     <script>
         window.onload = function() {
             const table = document.getElementById('dataTable');
             
-            // AJAX request to load the CSV file
-            const xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        parseCSV(xhr.responseText);
-                    } else {
-                        console.error('Failed to load CSV file');
+            // Function to load CSV data
+            function loadCSV() {
+                const xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            parseCSV(xhr.responseText);
+                        } else {
+                            console.error('Failed to load CSV file');
+                        }
                     }
-                }
-            };
-            xhr.open('GET', 'hours.csv');
-            xhr.send();
+                };
+                xhr.open('GET', 'hours.csv');
+                xhr.send();
+            }
             
+            // Function to parse CSV data
             function parseCSV(csvData) {
                 const lines = csvData.split('\n');
                 table.innerHTML = ''; // Clear existing table content
@@ -67,6 +70,7 @@
                 });
             }
             
+            // Function to set color class based on value
             function setColorClass(element, value) {
                 if (value < 20) {
                     element.classList.add('red');
@@ -78,10 +82,13 @@
                     element.classList.add('green');
                 }
             }
+            
+            // Load CSV data on page load
+            loadCSV();
         };
     </script>
 </head>
 <body>
-    <table id="dataTable" border="1"></table>
+    <table id="dataTable" border="0"></table>
 </body>
 </html>
