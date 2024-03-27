@@ -36,6 +36,14 @@
             height: 100%;
             background-color: black;
         }
+        /* CSS for the reference line */
+        .reference-line {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 2px; /* Adjust the height of the reference line */
+            background-color: black; /* Set the color of the reference line */
+        }
 
         .column1 { width: 200px; }
         .column2 { width: 200px; }
@@ -193,23 +201,24 @@
                     }
                 }
                     // Calculate the average of YTD Performance
-                    const averagePercentage = totalPercentage / rowCount;
-                    
-                    // Display the average percentage gauge and its value
-                    const averageGaugeContainer = document.getElementById('averageGaugeContainer');
-                    const averageGauge = document.getElementById('averageGauge');
-                    const averageIndicator = document.createElement('div');
-                    averageIndicator.className = 'indicator';
-                    averageIndicator.style.width = averagePercentage + '%';
-                    averageGauge.appendChild(averageIndicator);
+                        const averagePercentage = totalPercentage / rowCount;
+                        
+                        // Display the average percentage gauge and its value
+                        const averageGaugeContainer = document.getElementById('averageGaugeContainer');
+                        const averageGauge = document.getElementById('averageGauge');
+                        const averageIndicator = document.createElement('div');
+                        averageIndicator.className = 'indicator';
+                        averageIndicator.style.width = averagePercentage + '%';
+                        averageGauge.appendChild(averageIndicator);
                     
                     // Display the average percentage value
-                    const averagePercentageDisplay = document.getElementById('averagePercentageDisplay');
-                    averagePercentageDisplay.textContent = averagePercentage.toFixed(2) + '%';
+                        const averagePercentageDisplay = document.getElementById('averagePercentageDisplay');
+                        averagePercentageDisplay.textContent = averagePercentage.toFixed(2) + '%';
                     
-                    // Add a reference line
-                    const referenceLine = document.getElementById('referenceLine');
-                    referenceLine.style.top = (averageGaugeContainer.clientHeight / 2) + 'px'; // Position reference line vertically in the middle
+                   // Add a reference line
+                        const referenceLine = document.getElementById('referenceLine');
+                        referenceLine.style.top = (averageGaugeContainer.clientHeight / 2 - referenceLine.offsetHeight / 2) + 'px'; // Position reference line vertically in the middle
+
             }
             
             // Function to set color segments based on value
