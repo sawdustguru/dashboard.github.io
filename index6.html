@@ -36,14 +36,6 @@
             height: 100%;
             background-color: black;
         }
-        /* CSS for the reference line */
-        .reference-line {
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 2px; /* Adjust the height of the reference line */
-            background-color: black; /* Set the color of the reference line */
-        }
 
         .column1 { width: 200px; }
         .column2 { width: 200px; }
@@ -52,7 +44,6 @@
             background: linear-gradient(to right, red 0%, orange 35%, gold 45%, green 85%); /* Gradient from red to green starting at 85% */
             position: relative;
             height: 20px; /* Set height of the gauge */
-           /* display: flex;  Align content */
         }
 
         .percentage {
@@ -216,7 +207,6 @@
                 const averageGaugeContainer = document.getElementById('averageGaugeContainer');
                 const averageGauge = document.getElementById('averageGauge');
                 const averageIndicator = document.createElement('div');
-                //averageIndicator.className = 'indicator';
                 averageIndicator.style.width = averagePercentage + '%';
                 averageGauge.appendChild(averageIndicator);
                 
