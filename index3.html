@@ -52,7 +52,9 @@
             function parseCSV(csvData) {
                 const lines = csvData.split('\n');
                 table.innerHTML = ''; // Clear existing table content
-                lines.forEach(function(line) {
+                // Skip the first row
+                for (let i = 1; i < lines.length; i++) {
+                    const line = lines[i];
                     const rowData = line.split(',');
                     if (rowData[0]) { // Check if data exists
                         const row = document.createElement('tr');
@@ -74,7 +76,7 @@
                         
                         table.appendChild(row);
                     }
-                });
+                }
             }
             
             // Function to set color segments based on value
