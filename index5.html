@@ -83,6 +83,15 @@
             border: 2px solid black;
             padding: 2px;
         }
+        <style>
+    .new-gauge {
+        width: 600px; /* Set width to 600px */
+        height: 30px; /* Set height to 30px */
+        background: linear-gradient(to right, red 0%, orange 35%, gold 45%, green 85%); /* Gradient from red to green starting at 85% */
+        position: relative;
+        }
+</style>
+
     </style>
     <script>
         window.onload = function() {
@@ -227,6 +236,7 @@
         // Display the average percentage gauge
         const averageGauge = document.getElementById('averageGauge');
         const averageIndicator = document.createElement('div');
+        gauge.className = 'bar new-gauge'; // Add the new-gauge class here
         averageIndicator.className = 'indicator';
         averageIndicator.style.width = averagePercentage + '%';
         averageGauge.appendChild(averageIndicator);
