@@ -109,7 +109,7 @@
                         const cell2 = document.createElement('td');
                         const bar = document.createElement('div');
                         bar.className = 'bar';
-                        setColorSegments(bar, parseInt(rowData[1]));
+                        setColorSegments(bar, parseFloat(rowData[1]));
                         cell2.appendChild(bar);
                         cell2.classList.add('column2');
                         row.appendChild(cell2);
@@ -138,16 +138,16 @@
             
             // Function to set color segments based on value
             function setColorSegments(bar, value) {
-                if (value >= 0 && value < 19) {
+                if (value >= 0 && value < 50) {
                     bar.style.width = '25%'; // Adjust width accordingly
                     bar.style.backgroundColor = 'red';
-                } else if (value >= 20 && value < 27) {
+                } else if (value >= 50 && value < 100) {
                     bar.style.width = '50%'; // Adjust width accordingly
                     bar.style.backgroundColor = 'orange';
-                } else if (value >= 27 && value < 32) {
+                } else if (value >= 100 && value < 150) {
                     bar.style.width = '75%'; // Adjust width accordingly
                     bar.style.backgroundColor = 'gold';
-                } else if (value >= 33 && value <= 100) {
+                } else if (value >= 150) {
                     bar.style.width = '100%'; // Adjust width accordingly
                     bar.style.backgroundColor = 'green';
                 }
@@ -162,7 +162,7 @@
     <p>Technician Time Gauge<br>
     Previous Week - This is still a work in progress</p>
     <table id="dataTable" border="1" size=".5"></table>
-    <p>Red = 19 hours or less - Orange = 26 hours or less<br>
-    Gold = 32 hours or less - Green = 33 hours or more</p>
+    <p>Red = 50 hours or less - Orange = 100 hours or less<br>
+    Gold = 150 hours or less - Green = more than 150 hours</p>
 </body>
 </html>
