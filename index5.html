@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Data Display</title>
+    <style>
+        body{
+            background-color: #9E9C9B; /* Set the desired background color */
+        }
+        .bar {
+            height: 15px;
+            width: 200px; /* Fixed width for bars */
+            margin: 3px 0;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+            display: inline-block; /* Ensure bars are displayed inline */
+            overflow: hidden; /* Ensure segments do not overflow */
+            position: relative; /* Position for the indicator line */
+        }
+        .indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 2px; /* Width of the indicator line */
+            background-color: white; /* Color of the indicator line */
+            transform: translateX(-50%); /* Center the line */
+        }
+        .column1 { width: 200px; }
+        .column2 { width: 200px; }
+        .column3 {
+            width: 200px;
+            background: linear-gradient(to right, red, green); /* Gradient from red to green */
+            position: relative;
+            height: 20px; /* Set height of the gauge */
+            display: flex; /* Align content */
+        }
+        .percentage {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            padding-left: 5px; /* Adjust spacing */
+        }
+        .column-header {
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            const table = document.getElementById('dataTable');
+            
+            // Function to load CSV data
+            function loadCSV() {
+                const xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            parseCSV(xhr.responseText);
+                        } else {
+                            console.error('Failed to load CSV file');
+                        }
+                    }
+                };
+                xhr.open('GET', 'hours.csv');
+                xhr.send();
+            }
+            
+            // Function to parse CSV data
+            function parseCSV(csvData) {
+                const lines = csvData.split('\n');
+                table.innerHTML = ''; // Clear existing table content
+                
+                // Add column headers
+                const headerRow = document.createElement('tr');
+                const columnHeader1 = document.createElement('th');
+                columnHeader1.textContent = 'Name';
+                columnHeader1.classList.add('column-header');
+                headerRow.appendChild(columnHeader1);
+
+                const columnHeader2 = document.createElement('th');
+                columnHeader2.textContent = 'Weekly Hours';
+                columnHeader2.classList.add('column-header');
+                headerRow.appendChild(columnHeader2);
+
+                const columnHeader3 = document.createElement('th');
+                columnHeader3.textContent = 'YTD Performance';
+                columnHeader3.classList.add('column-header');
+                headerRow.appendChild(columnHeader3);
+
+                table.appendChild(headerRow);
+
+                // Parse data rows
+                for (let i = 1; i < lines.length; i++) {
+                    const line = lines[i];
+                    const rowData = line.split(',');
+                    if (rowData[0]) { // Check if data exists
+                        const row = document.createElement('tr');
+                        
+                        // Create and style column 1
+                        const cell1 = document.createElement('td');
+                        cell1.textContent = rowData[0]; // Display value of column 1
+                        cell1.classList.add('column1');
+                        row.appendChild(cell1);
+                        
+                        // Create and style column 2
+                        const cell2 = document.createElement('td');
+                        const bar = document.createElement('div');
+                        bar.className = 'bar';
+                        setColorSegments(bar, parseInt(rowData[1]));
+                        cell2.appendChild(bar);
+                        cell2.classList.add('column2');
+                        row.appendChild(cell2);
+
+                        // Create and style column 3
+                        const cell3 = document.createElement('td');
+                        cell3.classList.add('column3');
+                        const gauge = document.createElement('div');
+                        gauge.className = 'bar';
+                        const percentage = document.createElement('div');
+                        percentage.className = 'percentage';
+                        percentage.textContent = (parseFloat(rowData[2]) * 100).toFixed(2) + '%'; // Convert decimal to percentage
+                        gauge.appendChild(percentage);
+                        const indicator = document.createElement('div');
+                        indicator.className = 'indicator';
+                        const indicatorPosition = parseFloat(rowData[2]) * 100; // Calculate position of indicator line
+                        indicator.style.left = indicatorPosition + '%'; // Set left position of indicator
+                        gauge.appendChild(indicator);
+                        cell3.appendChild(gauge);
+                        row.appendChild(cell3);
+                        
+                        table.appendChild(row);
+                    }
+                }
+            }
+            
+            // Function to set color segments based on value
+            function setColorSegments(bar, value) {
+                if (value >= 0 && value < 19) {
+                    bar.style.width = '25%'; // Adjust width accordingly
+                    bar.style.backgroundColor = 'red';
+                } else if (value >= 20 && value < 27) {
+                    bar.style.width = '50%'; // Adjust width accordingly
+                    bar.style.backgroundColor = 'orange';
+                } else if (value >= 27 && value < 32) {
+                    bar.style.width = '75%'; // Adjust width accordingly
+                    bar.style.backgroundColor = 'gold';
+                } else if (value >= 33 && value <= 100) {
+                    bar.style.width = '100%'; // Adjust width accordingly
+                    bar.style.backgroundColor = 'green';
+                }
+            }
+            
+            // Load CSV data on page load
+            loadCSV();
+        };
+    </script>
+</head>
+<body>
+    <p>Technician Time Gauge<br>
+    Previous Week - This is still a work in progress</p>
+    <table id="dataTable" border="1" size=".5"></table>
+    <p>Red = 19 hours or less - Orange = 26 hours or less<br>
+    Gold = 32 hours or less - Green = 33 hours or more</p>
+</body>
+</html>
