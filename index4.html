@@ -27,7 +27,16 @@
         .segment4 { width: 50px; background-color: green; }
         .column1 { width: 200px; }
         .column2 { width: 200px; }
-        .column3 { width: 200px; }
+        .column3 {
+            width: 200px;
+            background-color: #ccc;
+            position: relative;
+        }
+        .gauge {
+            position: absolute;
+            height: 100%;
+            background-color: green;
+        }
         .column-header {
             text-align: center;
             font-weight: bold;
@@ -101,8 +110,11 @@
 
                         // Create and style column 3
                         const cell3 = document.createElement('td');
-                        cell3.textContent = rowData[2]; // Display value of column 3
                         cell3.classList.add('column3');
+                        const gauge = document.createElement('div');
+                        gauge.className = 'gauge';
+                        gauge.style.width = rowData[2] + '%';
+                        cell3.appendChild(gauge);
                         row.appendChild(cell3);
                         
                         table.appendChild(row);
