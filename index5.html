@@ -129,16 +129,17 @@
                         gauge.className = 'bar';
                         const percentage = document.createElement('div');
                         percentage.className = 'percentage';
-                        const percentageValue = Math.min(parseFloat(rowData[2]) * 100, 100); // Ensure percentage does not exceed 100%
+                        const percentageValue = Math.min(parseFloat(rowData[2]) * 100, 150); // Ensure percentage does not exceed 150%
                         percentage.textContent = percentageValue.toFixed(2) + '%'; // Convert decimal to percentage
                         gauge.appendChild(percentage);
                         const indicator = document.createElement('div');
                         indicator.className = 'indicator';
-                        const indicatorPosition = Math.min(percentageValue, 100); // Ensure indicator position does not exceed 100%
+                        const indicatorPosition = Math.min(percentageValue, 150); // Ensure indicator position does not exceed 150%
                         indicator.style.left = indicatorPosition + '%'; // Set left position of indicator
                         gauge.appendChild(indicator);
                         cell3.appendChild(gauge);
                         row.appendChild(cell3);
+
                         
                         table.appendChild(row);
                     }
