@@ -47,6 +47,14 @@
             text-align: center;
             font-weight: bold;
         }
+        .segment {
+            height: 100%;
+            float: left; /* Float segments left */
+        }
+        .segment1 { width: 25%; background-color: red; }
+        .segment2 { width: 25%; background-color: orange; }
+        .segment3 { width: 25%; background-color: gold; }
+        .segment4 { width: 25%; background-color: green; }
     </style>
     <script>
         window.onload = function() {
@@ -109,7 +117,7 @@
                         const cell2 = document.createElement('td');
                         const bar = document.createElement('div');
                         bar.className = 'bar';
-                        setColorSegments(bar, parseFloat(rowData[1]));
+                        setColorSegments(bar, parseInt(rowData[1]));
                         cell2.appendChild(bar);
                         cell2.classList.add('column2');
                         row.appendChild(cell2);
@@ -138,18 +146,40 @@
             
             // Function to set color segments based on value
             function setColorSegments(bar, value) {
-                if (value >= 0 && value < 50) {
-                    bar.style.width = '25%'; // Adjust width accordingly
-                    bar.style.backgroundColor = 'red';
-                } else if (value >= 50 && value < 100) {
-                    bar.style.width = '50%'; // Adjust width accordingly
-                    bar.style.backgroundColor = 'orange';
-                } else if (value >= 100 && value < 150) {
-                    bar.style.width = '75%'; // Adjust width accordingly
-                    bar.style.backgroundColor = 'gold';
-                } else if (value >= 150) {
-                    bar.style.width = '100%'; // Adjust width accordingly
-                    bar.style.backgroundColor = 'green';
+                if (value >= 0 && value < 19) {
+                    const segment1 = document.createElement('div');
+                    segment1.className = 'segment segment1';
+                    bar.appendChild(segment1);
+                } else if (value >= 20 && value < 27) {
+                    const segment1 = document.createElement('div');
+                    segment1.className = 'segment segment1';
+                    bar.appendChild(segment1);
+                    const segment2 = document.createElement('div');
+                    segment2.className = 'segment segment2';
+                    bar.appendChild(segment2);
+                } else if (value >= 27 && value < 32) {
+                    const segment1 = document.createElement('div');
+                    segment1.className = 'segment segment1';
+                    bar.appendChild(segment1);
+                    const segment2 = document.createElement('div');
+                    segment2.className = 'segment segment2';
+                    bar.appendChild(segment2);
+                    const segment3 = document.createElement('div');
+                    segment3.className = 'segment segment3';
+                    bar.appendChild(segment3);
+                } else if (value >= 33 && value <= 150) {
+                    const segment1 = document.createElement('div');
+                    segment1.className = 'segment segment1';
+                    bar.appendChild(segment1);
+                    const segment2 = document.createElement('div');
+                    segment2.className = 'segment segment2';
+                    bar.appendChild(segment2);
+                    const segment3 = document.createElement('div');
+                    segment3.className = 'segment segment3';
+                    bar.appendChild(segment3);
+                    const segment4 = document.createElement('div');
+                    segment4.className = 'segment segment4';
+                    bar.appendChild(segment4);
                 }
             }
             
