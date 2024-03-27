@@ -221,6 +221,16 @@
             // Load CSV data on page load
             loadCSV();
         };
+                // Calculate the average of YTD Performance
+        const averagePercentage = totalPercentage / rowCount;
+        
+        // Display the average percentage gauge
+        const averageGauge = document.getElementById('averageGauge');
+        const averageIndicator = document.createElement('div');
+        averageIndicator.className = 'indicator';
+        averageIndicator.style.width = averagePercentage + '%';
+        averageGauge.appendChild(averageIndicator);
+
     </script>
 </head>
 <body>
@@ -230,5 +240,10 @@
     <p>Red = 19 hours or less - Orange = 27 hours or less<br>
     Gold = 32 hours or less - Green = more than 33 hours</p>
     <p>YTD Performance is the percentage of Billed Time to On-Premise time</p>
+    <!-- Insert the HTML for the average percentage gauge here -->
+    <p>Average YTD Performance Gauge:</p>
+        <div id="averageGauge" class="bar">
+            <div class="indicator"></div>
+        </div>
 </body>
 </html>
