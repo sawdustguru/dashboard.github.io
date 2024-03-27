@@ -36,6 +36,14 @@
             height: 100%;
             background-color: black;
         }
+        /* CSS for the reference line */
+        .reference-line {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 2px; /* Adjust the height of the reference line */
+            background-color: black; /* Set the color of the reference line */
+        }
 
         .column1 { width: 200px; }
         .column2 { width: 200px; }
@@ -94,6 +102,14 @@
             background-color: white; /* Color of the indicator line */
             position: absolute;
             left: 0;
+            top: 0;
+        }
+        .vertical-line {
+            position: absolute;
+            width: 3px;
+            height: 100%;
+            background-color: black;
+            left: calc((var(--percentage) / 100) * 100% - 1.5px);
             top: 0;
         }
     </style>
@@ -192,9 +208,9 @@
                         table.appendChild(row);
                     }
                 }
-                
+
                 // Calculate the average of YTD Performance
-                const average = totalPercentage / rowCount;
+                const averagePercentage = totalPercentage / rowCount;
                 
                 // Display the average percentage gauge and its value
                 const averageGaugeContainer = document.getElementById('averageGaugeContainer');
@@ -204,6 +220,12 @@
                 averageIndicator.style.width = averagePercentage + '%';
                 averageGauge.appendChild(averageIndicator);
                 
+                // Add the vertical line to indicate the average percentage
+                const verticalLine = document.createElement('div');
+                verticalLine.className = 'vertical-line';
+                verticalLine.style.setProperty('--percentage', averagePercentage);
+                averageGauge.appendChild(verticalLine);
+
                 // Display the average percentage value
                 const averagePercentageDisplay = document.getElementById('averagePercentageDisplay');
                 averagePercentageDisplay.textContent = averagePercentage.toFixed(2) + '%';
@@ -261,14 +283,13 @@
     Gold = 32 hours or less - Green = more than 33 hours</p>
     <p>YTD Performance is the percentage of Billed Time to On-Premise time</p>
     <!-- Insert the HTML for the average percentage gauge here -->
-   <p>Average Shop Performance:</p>
-        <div id="averageGaugeContainer">
-            <div id="averageGauge" class="bar new-gauge">
-                <div class="indicator"></div>
-            </div>
-            <p><div id="averagePercentageDisplay" class="percentage"></div> <!-- Display average percentage here -->
+    <p>Average Shop Performance:</p>
+    <div id="averageGaugeContainer">
+        <div id="averageGauge" class="bar new-gauge">
+            <div class="indicator"></div>
         </div>
+        <div id="averagePercentageDisplay" class="percentage"></div> <!-- Display average percentage here -->
+    </div>
 </body>
 </html>
-
 
