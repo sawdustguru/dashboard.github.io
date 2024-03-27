@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Data Display</title>
+    <style>
+        body {
+            background-color: #9E9C9B;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin-right: 20px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .dial-gauge {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        .dial {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            transform: translate(-50%, -50%) rotate(-135deg);
+            border-radius: 50%;
+            border: 5px solid #ccc;
+            border-top-color: #4CAF50;
+            border-right-color: #4CAF50;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(-135deg); }
+            100% { transform: translate(-50%, -50%) rotate(135deg); }
+        }
+
+        .percentage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            const table = document.getElementById('dataTable');
+            const dialGauge = document.getElementById('dialGauge');
+            const percentageDisplay = document.getElementById('percentageDisplay');
+
+            // Function to load CSV data
+            function loadCSV() {
+                const xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            parseCSV(xhr.responseText);
+                        } else {
+                            console.error('Failed to load CSV file');
+                        }
+                    }
+                };
+                xhr.open('GET', 'hours.csv');
+                xhr.send();
+            }
+            
+            // Function to parse CSV data
+            function parseCSV(csvData) {
+                const lines = csvData.split('\n');
+                let totalPercentage = 0;
+                let rowCount = 0;
+
+                // Parse data rows
+                for (let i = 1; i < lines.length; i++) {
+                    const line = lines[i];
+                    const rowData = line.split(',');
+                    if (rowData[1]) { // Check if data exists
+                        totalPercentage += parseInt(rowData[1]);
+                        rowCount++;
+                    }
+                }
+
+                if (rowCount > 0) {
+                    const averagePercentage = totalPercentage / rowCount;
+                    updateDialGauge(averagePercentage);
+                    percentageDisplay.textContent = averagePercentage.toFixed(2) + '%';
+                } else {
+                    updateDialGauge(0);
+                    percentageDisplay.textContent = 'N/A';
+                }
+            }
+
+            // Function to update the dial gauge
+            function updateDialGauge(percentage) {
+                const rotation = -135 + (percentage / 100 * 270); // Convert percentage to degree
+                dialGauge.style.setProperty('--rotation', rotation + 'deg');
+            }
+            
+            // Load CSV data on page load
+            loadCSV();
+        };
+    </script>
+</head>
+<body>
+    <table id="dataTable">
+        <tr>
+            <th>Name</th>
+            <th>Weekly Hours</th>
+            <th>YTD Performance</th>
+        </tr>
+    </table>
+    <div id="dialGauge" class="dial-gauge">
+        <div class="dial"></div>
+        <div class="percentage" id="percentageDisplay">N/A</div>
+    </div>
+    <p>Red = 19 hours or less - Orange = 27 hours or less<br>
+    Gold = 32 hours or less - Green = more than 33 hours</p>
+</body>
+</html>
