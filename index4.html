@@ -31,11 +31,14 @@
             width: 200px;
             background-color: #ccc;
             position: relative;
+            height: 20px; /* Set height of the gauge */
         }
         .gauge {
             position: absolute;
+            width: 0; /* Set initial width to 0 */
             height: 100%;
             background-color: green;
+            transition: width 0.5s ease; /* Add transition for smooth animation */
         }
         .column-header {
             text-align: center;
