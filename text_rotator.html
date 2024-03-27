@@ -5,18 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text Rotator</title>
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevent scrolling */
+            box-sizing: border-box;
+        }
+        *, *::before, *::after {
+            box-sizing: inherit; /* Apply box-sizing to all elements */
+        }
         body {
             background-color: #9E9C9B; /* Set the desired background color */
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 5px;
+            padding: 0;
         }
         #text-rotator {
             font-size: 58px;
             color: blue;
             text-align: center; /* Center justify text */
+            margin: 0; /* Ensure no extra space is added around the text */
         }
     </style>
 </head>
@@ -24,7 +34,7 @@
     <div id="text-rotator"></div>
     <script>
         var textRotator = document.getElementById('text-rotator');
-        var texts = ['Clock in to ALL Jobs', 'Complete your write-ups as you go!', 'Check your email through out the day','Do Not flag extra time without prior approval!','Be very clear when specifying parts and include part numbers when possible','Add Notes when clocking in and out on diag jobs in so we know where you left off if it goes to another tech.']; // Add your desired texts here
+        var texts = ['Clock in to ALL Jobs', 'Complete your write-ups as you go!', 'Check your email through out the day', 'Do Not flag extra time without prior approval!', 'Be very clear when specifying parts and include part numbers when possible', 'Add Notes when clocking in and out on diag jobs in so we know where you left off if it goes to another tech.'];
         var index = 0;
 
         function rotateText() {
@@ -32,7 +42,7 @@
             index = (index + 1) % texts.length;
         }
 
-        setInterval(rotateText, 5000); // Change text every 2 seconds (2000 milliseconds)
+        setInterval(rotateText, 5000); // Change text every 5 seconds
     </script>
 </body>
 </html>
