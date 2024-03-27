@@ -6,65 +6,102 @@
     <title>CSV Data Display</title>
     <style>
         body {
-            background-color: #9E9C9B;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+            background-color: #9E9C9B; /* Set the desired background color */
+            font-family: Arial, sans-serif; /* Set font to Arial with a fallback to sans-serif */
         }
-
-        table {
-            border-collapse: collapse;
-            margin-right: 20px;
+        .bar {
+            height: 15px;
+            width: 200px; /* Fixed width for bars */
+            margin: 3px 0;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+            /*display: inline-block;  Ensure bars are displayed inline */
+            overflow: hidden; /* Ensure segments do not overflow */
+            position: relative; /* Position for the indicator line */
         }
-
-        th, td {
-            border: 1px solid black;
-            padding: 5px;
-            text-align: center;
-        }
-
-        .dial-gauge {
-            position: relative;
-            width: 200px;
-            height: 200px;
-        }
-
-        .dial {
+        .indicator {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100px;
-            height: 100px;
-            transform: translate(-50%, -50%) rotate(-135deg);
-            border-radius: 50%;
-            border: 5px solid #ccc;
-            border-top-color: #4CAF50;
-            border-right-color: #4CAF50;
-            animation: spin 2s linear infinite;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 3px; /* Width of the indicator line */
+            background-color: white; /* Color of the indicator line */
+            transform: translateX(-50%); /* Center the line */
+        }
+        .black-indicator {
+            position: absolute;
+            top: 0;
+            left: 100%;
+            width: 3px; /* Width of the indicator */
+            height: 100%;
+            background-color: black;
         }
 
-        @keyframes spin {
-            0% { transform: translate(-50%, -50%) rotate(-135deg); }
-            100% { transform: translate(-50%, -50%) rotate(135deg); }
+        .column1 { width: 200px; }
+        .column2 { width: 200px; }
+        .column3 {
+            width: 200px;
+            background: linear-gradient(to right, red 0%, orange 35%, gold 45%, green 85%); /* Gradient from red to green starting at 85% */
+            position: relative;
+            height: 20px; /* Set height of the gauge */
+           /* display: flex;  Align content */
         }
 
         .percentage {
             position: absolute;
             top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 24px;
+            transform: translateY(-50%);
+            color: white;
+            padding-left: 5px; /* Adjust spacing */
+        }
+        .column-header {
+            text-align: center;
             font-weight: bold;
+        }
+        .segment {
+            height: 100%;
+            float: left; /* Float segments left */
+        }
+        .segment1 { width: 25%; background-color: red; }
+        .segment2 { width: 25%; background-color: orange; }
+        .segment3 { width: 25%; background-color: gold; }
+        .segment4 { width: 25%; background-color: green; }
+        
+        td {
+            vertical-align: middle;
+            text-align: left;
+        }
+        
+        table {
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            font-family: Arial, sans-serif; /* Set font to Arial with a fallback to sans-serif */
+            border: 2px solid black;
+            padding: 2px;
+        }
+
+        /* CSS for the new gauge */
+        .new-gauge {
+            width: 600px; /* Set width to 600px */
+            height: 30px; /* Set height to 30px */
+            background: linear-gradient(to right, red 0%, orange 35%, gold 45%, green 85%); /* Gradient from red to green starting at 85% */
+            position: relative;
+        }
+        .new-gauge .indicator {
+            height: 100%;
+            background-color: white; /* Color of the indicator line */
+            position: absolute;
+            left: 0;
+            top: 0;
         }
     </style>
     <script>
         window.onload = function() {
             const table = document.getElementById('dataTable');
-            const dialGauge = document.getElementById('dialGauge');
-            const percentageDisplay = document.getElementById('percentageDisplay');
+            let totalPercentage = 0;
+            let rowCount = 0;
 
             // Function to load CSV data
             function loadCSV() {
@@ -85,33 +122,125 @@
             // Function to parse CSV data
             function parseCSV(csvData) {
                 const lines = csvData.split('\n');
-                let totalPercentage = 0;
-                let rowCount = 0;
+                table.innerHTML = ''; // Clear existing table content
+                
+                // Add column headers
+                const headerRow = document.createElement('tr');
+                const columnHeader1 = document.createElement('th');
+                columnHeader1.textContent = 'Name';
+                columnHeader1.classList.add('column-header');
+                headerRow.appendChild(columnHeader1);
+
+                const columnHeader2 = document.createElement('th');
+                columnHeader2.textContent = 'Weekly Hours';
+                columnHeader2.classList.add('column-header');
+                headerRow.appendChild(columnHeader2);
+
+                const columnHeader3 = document.createElement('th');
+                columnHeader3.textContent = 'YTD Performance';
+                columnHeader3.classList.add('column-header');
+                headerRow.appendChild(columnHeader3);
+
+                table.appendChild(headerRow);
 
                 // Parse data rows
                 for (let i = 1; i < lines.length; i++) {
                     const line = lines[i];
                     const rowData = line.split(',');
-                    if (rowData[1]) { // Check if data exists
-                        totalPercentage += parseInt(rowData[1]);
+                    if (rowData[0]) { // Check if data exists
+                        const row = document.createElement('tr');
                         rowCount++;
+
+                        // Create and style column 1
+                        const cell1 = document.createElement('td');
+                        cell1.textContent = rowData[0]; // Display value of column 1
+                        cell1.classList.add('column1');
+                        row.appendChild(cell1);
+                        
+                        // Create and style column 2
+                        const cell2 = document.createElement('td');
+                        const bar = document.createElement('div');
+                        bar.className = 'bar';
+                        setColorSegments(bar, parseInt(rowData[1]));
+                        cell2.appendChild(bar);
+                        cell2.classList.add('column2');
+                        row.appendChild(cell2);
+
+                        // Create and style column 3
+                        const cell3 = document.createElement('td');
+                        cell3.classList.add('column3');
+                        const gauge = document.createElement('div');
+                        gauge.className = 'bar';
+                        const percentage = document.createElement('div');
+                        percentage.className = 'percentage';
+                        const percentageValue = parseFloat(rowData[2]) * 100;
+                        totalPercentage += percentageValue;
+                        percentage.textContent = percentageValue.toFixed(2) + '%'; // Convert decimal to percentage
+                        gauge.appendChild(percentage);
+                        // Add the black indicator here
+                        const indicatorBlack = document.createElement('div');
+                        indicatorBlack.className = 'indicator-black';
+                        gauge.appendChild(indicatorBlack);
+                        const indicator = document.createElement('div');
+                        indicator.className = 'indicator';
+                        const indicatorPosition = Math.min(percentageValue, 150); // Ensure indicator position does not exceed 150%
+                        indicator.style.left = (indicatorPosition / 150) * 100 + '%'; // Calculate left position based on percentage of 150%
+                        gauge.appendChild(indicator);
+                        cell3.appendChild(gauge);
+                        row.appendChild(cell3);
+                        
+                        table.appendChild(row);
                     }
                 }
 
-                if (rowCount > 0) {
-                    const averagePercentage = totalPercentage / rowCount;
-                    updateDialGauge(averagePercentage);
-                    percentageDisplay.textContent = averagePercentage.toFixed(2) + '%';
-                } else {
-                    updateDialGauge(0);
-                    percentageDisplay.textContent = 'N/A';
-                }
+                // Calculate the average of YTD Performance
+                const averagePercentage = totalPercentage / rowCount;
+                
+                // Display the average percentage gauge
+                const averageGauge = document.getElementById('averageGauge');
+                const averageIndicator = document.createElement('div');
+                averageIndicator.className = 'indicator';
+                averageIndicator.style.width = averagePercentage + '%';
+                averageGauge.appendChild(averageIndicator);
             }
-
-            // Function to update the dial gauge
-            function updateDialGauge(percentage) {
-                const rotation = -135 + (percentage / 100 * 270); // Convert percentage to degree
-                dialGauge.style.setProperty('--rotation', rotation + 'deg');
+            
+            // Function to set color segments based on value
+            function setColorSegments(bar, value) {
+                if (value >= 0 && value < 19) {
+                    const segment1 = document.createElement('div');
+                    segment1.className = 'segment segment1';
+                    bar.appendChild(segment1);
+                } else if (value >= 20 && value < 27) {
+                    const segment1 = document.createElement('div');
+                    segment1.className = 'segment segment1';
+                    bar.appendChild(segment1);
+                    const segment2 = document.createElement('div');
+                    segment2.className = 'segment segment2';
+                    bar.appendChild(segment2);
+                } else if (value >= 27 && value < 32) {
+                    const segment1 = document.createElement('div');
+                    segment1.className = 'segment segment1';
+                    bar.appendChild(segment1);
+                    const segment2 = document.createElement('div');
+                    segment2.className = 'segment segment2';
+                    bar.appendChild(segment2);
+                    const segment3 = document.createElement('div');
+                    segment3.className = 'segment segment3';
+                    bar.appendChild(segment3);
+                } else if (value >= 33 && value <= 150) {
+                    const segment1 = document.createElement('div');
+                    segment1.className = 'segment segment1';
+                    bar.appendChild(segment1);
+                    const segment2 = document.createElement('div');
+                    segment2.className = 'segment segment2';
+                    bar.appendChild(segment2);
+                    const segment3 = document.createElement('div');
+                    segment3.className = 'segment segment3';
+                    bar.appendChild(segment3);
+                    const segment4 = document.createElement('div');
+                    segment4.className = 'segment segment4';
+                    bar.appendChild(segment4);
+                }
             }
             
             // Load CSV data on page load
@@ -120,18 +249,16 @@
     </script>
 </head>
 <body>
-    <table id="dataTable">
-        <tr>
-            <th>Name</th>
-            <th>Weekly Hours</th>
-            <th>YTD Performance</th>
-        </tr>
-    </table>
-    <div id="dialGauge" class="dial-gauge">
-        <div class="dial"></div>
-        <div class="percentage" id="percentageDisplay">N/A</div>
-    </div>
+    <p>Technician Time Gauge<br>
+    Previous Week - This is still a work in progress</p>
+    <table id="dataTable" border="1" size=".5"></table>
     <p>Red = 19 hours or less - Orange = 27 hours or less<br>
     Gold = 32 hours or less - Green = more than 33 hours</p>
+    <p>YTD Performance is the percentage of Billed Time to On-Premise time</p>
+    <!-- Insert the HTML for the average percentage gauge here -->
+    <p>Average YTD Performance Gauge:</p>
+    <div id="averageGauge" class="bar new-gauge">
+        <div class="indicator"></div>
+    </div>
 </body>
 </html>
