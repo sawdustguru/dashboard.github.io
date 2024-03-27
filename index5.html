@@ -27,6 +27,16 @@
             background-color: white; /* Color of the indicator line */
             transform: translateX(-50%); /* Center the line */
         }
+                /* Add this CSS */
+        .black-indicator {
+            position: absolute;
+            top: 0;
+            left: 100%;
+            width: 2px; /* Width of the indicator */
+            height: 100%;
+            background-color: black;
+        }
+
         .column1 { width: 200px; }
         .column2 { width: 200px; }
         .column3 {
@@ -135,6 +145,10 @@
                         const indicatorPosition = Math.min(percentageValue, 150); // Ensure indicator position does not exceed 150%
                         percentage.textContent = percentageValue.toFixed(2) + '%'; // Convert decimal to percentage
                         gauge.appendChild(percentage);
+                        // Add the black indicator here
+                        const indicatorBlack = document.createElement('div');
+                        indicatorBlack.className = 'indicator-black';
+                        gauge.appendChild(indicatorBlack);
                         const indicator = document.createElement('div');
                         indicator.className = 'indicator';
                         indicator.style.left = (indicatorPosition / 150) * 100 + '%'; // Calculate left position based on percentage of 150%
