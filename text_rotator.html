@@ -24,7 +24,8 @@
         }
         #text-rotator {
             font-size: 58px;
-            text-shadow: 0 0 5px #ff0000; /* Corrected red text shadow */
+            font-family: Arial, sans-serif; /* Set font to Arial */
+            text-shadow: 0 0 5px #ff0000; /* Red text shadow */
             color: blue;
             text-align: center; /* Center justify text */
             margin: 0; /* Ensure no extra space is added around the text */
@@ -37,11 +38,11 @@
         var textRotator = document.getElementById('text-rotator');
         var texts = ['Clock in to ALL Jobs',
                      'Complete your write-ups as you go!',
-                     'Check your email through out the day',
+                     'Check your email throughout the day',
                      'Do Not flag extra time without prior approval!',
                      'When specifying parts and include part numbers when possible',
                      'Take pictures of ALL appliance tags!',
-                    'Check your parts before working on the job'];
+                     'Check your parts before working on the job'];
         var index = 0;
 
         function rotateText() {
