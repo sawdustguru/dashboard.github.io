@@ -197,8 +197,8 @@
                         const indicatorBlack = document.createElement('div');
                         indicatorBlack.className = 'indicator-black';
                         gauge.appendChild(indicatorBlack);
-                        //const indicator = document.createElement('div');
-                       // indicator.className = 'indicator';
+                        const indicator = document.createElement('div');
+                        indicator.className = 'indicator';
                         const indicatorPosition = Math.min(percentageValue, 150); // Ensure indicator position does not exceed 150%
                         indicator.style.left = (indicatorPosition / 150) * 100 + '%'; // Calculate left position based on percentage of 150%
                         gauge.appendChild(indicator);
@@ -216,7 +216,7 @@
                 const averageGaugeContainer = document.getElementById('averageGaugeContainer');
                 const averageGauge = document.getElementById('averageGauge');
                 const averageIndicator = document.createElement('div');
-                averageIndicator.className = 'indicator';
+                //averageIndicator.className = 'indicator';
                 averageIndicator.style.width = averagePercentage + '%';
                 averageGauge.appendChild(averageIndicator);
                 
