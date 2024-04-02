@@ -1,43 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Basic Web Page</title>
-    <style>
-        /* CSS styles can go here */
-        label {
-              padding-right: 10px;
-              font-size: 1rem;
-              }
-
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gauge with HTML and CSS</title>
+<style>
+  .gauge {
+    position: relative;
+    width: 200px;
+    height: 100px;
+    border-radius: 100px 100px 0 0;
+    background-color: lightgrey;
+    overflow: hidden;
+  }
+  .gauge:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 4px;
+    height: 80px;
+    background-color: red;
+    transform: translateX(-50%) rotate(108deg); /* Adjust this to change the needle position */
+    transform-origin: 50% 100%;
+  }
+  .gauge-cover {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: lightgrey;
+    border-radius: 50%;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+  }
+</style>
 </head>
 <body>
 
-<header>
-    <h1>Welcome to My Basic Web Page</h1>
-</header>
-<label for="fuel">Hours Per Bay</label>
-<div class="container">
-   0 <meter id="fuel" min="0" max="8" low="5.99" high="7" optimum="7.5" value="5.75">at 50/100</meter> 8
+<div class="gauge">
+  <div class="gauge-cover"></div>
 </div>
 
 </body>
