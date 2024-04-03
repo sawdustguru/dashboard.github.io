@@ -11,6 +11,25 @@
       width: 200px;
       height: 200px;
     }
+      /** these classes are pre-generated **/
+            .fg-dial {
+                font-size: 200%;
+                font-weight: bold;
+                left: 0;
+                position: absolute;
+                text-align: center;
+                top: 100px;
+                width: 100%;
+            }
+            .fg-dial-label {
+                font-size: 200%;
+                font-weight: bold;
+                left: 0;
+                position: absolute;
+                text-align: center;
+                top: 160px;
+                width: 100%;
+            }
   </style>
 </head>
 <body>
@@ -19,18 +38,10 @@
   <script>
     // Creating a gauge instance
     var gauge = new FlexGauge({
-      id: 'gauge-container',
-      type: 'gauge',
-      minValue: 0,
-      maxValue: 100,
-      value: 60,
-      segments: [
-        { color: '#FF0000', label: 'Low', value: 30 },
-        { color: '#FFFF00', label: 'Medium', value: 60 },
-        { color: '#00FF00', label: 'High', value: 100 }
-      ],
-      showValue: true
-    });
+                    appendTo: '#example5',
+                    dialValue: true,
+                    dialLabel: true
+                });
   </script>
 </body>
 </html>
