@@ -5,31 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FlexGauge Example</title>
   <!-- Include FlexGauge.js library -->
-  <script type="text/javascript" src="/FlexGauge.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/flexgauge@1.0.1"></script>
   <style>
     #gauge-container {
       width: 200px;
       height: 200px;
     }
-      /** these classes are pre-generated **/
-            .fg-dial {
-                font-size: 200%;
-                font-weight: bold;
-                left: 0;
-                position: absolute;
-                text-align: center;
-                top: 100px;
-                width: 100%;
-            }
-            .fg-dial-label {
-                font-size: 200%;
-                font-weight: bold;
-                left: 0;
-                position: absolute;
-                text-align: center;
-                top: 160px;
-                width: 100%;
-            }
+    /* These classes are pre-generated */
+    .fg-dial {
+      font-size: 200%;
+      font-weight: bold;
+      left: 0;
+      position: absolute;
+      text-align: center;
+      top: 100px;
+      width: 100%;
+    }
+    .fg-dial-label {
+      font-size: 200%;
+      font-weight: bold;
+      left: 0;
+      position: absolute;
+      text-align: center;
+      top: 160px;
+      width: 100%;
+    }
   </style>
 </head>
 <body>
@@ -38,10 +38,10 @@
   <script>
     // Creating a gauge instance
     var gauge = new FlexGauge({
-                    appendTo: '#example5',
-                    dialValue: true,
-                    dialLabel: true
-                });
+      appendTo: '#gauge-container',
+      dialValue: true,
+      dialLabel: true
+    });
   </script>
 </body>
 </html>
