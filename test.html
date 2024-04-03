@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FlexGauge Example</title>
   <!-- Include FlexGauge.js library -->
- <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>  -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> 
   <script src="FlexGauge.js"></script>
   <style>
     #gauge-container {
@@ -35,14 +35,13 @@
 </head>
 <body>
   <div id="gauge-container"></div>
-
-  <script>
-    // Creating a gauge instance
-    var gauge = new FlexGauge({
-      appendTo: '#gauge-container',
-      dialValue: true,
-      dialLabel: true
-    });
-  </script>
+    <script>
+      // Creating a gauge instance
+      var gauge = new FlexGauge({
+        appendTo: '#gauge-container',
+        dialValue: true,
+        dialLabel: true
+      });
+    </script>
 </body>
 </html>
