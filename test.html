@@ -3,48 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FlexGauge Example</title>
-  <!-- Include FlexGauge.js library -->
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> 
-  <script src="FlexGauge.js"></script>
+  <title>Simple JavaScript Gauge Example</title>
   <style>
+    /* Styling for the gauge container */
     #gauge-container {
       width: 200px;
       height: 200px;
+      border: 5px solid #ccc;
+      border-radius: 50%;
+      position: relative;
     }
-    /* These classes are pre-generated */
-    .fg-dial {
-      font-size: 200%;
-      font-weight: bold;
-      left: 0;
+    
+    /* Styling for the gauge fill */
+    #gauge-fill {
       position: absolute;
-      text-align: center;
-      top: 100px;
-      width: 100%;
-    }
-    .fg-dial-label {
-      font-size: 200%;
-      font-weight: bold;
+      bottom: 0;
       left: 0;
-      position: absolute;
-      text-align: center;
-      top: 160px;
       width: 100%;
+      background-color: #4CAF50; /* Green color */
+      border-radius: 50%;
     }
   </style>
 </head>
 <body>
-  <div id="gauge-container"></div>
-    <div class="fg-dial">30%</div>
-      <script>
-        // Creating a gauge instance
-        var gauge = new FlexGauge({
-                    appendTo: '#example5',
-                    dialValue: true,
-                    dialLabel: true
-                });
-          
-      
-      </script>
+  <div id="gauge-container">
+    <div id="gauge-fill" style="height: 0%;"></div>
+  </div>
+
+  <script>
+    // Function to update the gauge fill based on a value
+    function updateGauge(value) {
+      var gaugeFill = document.getElementById('gauge-fill');
+      gaugeFill.style.height = value + '%';
+    }
+
+    // Example usage: update the gauge to 75%
+    updateGauge(75);
+  </script>
 </body>
 </html>
