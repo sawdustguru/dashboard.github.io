@@ -3,38 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simple JavaScript Gauge Example</title>
+  <title>Simple Dial Gauge Example</title>
   <style>
     /* Styling for the gauge container */
     #gauge-container {
       width: 200px;
       height: 200px;
-      border: 5px solid #ccc;
-      border-radius: 50%;
       position: relative;
     }
     
-    /* Styling for the gauge fill */
-    #gauge-fill {
-      position: absolute;
-      bottom: 0;
-      left: 0;
+    /* Styling for the gauge dial */
+    #gauge-dial {
       width: 100%;
-      background-color: #4CAF50; /* Green color */
+      height: 100%;
       border-radius: 50%;
+      border: 10px solid #ccc;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    
+    /* Styling for the gauge needle */
+    #gauge-needle {
+      width: 2px;
+      height: 80px;
+      background-color: red;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-origin: 0% 100%; /* Rotate from bottom */
+      transform: translateX(-50%) rotate(-45deg); /* Start position */
+      transition: transform 0.5s ease-in-out; /* Smooth transition */
     }
   </style>
 </head>
 <body>
   <div id="gauge-container">
-    <div id="gauge-fill" style="height: 0%;"></div>
+    <div id="gauge-dial"></div>
+    <div id="gauge-needle"></div>
   </div>
 
   <script>
-    // Function to update the gauge fill based on a value
+    // Function to update the gauge needle based on a value
     function updateGauge(value) {
-      var gaugeFill = document.getElementById('gauge-fill');
-      gaugeFill.style.height = value + '%';
+      var gaugeNeedle = document.getElementById('gauge-needle');
+      var angle = (value / 100) * 270 - 135; // Calculate angle from value
+      gaugeNeedle.style.transform = 'translateX(-50%) rotate(' + angle + 'deg)';
     }
 
     // Example usage: update the gauge to 75%
