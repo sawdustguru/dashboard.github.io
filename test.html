@@ -1,75 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nice Dial Gauge Example</title>
-  <style>
-    /* Styling for the gauge container */
-    #gauge-container {
-      width: 200px;
-      height: 200px;
-      position: relative;
-    }
-    
-    /* Styling for the gauge dial */
-    .gauge-dial {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      transform: rotate(-135deg);
-      background: linear-gradient(90deg, transparent 50%, #e6e6e6 50%);
-    }
-
-    /* Styling for the gauge fill */
-    .gauge-fill {
-      width: 50%;
-      height: 100%;
-      background: linear-gradient(90deg, #4CAF50 50%, transparent 50%);
-      border-radius: 50% 0 0 50% / 50% 50% 0 0;
-      position: absolute;
-      top: 0;
-      left: 0;
-      transform-origin: 100%;
-      transition: transform 0.5s ease-in-out;
-    }
-
-    /* Styling for the gauge needle */
-    .gauge-needle {
-      width: 4px;
-      height: 60%;
-      background-color: #4CAF50;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform-origin: 100% 100%;
-      transform: translate(-50%, -100%) rotate(-135deg);
-      transition: transform 0.5s ease-in-out;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gauge Example</title>
 </head>
 <body>
-  <div id="gauge-container">
-    <div class="gauge-dial"></div>
-    <div class="gauge-fill"></div>
-    <div class="gauge-needle"></div>
-  </div>
+    <canvas id="gauge" width="400" height="300"></canvas>
 
-  <script>
-    // Function to update the gauge needle based on a value
-    function updateGauge(value) {
-      var gaugeFill = document.querySelector('.gauge-fill');
-      var gaugeNeedle = document.querySelector('.gauge-needle');
-      var angle = (value / 100) * 270; // Calculate angle from value
-      gaugeFill.style.transform = 'rotate(' + angle + 'deg)';
-      gaugeNeedle.style.transform = 'translate(-50%, -100%) rotate(' + (angle - 135) + 'deg)';
-    }
+    <script src="gauge.js"></script>
+    <script>
+        // Assuming the gauge.js defines a `Gauge` class or function
+        document.addEventListener('DOMContentLoaded', function () {
+            var target = document.getElementById('gauge'); // Get the canvas element
+            var gauge = new Gauge(target).setOptions({ // Create and configure the gauge
+                // Gauge configuration
+                // These options are placeholders; replace them with actual configuration options
+                angle: 0.15, // The span of the gauge arc
+                lineWidth: 0.44,
+                pointer: {
+                    length: 0.9, // Relative to gauge radius
+                    strokeWidth: 0.035, // The thickness
+                    color: '#000000' // Fill color
+                },
+                colorStart: '#6FADCF', // Colors
+                colorStop: '#8FC0DA', // just experiment with them
+                strokeColor: '#E0E0E0', // to see which ones work best for you
+                generateGradient: true
+            });
 
-    // Example usage: update the gauge to 75%
-    updateGauge(75);
-  </script>
+            gauge.maxValue = 3000; // set max gauge value
+            gauge.setMinValue(0);  // Prefer setter over gauge.minValue = 0
+            gauge.animationSpeed = 32; // set animation speed (32 is default value)
+            gauge.set(1250); // set actual value
+        });
+    </script>
 </body>
 </html>
