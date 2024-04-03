@@ -47,7 +47,7 @@
          */
         dialUnitPosition: 'after',
         /**
-         *  {Boolean|String} Generate Label for the Gauge, true will use default "FlexGauge", string will use specified
+         *  {Boolean|String} Generate Label for the Gauge, true will use default "Something", string will use specified
          */
         dialLabel: false,
         /**
