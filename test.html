@@ -3,67 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Angular Gauge Chart</title>
-    <!-- Include FusionCharts library from CDN -->
-    <script src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
-    <!-- Include FusionCharts theme file -->
-    <script src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+    <title>Gauge Chart with Plotly.js</title>
+    <!-- Load Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
-    <!-- Container for the chart -->
-    <div id="chart-container" style="width:600px; height:400px; margin: auto;"></div>
 
-    <script>
-        // Define the data source for the chart
-        const dataSource = {
-          "chart": {
-            "caption": "Hours Per Bay",
-            "lowerlimit": "0",
-            "upperlimit": "10",
-            "showvalue": "1",
-            "numbersuffix": "hr",
-            "theme": "fusion",
-            "showtooltip": "0"
-          },
-          "colorrange": {
-            "color": [
-              {
-                "minvalue": "0",
-                "maxvalue": "5",
-                "code": "#F2726F"
-              },
-              {
-                "minvalue": "4",
-                "maxvalue": "6",
-                "code": "#FFC533"
-              },
-              {
-                "minvalue": "6",
-                "maxvalue": "10",
-                "code": "#62B58F"
-              }
-            ]
-          },
-          "dials": {
-            "dial": [
-              {
-                "value": "4.5"
-              }
-            ]
-          }
-        };
+<div id="myDiv" style="width:600px; height:400px;"></div> <!-- Container for the Plotly chart -->
 
-        // Render the chart
-        FusionCharts.ready(function() {
-           var myChart = new FusionCharts({
-              type: "angulargauge",
-              renderAt: "chart-container",
-              width: "100%",
-              height: "100%",
-              dataFormat: "json",
-              dataSource
-           }).render();
-        });
-    </script>
+<script>
+// Your data array
+var data = [
+  {
+    domain: { x: [0, 1], y: [0, 1] },
+    value: 6.3,
+    title: { text: "Hours Per Bay" },
+    type: "indicator",
+    mode: "gauge+number+delta",
+    delta: { reference: 6 },
+    gauge: { axis: { range: [null, 10] } }
+  }
+];
+
+// The layout of your chart
+var layout = { width: 600, height: 400 };
+
+// Rendering the chart
+Plotly.newPlot('myDiv', data, layout);
+</script>
+
 </body>
 </html>
