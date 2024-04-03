@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simple Dial Gauge Example</title>
+  <title>Nice Dial Gauge Example</title>
   <style>
     /* Styling for the gauge container */
     #gauge-container {
@@ -13,18 +13,35 @@
     }
     
     /* Styling for the gauge dial */
-    #gauge-dial {
+    .gauge-dial {
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      border: 10px solid #ccc;
       position: absolute;
       top: 0;
       left: 0;
     }
-    
+
+    /* Styling for the gauge background */
+    .gauge-background {
+      background: #f4f4f4;
+      border: 10px solid #ccc;
+    }
+
+    /* Styling for the gauge fill */
+    .gauge-fill {
+      background: #4CAF50;
+      border: 10px solid transparent;
+      border-top-color: #4CAF50;
+      border-right-color: #4CAF50;
+      border-radius: 50%;
+      transform-origin: 50% 100%; /* Rotate from bottom center */
+      transform: rotate(-135deg); /* Start position */
+      transition: transform 0.5s ease-in-out; /* Smooth transition */
+    }
+
     /* Styling for the gauge needle */
-    #gauge-needle {
+    .gauge-needle {
       width: 2px;
       height: 80px;
       background-color: red;
@@ -39,20 +56,21 @@
 </head>
 <body>
   <div id="gauge-container">
-    <div id="gauge-dial"></div>
-    <div id="gauge-needle"></div>
+    <div class="gauge-dial gauge-background"></div>
+    <div class="gauge-dial gauge-fill"></div>
+    <div class="gauge-needle"></div>
   </div>
 
   <script>
     // Function to update the gauge needle based on a value
     function updateGauge(value) {
-      var gaugeNeedle = document.getElementById('gauge-needle');
+      var gaugeNeedle = document.querySelector('.gauge-needle');
       var angle = (value / 100) * 270 - 135; // Calculate angle from value
       gaugeNeedle.style.transform = 'translateX(-50%) rotate(' + angle + 'deg)';
     }
 
     // Example usage: update the gauge to 75%
-    updateGauge(50);
+    updateGauge(75);
   </script>
 </body>
 </html>
