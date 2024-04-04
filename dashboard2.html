@@ -20,14 +20,14 @@
             height: calc(100% - 4px); /* Adjust height to account for border */
             border: none;
         }
-        .right-column {
-            width: 50%;
+       .right-column {
+            width: calc(50% - 4px); /* Fill remaining width of the page */
             height: 100vh; /* Adjust the height to fill the viewport */
             float: right;
             display: flex;
             flex-direction: column;
         }
-        .iframe-container:nth-child(n+2) {
+        .iframe-container:nth-child(2) {
             height: calc(50vh - 2px); /* Adjust the height of the right column iframes */
             /* Remove the bottom margin for the last iframe */
             margin-bottom: 0;
@@ -44,9 +44,6 @@
         </div>
         <div class="iframe-container">
             <iframe src="performance.html" frameborder="0"></iframe>
-        </div>
-        <div class="iframe-container">
-            <iframe src="text_rotator.html2" frameborder="0"></iframe> <!-- Assuming text_rotator.html contains the text rotator -->
         </div>
     </div>
 </body>
