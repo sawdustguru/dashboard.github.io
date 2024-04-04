@@ -15,22 +15,22 @@
             margin: 0;
         }
         .chart-container {
-            margin: 5px;
+            margin: 0px;
         }
     </style>
 </head>
 <body>
 
 <div class="chart-container">
-    <div id="myDiv1" style="width:400px; height:200px;"></div> <!-- Container for the Plotly chart -->
+    <div id="myDiv1" style="width:300px; height:300px;"></div> <!-- Container for the Plotly chart -->
 </div>
 
 <div class="chart-container">
-    <div id="myDiv2" style="width:400px; height:200px;"></div> <!-- Container for the Plotly chart -->
+    <div id="myDiv2" style="width:300px; height:300px;"></div> <!-- Container for the Plotly chart -->
 </div>
 
 <div class="chart-container">
-    <div id="myDiv3" style="width:400px; height:200px;"></div> <!-- Container for the Plotly chart -->
+    <div id="myDiv3" style="width:300px; height:300px;"></div> <!-- Container for the Plotly chart -->
 </div>
 
 <script>
@@ -48,7 +48,7 @@ var data = [
 ];
 
 // The layout of your chart
-var layout = { width: 400, height: 400 };
+var layout = { width: 300, height: 300 };
 
 // Rendering the charts
 Plotly.newPlot('myDiv1', data, layout);
