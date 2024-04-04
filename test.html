@@ -76,7 +76,10 @@ var data3 = [
 ];
 
 // The layout of your charts
-var layout = { width: 400, height: 400 };
+var layout = { 
+    paper_bgcolor: "lightgray",
+    width: 400, height: 400 
+};
 
 // Rendering the charts
 Plotly.newPlot('myDiv1', data1, layout);
