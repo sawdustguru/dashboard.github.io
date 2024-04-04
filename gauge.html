@@ -68,7 +68,7 @@ async function updateCharts() {
         delta: { reference: deltaValues[0] },
         gauge: {
             axis: { range: [null, 200], tickwidth: 1, tickcolor: "darkblue" }, // Corrected here
-            bar: { color: "lightgray" }, // Corrected here
+            bar: { color: "darkgray" }, // Corrected here
             // Use conditional color based on whether current value exceeds the delta reference
             steps: [
                 { range: [0, deltaValues[0]], color: "lightcoral" }, // Color before reaching delta reference
@@ -91,7 +91,7 @@ async function updateCharts() {
         delta: { reference: deltaValues[1] },
         gauge: {
             axis: { range: [null, 200], tickwidth: 1, tickcolor: "darkblue" }, // Corrected here
-            bar: { color: "lightgray" }, // Corrected here
+            bar: { color: "darkgray" }, // Corrected here
             // Use conditional color based on whether current value exceeds the delta reference
             steps: [
                 { range: [0, deltaValues[1]], color: "lightcoral" }, // Color before reaching delta reference
@@ -114,6 +114,7 @@ var data3 = [
         delta: { reference: deltaValues[2] },
         gauge: {
             axis: { range: [null, 30000], tickwidth: 1, tickcolor: "darkblue" },
+            bar: { color: "darkgray" }, // Corrected here
             steps: [
                 { range: [0, deltaValues[2]], color: "lightgreen" }, // Green for values below delta (better)
                 { range: [deltaValues[2], 30000], color: "lightcoral" } // Red for values above delta (worse)
