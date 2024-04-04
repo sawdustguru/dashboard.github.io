@@ -6,10 +6,32 @@
     <title>Gauge Chart with Plotly.js</title>
     <!-- Load Plotly.js -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .chart-container {
+            margin: 20px;
+        }
+    </style>
 </head>
 <body>
 
-<div id="myDiv" style="width:400px; height:200px;"></div> <!-- Container for the Plotly chart -->
+<div class="chart-container">
+    <div id="myDiv1" style="width:400px; height:200px;"></div> <!-- Container for the Plotly chart -->
+</div>
+
+<div class="chart-container">
+    <div id="myDiv2" style="width:400px; height:200px;"></div> <!-- Container for the Plotly chart -->
+</div>
+
+<div class="chart-container">
+    <div id="myDiv3" style="width:400px; height:200px;"></div> <!-- Container for the Plotly chart -->
+</div>
 
 <script>
 // Your data array
@@ -28,8 +50,10 @@ var data = [
 // The layout of your chart
 var layout = { width: 400, height: 200 };
 
-// Rendering the chart
-Plotly.newPlot('myDiv', data, layout);
+// Rendering the charts
+Plotly.newPlot('myDiv1', data, layout);
+Plotly.newPlot('myDiv2', data, layout);
+Plotly.newPlot('myDiv3', data, layout);
 </script>
 
 </body>
