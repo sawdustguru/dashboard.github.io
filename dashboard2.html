@@ -8,39 +8,28 @@
         body {
             margin: 0; /* Remove default margin */
             padding: 0; /* Remove default padding */
-        }
-        .column {
-            width: 50%;
+            display: grid; /* Use CSS Grid for layout */
+            grid-template-columns: 1fr 1fr; /* Two equal-width columns */
+            grid-template-rows: repeat(2, minmax(0, 1fr)); /* Two rows */
             height: 100vh; /* Adjust the height to fill the viewport */
-            float: left;
+        }
+        .iframe-container {
             box-sizing: border-box; /* Include padding and border in element's total width and height */
             padding: 5px; /* Add padding */
             border: 2px solid black; /* Add black border */
-        }
-        .left-column {
-            width: 50%;
-            float: left;
-        }
-        .right-column {
-            width: 50%;
-            float: left;
-            box-sizing: border-box; /* Include padding and border in element's total width and height */
-            padding: 5px; /* Add padding */
-        }
-        .iframe-container {
-            width: 100%;
-            height: calc(50% - 10px); /* Adjust the height as needed */
-            box-sizing: border-box; /* Include padding and border in element's total width and height */
-            margin-bottom: 10px; /* Add bottom margin */
-        }
-        .iframe-container:last-child {
-            margin-bottom: 0; /* Remove bottom margin for the last iframe container */
-            height: calc(50% - 5px); /* Adjust height for the last iframe container to fill remaining space */
         }
         iframe {
             width: 100%;
             height: 100%;
             border: none;
+        }
+        .left-column {
+            display: grid;
+            grid-template-rows: repeat(2, 1fr); /* Two equal-height rows */
+        }
+        .right-column {
+            display: grid;
+            grid-template-rows: repeat(3, 1fr); /* Three equal-height rows */
         }
     </style>
 </head>
@@ -53,7 +42,7 @@
             <iframe src="performance.html" frameborder="0"></iframe>
         </div>
     </div>
-    <div class="right-column">
+   div class="right-column">
         <div class="iframe-container">
             <iframe src="https://www.tickcounter.com/widget/countdown/5051472" frameborder="0"></iframe>
         </div>
@@ -65,4 +54,3 @@
         </div>
     </div>
 </body>
-</html>
