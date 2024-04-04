@@ -62,7 +62,7 @@ async function updateCharts() {
         {
             domain: { x: [0, 1], y: [0, 1] },
             value: currentValues[0],
-            title: { text: "Hours Per Day" },
+            title: { text: "Hours Per Day<br><span style='font-size:0.8em;color:gray'>Higher is Better</span>" },
             type: "indicator",
             mode: "gauge+number+delta",
             delta: { reference: deltaValues[0] },
@@ -75,7 +75,7 @@ async function updateCharts() {
         {
             domain: { x: [0, 1], y: [0, 1] },
             value: currentValues[1],
-            title: { text: "% to Goal" },
+            title: { text: "% to Goal<br><span style='font-size:0.8em;color:gray'>Higher is Better</span>" },
             type: "indicator",
             mode: "gauge+number+delta",
             delta: { reference: deltaValues[1] },
@@ -88,7 +88,7 @@ async function updateCharts() {
         {
             domain: { x: [0, 1], y: [0, 1] },
             value: currentValues[2],
-            title: { text: "SVC Policy Dollars" },
+            title: { text: "SVC Policy Dollars<br><span style='font-size:0.8em;color:gray'>Lower is Better</span>" },
             type: "indicator",
             mode: "gauge+number+delta",
             delta: { reference: deltaValues[2] },
