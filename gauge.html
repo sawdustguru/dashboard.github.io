@@ -57,9 +57,8 @@ async function updateCharts() {
     const deltaValues = parsedData.map(row => parseFloat(row[2]));
     const currentValues = parsedData.map(row => parseFloat(row[3]));
 
-    // Data for chart 1
-   // Data for chart 1 with conditional coloring
-var data1 = [
+    //Data for chart 1
+   var data1 = [
     {
         domain: { x: [0, 1], y: [0, 1] },
         value: currentValues[0],
@@ -68,8 +67,8 @@ var data1 = [
         mode: "gauge+number+delta",
         delta: { reference: deltaValues[0] },
         gauge: {
-            axis: { range: [null, 200] tickwidth: 1, tickcolor: "darkblue"},
-             bar: { color: "lightgray" }
+            axis: { range: [null, 200], tickwidth: 1, tickcolor: "darkblue" }, // Corrected here
+            bar: { color: "lightgray" }, // Corrected here
             // Use conditional color based on whether current value exceeds the delta reference
             steps: [
                 { range: [0, deltaValues[0]], color: "lightcoral" }, // Color before reaching delta reference
@@ -79,6 +78,7 @@ var data1 = [
         }
     }
 ];
+
 
     // Data for chart 2
     var data2 = [
