@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gauge Chart with Plotly.js</title>
+    <!-- Load Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #9E9C9B;
+        }
+        .chart-container {
+            margin: 5px;
+            padding: 5px;
+            background-color: #fff;
+            border: 2px solid black;
+        }
+        .chart-container > div {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chart-container">
+    <div id="myDiv1"></div> <!-- Container for the Plotly chart -->
+</div>
+
+<div class="chart-container">
+    <div id="myDiv2"></div> <!-- Container for the Plotly chart -->
+</div>
+
+<div class="chart-container">
+    <div id="myDiv3"></div> <!-- Container for the Plotly chart -->
+</div>
+
+<script>
+// Function to fetch CSV data and update charts
+async function updateCharts() {
+    // Fetch CSV data
+    const response = await fetch('gauge_data.csv');
+    const data = await response.text();
+
+    // Parse CSV data
+    const rows = data.split('\n').slice(1); // Skip header row
+    const parsedData = rows.map(row => row.split(','));
+
+    // Extract values from parsed data
+    const gaugeValues = parsedData.map(row => parseFloat(row[1]));
+    const deltaValues = parsedData.map(row => parseFloat(row[2]));
+    const currentValues = parsedData.map(row => parseFloat(row[3]));
+
+    // Data for chart 1
+    var data1 = [
+        {
+            domain: { x: [0, 1], y: [0, 1] },
+            value: currentValues[0],
+            title: { text: "Hours Per Day" },
+            type: "indicator",
+            mode: "gauge+number+delta",
+            delta: { reference: deltaValues[0] },
+            gauge: { axis: { range: [null, Math.max(...gaugeValues)] } }
+        }
+    ];
+
+    // Data for chart 2
+    var data2 = [
+        {
+            domain: { x: [0, 1], y: [0, 1] },
+            value: currentValues[1],
+            title: { text: "% to Goal" },
+            type: "indicator",
+            mode: "gauge+number+delta",
+            delta: { reference: deltaValues[1] },
+            gauge: { axis: { range: [null, Math.max(...gaugeValues)] } }
+        }
+    ];
+
+    // Data for chart 3
+    var data3 = [
+        {
+            domain: { x: [0, 1], y: [0, 1] },
+            value: currentValues[2],
+            title: { text: "SVC Policy Dollars" },
+            type: "indicator",
+            mode: "gauge+number+delta",
+            delta: { reference: deltaValues[2] },
+            gauge: { axis: { range: [null, Math.max(...gaugeValues)] } }
+        }
+    ];
+
+    // The layout of your charts
+    var layout = {
+        paper_bgcolor: "lightgray",
+        width: 400, height: 300
+    };
+
+    // Rendering the charts
+    Plotly.newPlot('myDiv1', data1, layout);
+    Plotly.newPlot('myDiv2', data2, layout);
+    Plotly.newPlot('myDiv3', data3, layout);
+}
+
+// Call the updateCharts function to initially load the data
+updateCharts();
+</script>
+
+</body>
+</html>
