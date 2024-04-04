@@ -57,8 +57,8 @@ async function updateCharts() {
     const deltaValues = parsedData.map(row => parseFloat(row[2]));
     const currentValues = parsedData.map(row => parseFloat(row[3]));
 
-    //Data for chart 1
-   var data1 = [
+  // Data for chart 1 with threshold line
+var data1 = [
     {
         domain: { x: [0, 1], y: [0, 1] },
         value: currentValues[0],
@@ -67,47 +67,47 @@ async function updateCharts() {
         mode: "gauge+number+delta",
         delta: { reference: deltaValues[0] },
         gauge: {
-            axis: { range: [null, 200], tickwidth: 2, tickcolor: "darkblue" }, // Corrected here
-            bar: { color: "darkblue" }, // Corrected here
-            // Use conditional color based on whether current value exceeds the delta reference
+            axis: { range: [null, 200], tickwidth: 2, tickcolor: "darkblue" },
+            bar: { color: "darkblue" },
             steps: [
-                { range: [0, deltaValues[0]], color: "lightcoral" }, // Color before reaching delta reference
-                { range: [deltaValues[0], 200], color: "lightgreen" } // Color after reaching delta reference
+                { range: [0, deltaValues[0]], color: "lightcoral" },
+                { range: [deltaValues[0], 200], color: "lightgreen" }
             ],
-            // Additional customization for the threshold or the appearance can be added here
             // Add a threshold line
             threshold: {
-                line: { color: "blue", width: 2 }, // Customize threshold line color and width
-                value: [deltaValues[0], 200 ]// Set the threshold value
+                line: { color: "blue", width: 2 },
+                value: 100 // Set the threshold value
+            }
         }
     }
 ];
 
-
-    // Data for chart 2
-    var data2 = [
-        {
-            domain: { x: [0, 1], y: [0, 1] },
-            value: currentValues[1],
-            title: { text: "% to Goal<br><span style='font-size:0.8em;color:gray'>Higher is Better</span>" },
+// Data for chart 2 with threshold line
+var data2 = [
+    {
+        domain: { x: [0, 1], y: [0, 1] },
+        value: currentValues[1],
+        title: { text: "% to Goal<br><span style='font-size:0.8em;color:gray'>Higher is Better</span>" },
         type: "indicator",
         mode: "gauge+number+delta",
         delta: { reference: deltaValues[1] },
         gauge: {
-            axis: { range: [null, 200], tickwidth: 2, tickcolor: "darkblue" }, // Corrected here
-            bar: { color: "darkblue" }, // Corrected here
-            // Use conditional color based on whether current value exceeds the delta reference
+            axis: { range: [null, 200], tickwidth: 2, tickcolor: "darkblue" },
+            bar: { color: "darkblue" },
             steps: [
-                { range: [0, deltaValues[1]], color: "lightcoral" }, // Color before reaching delta reference
-                { range: [deltaValues[1], 200], color: "lightgreen" } // Color after reaching delta reference
+                { range: [0, deltaValues[1]], color: "lightcoral" },
+                { range: [deltaValues[1], 200], color: "lightgreen" }
             ],
-            // Additional customization for the threshold or the appearance can be added here
+            // Add a threshold line
+            threshold: {
+                line: { color: "blue", width: 2 },
+                value: 50 // Set the threshold value
+            }
         }
     }
 ];
 
-    // Data for chart 3
-   // Data for chart 3 with conditional coloring
+// Data for chart 3 with threshold line
 var data3 = [
     {
         domain: { x: [0, 1], y: [0, 1] },
@@ -118,11 +118,16 @@ var data3 = [
         delta: { reference: deltaValues[2] },
         gauge: {
             axis: { range: [null, 30000], tickwidth: 2, tickcolor: "darkblue" },
-            bar: { color: "darkblue" }, // Corrected here
+            bar: { color: "darkblue" },
             steps: [
-                { range: [0, deltaValues[2]], color: "lightgreen" }, // Green for values below delta (better)
-                { range: [deltaValues[2], 30000], color: "lightcoral" } // Red for values above delta (worse)
+                { range: [0, deltaValues[2]], color: "lightgreen" },
+                { range: [deltaValues[2], 30000], color: "lightcoral" }
             ],
+            // Add a threshold line
+            threshold: {
+                line: { color: "blue", width: 2 },
+                value: 20000 // Set the threshold value
+            }
         }
     }
 ];
