@@ -116,7 +116,7 @@ var data3 = [
         title: { text: "SVC Policy Dollars<br><span style='font-size:0.8em;color:gray'>Lower is Better</span>" },
         type: "indicator",
         mode: "gauge+number+delta",
-        delta: { reference: deltaValues[2].toFixed(2) }, // Removed the dollar sign
+        delta: { reference: deltaValues[2] },
         gauge: {
             axis: { range: [null, 30000], tickwidth: 2, tickcolor: "darkblue" },
             bar: { color: "darkblue" },
@@ -132,7 +132,7 @@ var data3 = [
         }
     }
 ];
-    // The layout of your charts
+With this modific    // The layout of your charts
     var layout = {
         paper_bgcolor: "lightgray",
         width: 400, height: 300
