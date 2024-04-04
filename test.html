@@ -34,8 +34,8 @@
 </div>
 
 <script>
-// Your data array
-var data = [
+// Data for chart 1
+var data1 = [
   {
     domain: { x: [0, 1], y: [0, 1] },
     value: 5.25,
@@ -47,13 +47,39 @@ var data = [
   }
 ];
 
-// The layout of your chart
+// Data for chart 2
+var data2 = [
+  {
+    domain: { x: [0, 1], y: [0, 1] },
+    value: 3.5,
+    title: { text: "Temperature" },
+    type: "indicator",
+    mode: "gauge+number+delta",
+    delta: { reference: 4 },
+    gauge: { axis: { range: [null, 10] } }
+  }
+];
+
+// Data for chart 3
+var data3 = [
+  {
+    domain: { x: [0, 1], y: [0, 1] },
+    value: 7.8,
+    title: { text: "Pressure" },
+    type: "indicator",
+    mode: "gauge+number+delta",
+    delta: { reference: 8 },
+    gauge: { axis: { range: [null, 10] } }
+  }
+];
+
+// The layout of your charts
 var layout = { width: 400, height: 400 };
 
 // Rendering the charts
-Plotly.newPlot('myDiv1', data, layout);
-Plotly.newPlot('myDiv2', data, layout);
-Plotly.newPlot('myDiv3', data, layout);
+Plotly.newPlot('myDiv1', data1, layout);
+Plotly.newPlot('myDiv2', data2, layout);
+Plotly.newPlot('myDiv3', data3, layout);
 </script>
 
 </body>
