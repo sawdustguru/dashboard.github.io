@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Service Dashboard</title>
     <style>
-	    body {
-		    background-color: black;
-	    }
-	    	    .iframe-container {
+        body {
+            background-color: black;
+            margin: 0; /* Remove default margin */
+        }
+        .iframe-container {
             width: 50%;
             height: 50vh; /* Adjust the height as needed */
             float: left;
@@ -19,12 +20,17 @@
             height: calc(100% - 4px); /* Adjust height to account for border */
             border: none;
         }
-        .iframe-container:nth-child(4) {
-            height: calc(50vh - 250px); /* Adjust the height of the bottom right frame */
-            overflow: hidden;
+        .right-column {
+            width: 50%;
+            height: 100vh; /* Adjust the height to fill the viewport */
+            float: right;
+            display: flex;
+            flex-direction: column;
         }
-        .iframe-container:nth-child(4) iframe {
-            height: 100%;
+        .iframe-container:nth-child(n+2) {
+            height: calc(50vh - 2px); /* Adjust the height of the right column iframes */
+            /* Remove the bottom margin for the last iframe */
+            margin-bottom: 0;
         }
     </style>
 </head>
@@ -32,15 +38,15 @@
     <div class="iframe-container">
         <iframe src="https://radar.weather.gov/?settings=v1_eyJhZ2VuZGEiOnsiaWQiOm51bGwsImNlbnRlciI6Wy03OS45OSw0MC45NTRdLCJsb2NhdGlvbiI6bnVsbCwiem9vbSI6Ni4zMzY4NjA1NzkwNzM5MjQ1fSwiYW5pbWF0aW5nIjp0cnVlLCJiYXNlIjoic3RhbmRhcmQiLCJhcnRjYyI6ZmFsc2UsImNvdW50eSI6ZmFsc2UsImN3YSI6ZmFsc2UsInJmYyI6ZmFsc2UsInN0YXRlIjpmYWxzZSwibWVudSI6dHJ1ZSwic2hvcnRGdXNlZE9ubHkiOmZhbHNlLCJvcGFjaXR5Ijp7ImFsZXJ0cyI6MC44LCJsb2NhbCI6MC42LCJsb2NhbFN0YXRpb25zIjowLjgsIm5hdGlvbmFsIjowLjZ9fQ%3D%3D" frameborder="0"></iframe>
     </div>
-	<div class="iframe-container">
-        <iframe src="https://www.tickcounter.com/widget/countdown/5051472" frameborder="0"></iframe>
-    </div>
-    <div class="iframe-container">
-        <iframe src="performance.html" frameborder="0"></iframe>
-    </div>
-    <div class="iframe-container">
-        <div style="height: 500px;">
-            <iframe src="text_rotator2.html" frameborder="0"></iframe> <!-- Assuming text_rotator.html contains the text rotator -->
+    <div class="right-column">
+        <div class="iframe-container">
+            <iframe src="https://www.tickcounter.com/widget/countdown/5051472" frameborder="0"></iframe>
+        </div>
+        <div class="iframe-container">
+            <iframe src="performance.html" frameborder="0"></iframe>
+        </div>
+        <div class="iframe-container">
+            <iframe src="text_rotator.html2" frameborder="0"></iframe> <!-- Assuming text_rotator.html contains the text rotator -->
         </div>
     </div>
 </body>
