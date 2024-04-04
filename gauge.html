@@ -67,21 +67,7 @@ async function updateCharts() {
             mode: "gauge+number+delta",
             delta: { reference: deltaValues[0] },
             gauge: { axis: { range: [null, 200] },
-             // The bar color does not dynamically change in this setup
-            bar: { color: "lightgray" }, // Use a neutral color for the bar itself
-            bgcolor: "white",
-            borderwidth: 2,
-            bordercolor: "gray",
-            steps: [
-                { range: [0, 300], color: "red" }, // Color before the threshold
-                { range: [300, 500], color: "green" } // Color after the threshold
-            ],
-            // Optionally, highlight the threshold with a line or thicker step
-            threshold: {
-                line: { color: "blue", width: 4 },
-                thickness: 0.75,
-                value: 300 // Your dynamic threshold
-            }
+            
         }
     ];
 
