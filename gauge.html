@@ -75,6 +75,10 @@ async function updateCharts() {
                 { range: [deltaValues[0], 200], color: "lightgreen" } // Color after reaching delta reference
             ],
             // Additional customization for the threshold or the appearance can be added here
+            // Add a threshold line
+            threshold: {
+                line: { color: "blue", width: 2 }, // Customize threshold line color and width
+                value: [deltaValues[0], 200 ]// Set the threshold value
         }
     }
 ];
