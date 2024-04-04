@@ -57,40 +57,80 @@ async function updateCharts() {
     const deltaValues = parsedData.map(row => parseFloat(row[2]));
     const currentValues = parsedData.map(row => parseFloat(row[3]));
 
-    // Data for chart 1 with threshold line
-    var data1 = [
-        // Define your data for chart 1
-    ];
-
-    // Data for chart 2 with threshold line
-    var data2 = [
-        // Define your data for chart 2
-    ];
-
-    // Data for chart 3 with threshold line and "$" delta reference
-    var data3 = [
-        {
-            domain: { x: [0, 1], y: [0, 1] },
-            value: "$" + currentValues[2], // Add dollar sign to the value
-            title: { text: "SVC Policy Dollars<br><span style='font-size:0.8em;color:gray'>Lower is Better</span>" },
-            type: "indicator",
-            mode: "gauge+number+delta",
-            delta: { reference: deltaValues[2] },
-            gauge: {
-                axis: { range: [null, 30000], tickwidth: 2, tickcolor: "darkblue" },
-                bar: { color: "darkblue" },
-                steps: [
-                    { range: [0, deltaValues[2]], color: "lightgreen" },
-                    { range: [deltaValues[2], 30000], color: "lightcoral" }
-                ],
-                // Add a threshold line
-                threshold: {
-                    line: { color: "blue", width: 2 },
-                    value: deltaValues[2] // Set the threshold value to delta value
-                }
+  // Data for chart 1 with threshold line
+var data1 = [
+    {
+        domain: { x: [0, 1], y: [0, 1] },
+        value: currentValues[0],
+        title: { text: "Hours Per Day<br><span style='font-size:0.8em;color:gray'>Higher is Better</span>" },
+        type: "indicator",
+        mode: "gauge+number+delta",
+        delta: { reference: deltaValues[0] },
+        gauge: {
+            axis: { range: [null, 200], tickwidth: 2, tickcolor: "darkblue" },
+            bar: { color: "darkblue" },
+            steps: [
+                { range: [0, deltaValues[0]], color: "lightcoral" },
+                { range: [deltaValues[0], 200], color: "lightgreen" }
+            ],
+            // Add a threshold line
+            threshold: {
+                line: { color: "blue", width: 2 },
+                value: deltaValues[0] // Set the threshold value to delta value
             }
         }
-    ];
+    }
+];
+
+// Data for chart 2 with threshold line
+var data2 = [
+    {
+        domain: { x: [0, 1], y: [0, 1] },
+        value: currentValues[1],
+        title: { text: "% to Goal<br><span style='font-size:0.8em;color:gray'>Higher is Better</span>" },
+        type: "indicator",
+        mode: "gauge+number+delta",
+        delta: { reference: deltaValues[1] },
+        gauge: {
+            axis: { range: [null, 200], tickwidth: 2, tickcolor: "darkblue" },
+            bar: { color: "darkblue" },
+            steps: [
+                { range: [0, deltaValues[1]], color: "lightcoral" },
+                { range: [deltaValues[1], 200], color: "lightgreen" }
+            ],
+            // Add a threshold line
+             threshold: {
+                line: { color: "blue", width: 2 },
+                value: deltaValues[1] // Set the threshold value to delta value
+            }
+        }
+    }
+];
+
+// Data for chart 3 with threshold line
+var data3 = [
+    {
+        domain: { x: [0, 1], y: [0, 1] },
+        value: currentValues[2],
+        title: { text: "SVC Policy Dollars<br><span style='font-size:0.8em;color:gray'>Lower is Better</span>" },
+        type: "indicator",
+        mode: "gauge+number+delta",
+        delta: { reference: "$" + deltaValues[2] },
+        gauge: {
+            axis: { range: [null, 30000], tickwidth: 2, tickcolor: "darkblue" },
+            bar: { color: "darkblue" },
+            steps: [
+                { range: [0, deltaValues[2]], color: "lightgreen" },
+                { range: [deltaValues[2], 30000], color: "lightcoral" }
+            ],
+            // Add a threshold line
+             threshold: {
+                line: { color: "blue", width: 2 },
+                value: deltaValues[2] // Set the threshold value to delta value
+            }
+        }
+    }
+];
 
     // The layout of your charts
     var layout = {
