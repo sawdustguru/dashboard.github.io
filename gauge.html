@@ -86,12 +86,21 @@ async function updateCharts() {
             domain: { x: [0, 1], y: [0, 1] },
             value: currentValues[1],
             title: { text: "% to Goal<br><span style='font-size:0.8em;color:gray'>Higher is Better</span>" },
-            type: "indicator",
-            mode: "gauge+number+delta",
-            delta: { reference: deltaValues[1] },
-            gauge: { axis: { range: [null, 150] } }
+        type: "indicator",
+        mode: "gauge+number+delta",
+        delta: { reference: deltaValues[0] },
+        gauge: {
+            axis: { range: [null, 200], tickwidth: 1, tickcolor: "darkblue" }, // Corrected here
+            bar: { color: "lightgray" }, // Corrected here
+            // Use conditional color based on whether current value exceeds the delta reference
+            steps: [
+                { range: [0, deltaValues[0]], color: "lightcoral" }, // Color before reaching delta reference
+                { range: [deltaValues[0], 200], color: "lightgreen" } // Color after reaching delta reference
+            ],
+            // Additional customization for the threshold or the appearance can be added here
         }
-    ];
+    }
+];
 
     // Data for chart 3
     var data3 = [
