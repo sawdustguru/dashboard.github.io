@@ -1,128 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gauge Chart with Plotly.js</title>
-    <!-- Load Plotly.js -->
+    <title>Plotly.js Dynamic Color Gauge Example</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #9E9C9B;
-        }
-        .chart-wrapper {
-            display: flex;
-        }
-        .chart-container {
-            margin: 5px;
-            padding: 5px;
-            background-color: #fff;
-            border: 2px solid black;
-            text-align: center;
-            flex: 1;
-        }
-        .chart-description {
-            margin-top: 5px;
-        }
-        .chart-container > div {
-            width: 100%;
-            height: 100%;
-        }
-    </style>
 </head>
 <body>
 
-<div class="chart-wrapper">
-    <div class="chart-container">
-        <div id="myDiv1"></div> <!-- Container for the Plotly chart -->
-        <div class="chart-description">Hours Per Day</div>
-    </div>
-
-    <div class="chart-container">
-        <div id="myDiv2"></div> <!-- Container for the Plotly chart -->
-        <div class="chart-description">% to Goal</div>
-    </div>
-
-    <div class="chart-container">
-        <div id="myDiv3"></div> <!-- Container for the Plotly chart -->
-        <div class="chart-description">SVC Policy Dollars</div>
-    </div>
-</div>
+<div id="gauge-chart" style="width:600px;height:400px;"></div>
 
 <script>
-// Function to fetch CSV data and update charts
-async function updateCharts() {
-    // Fetch CSV data
-    const response = await fetch('gauge_data.csv');
-    const data = await response.text();
+    var gaugeValue = 350; // Example current value
 
-    // Parse CSV data
-    const rows = data.split('\n').slice(1); // Skip header row
-    const parsedData = rows.map(row => row.split(','));
-
-    // Extract values from parsed data
-    const gaugeValues = parsedData.map(row => parseFloat(row[1]));
-    const deltaValues = parsedData.map(row => parseFloat(row[2]));
-    const currentValues = parsedData.map(row => parseFloat(row[3]));
-
-    // Data for chart 1
-    var data1 = [
-        {
-            domain: { x: [0, 1], y: [0, 1] },
-            value: currentValues[0],
-            title: { text: "Hours Per Day" },
-            type: "indicator",
-            mode: "gauge+number+delta",
-            delta: { reference: deltaValues[0] },
-            gauge: { axis: { range: [null, 200] } }
+    var data = [{
+        type: "indicator",
+        mode: "gauge+number",
+        value: gaugeValue,
+        title: { text: "Dynamic Color Gauge", font: { size: 24 } },
+        gauge: {
+            axis: { range: [null, 500], tickwidth: 1, tickcolor: "darkblue" },
+            // The bar color does not dynamically change in this setup
+            bar: { color: "lightgray" }, // Use a neutral color for the bar itself
+            bgcolor: "white",
+            borderwidth: 2,
+            bordercolor: "gray",
+            steps: [
+                { range: [0, 300], color: "red" }, // Color before the threshold
+                { range: [300, 500], color: "green" } // Color after the threshold
+            ],
+            // Optionally, highlight the threshold with a line or thicker step
+            threshold: {
+                line: { color: "blue", width: 4 },
+                thickness: 0.75,
+                value: 300 // Your dynamic threshold
+            }
         }
-    ];
+    }];
 
-    // Data for chart 2
-    var data2 = [
-        {
-            domain: { x: [0, 1], y: [0, 1] },
-            value: currentValues[1],
-            title: { text: "% to Goal" },
-            type: "indicator",
-            mode: "gauge+number+delta",
-            delta: { reference: deltaValues[1] },
-            gauge: { axis: { range: [null, 150] } }
-        }
-    ];
-
-    // Data for chart 3
-    var data3 = [
-        {
-            domain: { x: [0, 1], y: [0, 1] },
-            value: currentValues[2],
-            title: { text: "SVC Policy Dollars" },
-            type: "indicator",
-            mode: "gauge+number+delta",
-            delta: { reference: deltaValues[2] },
-            gauge: { axis: { range: [null, 30000] } }
-        }
-    ];
-
-    // The layout of your charts
-    var layout = {
-        paper_bgcolor: "lightgray",
-        width: 400, height: 300
-    };
-
-    // Rendering the charts
-    Plotly.newPlot('myDiv1', data1, layout);
-    Plotly.newPlot('myDiv2', data2, layout);
-    Plotly.newPlot('myDiv3', data3, layout);
-}
-
-// Call the updateCharts function to initially load the data
-updateCharts();
+    var layout = { width: 600, height: 400, margin: { t: 25, r: 25, l: 25, b: 25 } };
+    Plotly.newPlot('gauge-chart', data, layout);
 </script>
 
 </body>
