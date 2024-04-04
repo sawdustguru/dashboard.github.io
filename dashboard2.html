@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Service Dashboard</title>
     <style>
-        body {
+        html, body {
+            height: 100%; /* Ensure html and body fill the entire viewport */
             margin: 0; /* Remove default margin */
             padding: 0; /* Remove default padding */
+        }
+        body {
             display: grid; /* Use CSS Grid for layout */
             grid-template-columns: repeat(2, minmax(0, 1fr)); /* Two equal-width columns */
-            height: auto; /* Auto height to adjust based on content */
         }
         .iframe-container {
             box-sizing: border-box; /* Include padding and border in element's total width and height */
@@ -23,11 +25,7 @@
             height: 100%;
             border: none;
         }
-        .left-column {
-            display: grid;
-            grid-template-rows: auto; /* Auto height to adjust based on content */
-        }
-        .right-column {
+        .left-column, .right-column {
             display: grid;
             grid-template-rows: auto; /* Auto height to adjust based on content */
         }
