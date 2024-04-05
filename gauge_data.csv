@@ -1,4 +1,4 @@
 data_id,gauge_value,delta_value,current_value
-data1,200,166,105.7175
+data1,200,166,149.32
 data2,150,95,8.025100402
-data3,30000.0,25332.0,3212.0
+data3,30000.0,25332.0,3563.0
