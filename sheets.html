@@ -17,24 +17,23 @@
             });
         }
 
-        function loadGoogleSheetData() {
-            gapi.client.sheets.spreadsheets.values.get({
-                spreadsheetId: '1Em_4WKvdHbWu5WR2HCkd4JRVFaTsjJsqPHqDPRj8Gxs',
-                ranges: ['Sheet1!A1:A4', 'Sheet1!D1:D4'],
-            }).then(function(response) {
-                var rangeData = response.result.valueRanges;
-                var data1 = rangeData[0].values;
-                var data2 = rangeData[1].values;
-                if (data1.length > 0 && data2.length > 0) {
-                    displayDataInTable(data1, data2);
-                } else {
-                    console.error('No data found in the specified ranges');
-                }
-            }, function(error) {
-                console.error('Error loading data from Google Sheet:', error);
-            });
+       function loadGoogleSheetData() {
+    gapi.client.sheets.spreadsheets.values.batchGet({
+        spreadsheetId: '1Em_4WKvdHbWu5WR2HCkd4JRVFaTsjJsqPHqDPRj8Gxs',
+        ranges: ['Sheet1!A1:A4', 'Sheet1!D1:D4'],
+    }).then(function(response) {
+        var rangeData = response.result.valueRanges;
+        var data1 = rangeData[0].values;
+        var data2 = rangeData[1].values;
+        if (data1.length > 0 && data2.length > 0) {
+            displayDataInTable(data1, data2);
+        } else {
+            console.error('No data found in the specified ranges');
         }
-
+    }, function(error) {
+        console.error('Error loading data from Google Sheet:', error);
+    });
+}
             function displayDataInTable(data1, data2) {
             console.log("Data 1:", data1);
             console.log("Data 2:", data2);
