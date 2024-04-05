@@ -20,7 +20,8 @@
         function loadGoogleSheetData() {
             gapi.client.sheets.spreadsheets.values.get({
                 spreadsheetId: '1Em_4WKvdHbWu5WR2HCkd4JRVFaTsjJsqPHqDPRj8Gxs',
-                range: 'Sheet1!A1:B4', // Change Sheet1 to your sheet name and adjust range accordingly
+                range: 'Sheet1!A1:A4',
+                range: 'Sheet1!D1:D4', // Change Sheet1 to your sheet name and adjust range accordingly
             }).then(function(response) {
                 var data = response.result.values;
                 if (data.length > 0) {
