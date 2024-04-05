@@ -4,7 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Service Dashboard</title>
-    <style>
+      <script>
+        // Function to perform a hard refresh
+        function hardRefresh() {
+            location.reload(true); // Reload the page, ignoring the cache
+        }
+
+        // Perform a hard refresh every hour (3600000 milliseconds)
+        setInterval(hardRefresh, 3600000);
+    </script>
+            <style>
         html, body {
             height: 100%; /* Ensure html and body fill the entire viewport */
             margin: 0; /* Remove default margin */
