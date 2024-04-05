@@ -20,35 +20,42 @@
         function loadGoogleSheetData() {
             gapi.client.sheets.spreadsheets.values.get({
                 spreadsheetId: '1Em_4WKvdHbWu5WR2HCkd4JRVFaTsjJsqPHqDPRj8Gxs',
-                range: 'Sheet1!A1:A4',
-                range: 'Sheet1!D1:D4', // Change Sheet1 to your sheet name and adjust range accordingly
+                ranges: ['Sheet1!A1:A4', 'Sheet1!D1:D4'],
             }).then(function(response) {
-                var data = response.result.values;
-                if (data.length > 0) {
-                    displayDataInTable(data);
+                var rangeData = response.result.valueRanges;
+                var data1 = rangeData[0].values;
+                var data2 = rangeData[1].values;
+                if (data1.length > 0 && data2.length > 0) {
+                    displayDataInTable(data1, data2);
                 } else {
-                    console.error('No data found in the Google Sheet');
+                    console.error('No data found in the specified ranges');
                 }
             }, function(error) {
                 console.error('Error loading data from Google Sheet:', error);
             });
         }
 
-        function displayDataInTable(data) {
+        function displayDataInTable(data1, data2) {
             var table = document.createElement('table');
+
+            // Create header row
             var headerRow = table.insertRow();
-            for (var i = 0; i < data[0].length; i++) {
-                var headerCell = document.createElement('th');
-                headerCell.textContent = data[0][i];
-                headerRow.appendChild(headerCell);
-            }
-            for (var j = 1; j < data.length; j++) {
+            var headerCell1 = document.createElement('th');
+            headerCell1.textContent = 'Column A';
+            headerRow.appendChild(headerCell1);
+            var headerCell2 = document.createElement('th');
+            headerCell2.textContent = 'Column D';
+            headerRow.appendChild(headerCell2);
+
+            // Create data rows
+            for (var i = 0; i < Math.max(data1.length, data2.length); i++) {
                 var row = table.insertRow();
-                for (var k = 0; k < data[j].length; k++) {
-                    var cell = row.insertCell();
-                    cell.textContent = data[j][k];
-                }
+                var cell1 = row.insertCell();
+                cell1.textContent = i < data1.length ? data1[i][0] : '';
+                var cell2 = row.insertCell();
+                cell2.textContent = i < data2.length ? data2[i][0] : '';
             }
+
             document.body.appendChild(table);
         }
     </script>
