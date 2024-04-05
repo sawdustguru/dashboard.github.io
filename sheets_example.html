@@ -4,51 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google Sheets Data Display</title>
-    <!-- Add your Google Sheets API client library -->
     <script src="https://apis.google.com/js/api.js"></script>
     <script>
-        // Load the Google Sheets API client library
         gapi.load('client', initClient);
 
-        // Initialize the Google Sheets API client
         function initClient() {
             gapi.client.init({
                 apiKey: 'AIzaSyCFvX56uc0WNPz2ZTJhpg7Q2pFOgZxt7-0',
                 discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
             }).then(function() {
-                // Call the function to load data from Google Sheet
                 loadGoogleSheetData();
             });
         }
 
-        // Function to load data from Google Sheet
         function loadGoogleSheetData() {
-            gapi.client.sheets.spreadsheets.values.get({
+            gapi.client.sheets.spreadsheets.values.batchGet({
                 spreadsheetId: '1Em_4WKvdHbWu5WR2HCkd4JRVFaTsjJsqPHqDPRj8Gxs',
-                range: 'Sheet1!A1:B4', // Change Sheet1 to your sheet name and adjust range accordingly
+                ranges: ['gauge_data', 'hours', 'hours_pdi'], // Named ranges
             }).then(function(response) {
-                var data = response.result.values;
-                if (data.length > 0) {
-                    parseGoogleSheetData(data);
-                } else {
-                    console.error('No data found in the Google Sheet');
-                }
+                var rangeData = response.result.valueRanges;
+                // Display each range in a separate table
+                rangeData.forEach((data, index) => {
+                    if (data.values.length > 0) {
+                        var tableName = ['Gauge Data', 'Hours', 'Hours PDI'][index]; // For display purposes
+                        displayDataInTable(data.values, tableName);
+                    } else {
+                        console.error('No data found in range: ' + index);
+                    }
+                });
             }, function(error) {
                 console.error('Error loading data from Google Sheet:', error);
             });
         }
 
-        // Function to parse and use the data from Google Sheet
-        function parseGoogleSheetData(data) {
-            // Your parsing logic goes here
-            // Example:
-            console.log('Data from Google Sheet:', data);
-            // Now you can use the data as needed in your code
+        function displayDataInTable(data, tableName) {
+            console.log(tableName + ":", data);
+            var table = document.createElement('table');
+            var caption = table.createCaption();
+            caption.textContent = tableName;
+
+            // Create header row
+            var headerRow = table.insertRow();
+            data[0].forEach(function(headerTitle) {
+                var headerCell = document.createElement('th');
+                headerCell.textContent = headerTitle;
+                headerRow.appendChild(headerCell);
+            });
+
+            // Create data rows
+            for (var i = 1; i < data.length; i++) { // Assuming first row is headers
+                var row = table.insertRow();
+                data[i].forEach(function(cellData) {
+                    var cell = row.insertCell();
+                    cell.textContent = cellData;
+                });
+            }
+
+            document.body.appendChild(table);
         }
     </script>
 </head>
 <body>
-    <!-- Your HTML content goes here -->
-    <!-- You can display the data in a table or any other format -->
+    <!-- Tables will be dynamically created here -->
 </body>
 </html>
