@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sheets Data Display</title>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script>
+        gapi.load('client', initClient);
+
+        function initClient() {
+            gapi.client.init({
+                apiKey: 'AIzaSyCFvX56uc0WNPz2ZTJhpg7Q2pFOgZxt7-0',
+                discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
+            }).then(function() {
+                loadGoogleSheetData();
+            });
+        }
+
+        function loadGoogleSheetData() {
+            gapi.client.sheets.spreadsheets.values.get({
+                spreadsheetId: '1Em_4WKvdHbWu5WR2HCkd4JRVFaTsjJsqPHqDPRj8Gxs',
+                range: 'Sheet1!A1:B4', // Change Sheet1 to your sheet name and adjust range accordingly
+            }).then(function(response) {
+                var data = response.result.values;
+                if (data.length > 0) {
+                    displayDataInTable(data);
+                } else {
+                    console.error('No data found in the Google Sheet');
+                }
+            }, function(error) {
+                console.error('Error loading data from Google Sheet:', error);
+            });
+        }
+
+        function displayDataInTable(data) {
+            var table = document.createElement('table');
+            var headerRow = table.insertRow();
+            for (var i = 0; i < data[0].length; i++) {
+                var headerCell = document.createElement('th');
+                headerCell.textContent = data[0][i];
+                headerRow.appendChild(headerCell);
+            }
+            for (var j = 1; j < data.length; j++) {
+                var row = table.insertRow();
+                for (var k = 0; k < data[j].length; k++) {
+                    var cell = row.insertCell();
+                    cell.textContent = data[j][k];
+                }
+            }
+            document.body.appendChild(table);
+        }
+    </script>
+</head>
+<body>
+    <!-- Table will be dynamically created here -->
+</body>
+</html>
