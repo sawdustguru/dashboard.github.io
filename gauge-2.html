@@ -6,6 +6,7 @@
     <title>Gauge Chart with Plotly.js</title>
     <!-- Load Plotly.js -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
     <style>
         body {
             display: flex;
@@ -42,110 +43,90 @@
 </div>
 
 <script>
-// Function to fetch CSV data and update charts
-async function updateCharts() {
-    // Fetch CSV data
-    const response = await fetch('gauge_data.csv');
-    const data = await response.text();
+// API key from the Developer Console
+var API_KEY = 'AIzaSyCFvX56uc0WNPz2ZTJhpg7Q2pFOgZxt7-0';
 
-    // Parse CSV data
-    const rows = data.split('\n').slice(1); // Skip header row
-    const parsedData = rows.map(row => row.split(','));
+// Array of API discovery doc URLs for APIs used by the application
+var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
 
-    // Extract values from parsed data
-    const gaugeValues = parsedData.map(row => parseFloat(row[1]));
-    const deltaValues = parsedData.map(row => parseFloat(row[2]));
-    const currentValues = parsedData.map(row => parseFloat(row[3]));
+// Authorization scopes required by the API; for Sheets API, use 'https://www.googleapis.com/auth/spreadsheets.readonly'
+var SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly';
 
-  // Data for chart 1 with threshold line
-var data1 = [
-    {
-        domain: { x: [0, 1], y: [0, 1] },
-        value: currentValues[0],
-        title: { text: "Hours Per Day<br><span style='font-size:0.8em;color:gray'>Higher is Better</span>" },
-        type: "indicator",
-        mode: "gauge+number+delta",
-        delta: { reference: deltaValues[0] },
-        gauge: {
-            axis: { range: [null, 200], tickwidth: 2, tickcolor: "darkblue" },
-            bar: { color: "darkblue" },
-            steps: [
-                { range: [0, deltaValues[0]], color: "lightcoral" },
-                { range: [deltaValues[0], 200], color: "lightgreen" }
-            ],
-            // Add a threshold line
-            threshold: {
-                line: { color: "blue", width: 2 },
-                value: deltaValues[0] // Set the threshold value to delta value
-            }
-        }
-    }
-];
-
-// Data for chart 2 with threshold line
-var data2 = [
-    {
-        domain: { x: [0, 1], y: [0, 1] },
-        value: currentValues[1],
-        title: { text: "% to Goal<br><span style='font-size:0.8em;color:gray'>Higher is Better</span>" },
-        type: "indicator",
-        mode: "gauge+number+delta",
-        delta: { reference: deltaValues[1] },
-        gauge: {
-            axis: { range: [null, 200], tickwidth: 2, tickcolor: "darkblue" },
-            bar: { color: "darkblue" },
-            steps: [
-                { range: [0, deltaValues[1]], color: "lightcoral" },
-                { range: [deltaValues[1], 200], color: "lightgreen" }
-            ],
-            // Add a threshold line
-             threshold: {
-                line: { color: "blue", width: 2 },
-                value: deltaValues[1] // Set the threshold value to delta value
-            }
-        }
-    }
-];
-
-// Data for chart 3 with threshold line
-var data3 = [
-    {
-        domain: { x: [0, 1], y: [0, 1] },
-        value: currentValues[2],
-        title: { text: "SVC Policy Dollars<br><span style='font-size:0.8em;color:gray'>Lower is Better</span>" },
-        type: "indicator",
-        mode: "gauge+number+delta",
-        delta: { reference: deltaValues[2] }, // Prefixing delta reference with "$"
-        gauge: {
-            axis: { range: [null, 30000], tickwidth: 2, tickcolor: "darkblue" },
-            bar: { color: "darkblue" },
-            steps: [
-                { range: [0, deltaValues[2]], color: "lightgreen" },
-                { range: [deltaValues[2], 30000], color: "lightcoral" }
-            ],
-            // Add a threshold line
-            threshold: {
-                line: { color: "blue", width: 2 },
-                value: deltaValues[2] // Set the threshold value to delta value
-            }
-        }
-    }
-];
-
-    // The layout of your charts
-    var layout = {
-        paper_bgcolor: "lightgray",
-        width: 400, height: 300
-    };
-
-    // Rendering the charts
-    Plotly.newPlot('myDiv1', data1, layout);
-    Plotly.newPlot('myDiv2', data2, layout);
-    Plotly.newPlot('myDiv3', data3, layout);
+function handleClientLoad() {
+    gapi.load('client:auth2', initClient);
 }
 
-// Call the updateCharts function to initially load the data
-updateCharts();
+function initClient() {
+    gapi.client.init({
+        apiKey: API_KEY,
+        discoveryDocs: DISCOVERY_DOCS,
+        scope: SCOPES
+    }).then(function () {
+        // Fetch data from Google Sheets API
+        fetchSheetData();
+    });
+}
+
+function fetchSheetData() {
+    gapi.client.sheets.spreadsheets.values.get({
+        spreadsheetId: '1Em_4WKvdHbWu5WR2HCkd4JRVFaTsjJsqPHqDPRj8Gxs',
+        range: 'Sheet1!A1:D' // Update range as per your sheet structure
+    }).then(function(response) {
+        var range = response.result;
+        if (range.values.length > 0) {
+            // Process the fetched data
+            processData(range.values);
+        } else {
+            console.log('No data found.');
+        }
+    }, function(response) {
+        console.log('Error: ' + response.result.error.message);
+    });
+}
+
+function processData(values) {
+    // Extracting required data from the fetched values
+    var gaugeValues = values.map(row => parseFloat(row[1]));
+    var deltaValues = values.map(row => parseFloat(row[2]));
+    var currentValues = values.map(row => parseFloat(row[3]));
+
+    // Create data for Plotly charts
+    var data1 = createChartData(gaugeValues[0], deltaValues[0], currentValues[0], "Hours Per Day<br><span style='font-size:0.8em;color:gray'>Higher is Better</span>");
+    var data2 = createChartData(gaugeValues[1], deltaValues[1], currentValues[1], "% to Goal<br><span style='font-size:0.8em;color:gray'>Higher is Better</span>");
+    var data3 = createChartData(gaugeValues[2], deltaValues[2], currentValues[2], "SVC Policy Dollars<br><span style='font-size:0.8em;color:gray'>Lower is Better</span>");
+
+    // Render the Plotly charts
+    Plotly.newPlot('myDiv1', data1);
+    Plotly.newPlot('myDiv2', data2);
+    Plotly.newPlot('myDiv3', data3);
+}
+
+function createChartData(gaugeValue, deltaValue, currentValue, titleText) {
+    return [{
+        domain: { x: [0, 1], y: [0, 1] },
+        value: currentValue,
+        title: { text: titleText },
+        type: "indicator",
+        mode: "gauge+number+delta",
+        delta: { reference: deltaValue },
+        gauge: {
+            axis: { range: [null, 200], tickwidth: 2, tickcolor: "darkblue" },
+            bar: { color: "darkblue" },
+            steps: [
+                { range: [0, deltaValue], color: "lightcoral" },
+                { range: [deltaValue, 200], color: "lightgreen" }
+            ],
+            // Add a threshold line
+            threshold: {
+                line: { color: "blue", width: 2 },
+                value: deltaValue // Set the threshold value to delta value
+            }
+        }
+    }];
+}
+
+// Call handleClientLoad when the page is fully loaded
+window.onload = handleClientLoad;
 </script>
 
 </body>
