@@ -70,7 +70,7 @@ function initClient() {
 function fetchSheetData() {
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: '1Em_4WKvdHbWu5WR2HCkd4JRVFaTsjJsqPHqDPRj8Gxs',
-        range: 'Sheet1!A1:D' // Update range as per your sheet structure
+        range: 'gauge_data' // Use the named range instead of A1:D
     }).then(function(response) {
         var range = response.result;
         if (range.values.length > 0) {
