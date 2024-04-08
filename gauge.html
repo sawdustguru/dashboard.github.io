@@ -92,7 +92,7 @@ function processData(values) {
 
     // Process each row of data
     values.forEach(function(row) {
-        var gaugeName = row[0]; // Assuming the name is in the first column
+        var gaugeName = row[row.length - 1]; // Gauge name is in the last column
         var gaugeValue = parseFloat(row[1]);
         var deltaValue = parseFloat(row[2]);
         var currentValue = parseFloat(row[3]);
@@ -132,7 +132,7 @@ function createChartData(gaugeValue, deltaValue, currentValue, gaugeName, revers
     ];
 
     // Define the HTML structure for the title
-    var titleText = gaugeName ;
+    var titleText = gaugeName + "<br><span style='font-size:0.8em;color:gray'>Higher is Better</span>";
 
     return [{
         domain: { x: [0, 1], y: [0, 1] },
