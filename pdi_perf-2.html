@@ -161,7 +161,7 @@
         // Function to parse Google Sheet data
         function parseGoogleSheetData(values) {
             table.innerHTML = ''; // Clear existing table content
-            
+                
             // Add column headers
             const headerRow = document.createElement('tr');
             const columnHeader1 = document.createElement('th');
@@ -192,7 +192,7 @@
                     cell1.textContent = rowData[0]; // Display value of column 1
                     cell1.classList.add('column1');
                     row.appendChild(cell1);
-                    
+                        
                     // Create and style column 2
                     const cell2 = document.createElement('td');
                     const bar = document.createElement('div');
@@ -224,21 +224,21 @@
                     gauge.appendChild(indicator);
                     cell3.appendChild(gauge);
                     row.appendChild(cell3);
-                    
+                        
                     table.appendChild(row);
                 }
             });
 
             // Calculate the average of YTD Performance
             const averagePercentage = totalPercentage / rowCount;
-            
+                
             // Display the average percentage gauge and its value
             const averageGaugeContainer = document.getElementById('averageGaugeContainer');
             const averageGauge = document.getElementById('averageGauge');
             const averageIndicator = document.createElement('div');
             averageIndicator.style.width = averagePercentage + '%';
             averageGauge.appendChild(averageIndicator);
-            
+                
             // Add the vertical line to indicate the average percentage
             const verticalLine = document.createElement('div');
             verticalLine.className = 'vertical-line';
@@ -249,7 +249,7 @@
             const averagePercentageDisplay = document.getElementById('averagePercentageDisplay');
             averagePercentageDisplay.textContent = averagePercentage.toFixed(2) + '%';
         }
-        
+            
         // Function to set color segments based on value
         function setColorSegments(bar, value) {
             if (value >= 0 && value < 19) {
@@ -288,6 +288,9 @@
                 bar.appendChild(segment4);
             }
         }
+
+        // Load Google Sheet data on page load
+        loadGoogleSheetData("1Em_4WKvdHbWu5WR2HCkd4JRVFaTsjJsqPHqDPRj8Gxs");
     </script>
 </head>
 <body>
