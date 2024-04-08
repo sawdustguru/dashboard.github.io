@@ -107,10 +107,13 @@ function processData(values) {
         }
     });
 
+    // Calculate the maximum value of gaugeValue
+    var maxGaugeValue = Math.max(...gaugeValues);
+
     // Create data for Plotly charts
-    var data1 = createChartData(gaugeValues[0], deltaValues[0], currentValues[0], "Hours Per Day<br><span style='font-size:0.8em;color:gray'>Higher is Better</span>");
-    var data2 = createChartData(gaugeValues[1], deltaValues[1], currentValues[1], "% to Goal<br><span style='font-size:0.8em;color:gray'>Higher is Better</span>");
-    var data3 = createChartData(gaugeValues[2], deltaValues[2], currentValues[2], "SVC Policy Dollars<br><span style='font-size:0.8em;color:gray'>Lower is Better</span>");
+    var data1 = createChartData(gaugeValues[0], deltaValues[0], currentValues[0], "Hours Per Day<br><span style='font-size:0.8em;color:gray'>Higher is Better</span>", maxGaugeValue);
+    var data2 = createChartData(gaugeValues[1], deltaValues[1], currentValues[1], "% to Goal<br><span style='font-size:0.8em;color:gray'>Higher is Better</span>", maxGaugeValue);
+    var data3 = createChartData(gaugeValues[2], deltaValues[2], currentValues[2], "SVC Policy Dollars<br><span style='font-size:0.8em;color:gray'>Lower is Better</span>", maxGaugeValue);
 
     // Render the Plotly charts
     Plotly.newPlot('myDiv1', data1);
@@ -118,7 +121,7 @@ function processData(values) {
     Plotly.newPlot('myDiv3', data3);
 }
 
-function createChartData(gaugeValue, deltaValue, currentValue, titleText) {
+function createChartData(gaugeValue, deltaValue, currentValue, titleText, maxGaugeValue) {
     return [{
         domain: { x: [0, 1], y: [0, 1] },
         value: currentValue,
@@ -127,11 +130,11 @@ function createChartData(gaugeValue, deltaValue, currentValue, titleText) {
         mode: "gauge+number+delta",
         delta: { reference: deltaValue },
         gauge: {
-            axis: { range: [null, 200], tickwidth: 2, tickcolor: "darkblue" },
+            axis: { range: [null, maxGaugeValue], tickwidth: 2, tickcolor: "darkblue" },
             bar: { color: "darkblue" },
             steps: [
                 { range: [0, deltaValue], color: "lightcoral" },
-                { range: [deltaValue, 200], color: "lightgreen" }
+                { range: [deltaValue, maxGaugeValue], color: "lightgreen" }
             ],
             // Add a threshold line
             threshold: {
