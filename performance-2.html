@@ -57,98 +57,34 @@
             padding-left: 5px;
         }
     </style>
-    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="config.json"></script>
     <script>
-        function loadGoogleSheetData() {
-            gapi.client.sheets.spreadsheets.values.get({
-                spreadsheetId: 'YOUR_SPREADSHEET_ID',
-                range: 'hours'
-            }).then(function(response) {
-                const data = response.result.values;
-                parseGoogleSheetData(data);
-            }, function(response) {
-                console.error('Error loading Google Sheet data: ' + response.result.error.message);
-            });
-        }
+        window.onload = function() {
+            // Load configuration from JSON file
+            fetch('config.json')
+                .then(response => response.json())
+                .then(config => {
+                    const apiKey = config.apiKey;
+                    const spreadsheetId = config.spreadsheetId;
 
-        function parseGoogleSheetData(data) {
-            const table = document.getElementById('dataTable');
-            let totalPercentage = 0;
-            let rowCount = 0;
-
-            table.innerHTML = ''; // Clear existing table content
-
-            // Add column headers
-            const headerRow = document.createElement('tr');
-            ['Name', 'Weekly Hours', 'YTD Performance'].forEach(function(columnHeader) {
-                const th = document.createElement('th');
-                th.textContent = columnHeader;
-                headerRow.appendChild(th);
-            });
-            table.appendChild(headerRow);
-
-            // Parse data rows
-            data.forEach(function(rowData) {
-                if (rowData[0]) { // Check if data exists
-                    const row = document.createElement('tr');
-                    rowCount++;
-
-                    // Create and style cells
-                    rowData.forEach(function(cellData, index) {
-                        const cell = document.createElement('td');
-                        if (index === 1) { // Weekly Hours column
-                            const percentageBar = document.createElement('div');
-                            percentageBar.className = 'percentage-bar';
-                            setColorSegments(percentageBar, parseInt(cellData));
-                            cell.appendChild(percentageBar);
-                        } else if (index === 2) { // YTD Performance column
-                            const percentageIndicator = document.createElement('div');
-                            percentageIndicator.className = 'percentage-indicator';
-                            const percentageValue = parseFloat(cellData) * 100;
-                            totalPercentage += percentageValue;
-                            percentageIndicator.textContent = percentageValue.toFixed(2) + '%';
-                            cell.appendChild(percentageIndicator);
-                        } else {
-                            cell.textContent = cellData;
-                        }
-                        row.appendChild(cell);
+                    gapi.load('client:auth2', function() {
+                        gapi.client.init({
+                            apiKey: apiKey,
+                            discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+                            scope: 'https://www.googleapis.com/auth/spreadsheets.readonly'
+                        }).then(function() {
+                            loadGoogleSheetData(spreadsheetId);
+                        });
                     });
+                });
+        };
 
-                    table.appendChild(row);
-                }
-            });
-
-            // Calculate the average of YTD Performance
-            const averagePercentage = totalPercentage / rowCount;
-            
-            // Display the average percentage value
-            const averagePercentageDisplay = document.getElementById('averagePercentageDisplay');
-            averagePercentageDisplay.textContent = averagePercentage.toFixed(2) + '%';
+        function loadGoogleSheetData(spreadsheetId) {
+            // Use Google Sheets API to load data
+            // You can implement this part based on your specific requirements
+            console.log('Loading data from spreadsheet with ID:', spreadsheetId);
+            // Your code to load data from Google Sheets goes here
         }
-
-        function setColorSegments(bar, value) {
-            if (value >= 0 && value < 19) {
-                bar.innerHTML = '<div class="bar-segment segment1"></div>';
-            } else if (value >= 20 && value < 27) {
-                bar.innerHTML = '<div class="bar-segment segment1"></div><div class="bar-segment segment2"></div>';
-            } else if (value >= 27 && value < 32) {
-                bar.innerHTML = '<div class="bar-segment segment1"></div><div class="bar-segment segment2"></div><div class="bar-segment segment3"></div>';
-            } else if (value >= 33 && value <= 150) {
-                bar.innerHTML = '<div class="bar-segment segment1"></div><div class="bar-segment segment2"></div><div class="bar-segment segment3"></div><div class="bar-segment segment4"></div>';
-            }
-        }
-
-       window.onload = function() {
-    gapi.load('client:auth2', function() {
-        gapi.client.init({
-            apiKey: 'YOUR_API_KEY',
-            discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
-            scope: 'https://www.googleapis.com/auth/spreadsheets.readonly'
-        }).then(function() {
-            loadGoogleSheetData();
-        });
-    });
-};
     </script>
 </head>
 <body>
@@ -160,9 +96,5 @@
         <p>Average Shop Performance:</p>
         <div id="averagePercentageDisplay" class="percentage-indicator"></div>
     </div>
-    <script async defer src="https://apis.google.com/js/api.js" 
-        onload="this.onload=function(){};handleClientLoad()" 
-        onreadystatechange="if (this.readyState === 'complete') this.onload()">
-    </script>
 </body>
 </html>
