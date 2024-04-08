@@ -47,33 +47,32 @@
             }
 
             // Function to parse and display data
-            function parseData(values) {
-                // Your parsing logic here
-                // Example:
-                values.forEach(function (row) {
-                    const rowData = row.split(',');
-                    if (rowData[0]) { // Check if data exists
-                        // Create table rows and populate data accordingly
-                        const tr = document.createElement('tr');
-                        // Add cells and populate data accordingly
-                        // Example:
-                        const td1 = document.createElement('td');
-                        td1.textContent = rowData[0]; // Name
-                        tr.appendChild(td1);
+           function parseData(values) {
+    // Assuming each row in the values array is an array itself
+    values.forEach(function (row) {
+        if (row.length >= 3) { // Ensure the row contains at least three elements
+            // Create table row
+            const tr = document.createElement('tr');
 
-                        const td2 = document.createElement('td');
-                        td2.textContent = rowData[1]; // Weekly Hours
-                        tr.appendChild(td2);
+            // Add cells and populate data accordingly
+            const td1 = document.createElement('td');
+            td1.textContent = row[0]; // Name
+            tr.appendChild(td1);
 
-                        const td3 = document.createElement('td');
-                        td3.textContent = rowData[2]; // YTD Performance
-                        tr.appendChild(td3);
+            const td2 = document.createElement('td');
+            td2.textContent = row[1]; // Weekly Hours
+            tr.appendChild(td2);
 
-                        // Append the row to the table
-                        table.appendChild(tr);
-                    }
-                });
-            }
+            const td3 = document.createElement('td');
+            td3.textContent = row[2]; // YTD Performance
+            tr.appendChild(td3);
+
+            // Append the row to the table
+            table.appendChild(tr);
+        }
+    });
+}
+
 
             // Call handleClientLoad when the page is fully loaded
             handleClientLoad();
