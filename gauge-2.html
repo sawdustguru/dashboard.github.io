@@ -70,7 +70,7 @@ function initClient() {
 function fetchSheetData() {
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: '1Em_4WKvdHbWu5WR2HCkd4JRVFaTsjJsqPHqDPRj8Gxs',
-        range: 'gauge_data' // Fetch the named range 'gauge_data'
+        range: 'gauge_data1' // Update the range name
     }).then(function(response) {
         var range = response.result;
         if (range.values.length > 0) {
@@ -85,20 +85,20 @@ function fetchSheetData() {
 }
 
 function processData(values) {
-    // Extracting required data from the fetched values
+    var gaugeNames = [];
     var gaugeValues = [];
     var deltaValues = [];
     var currentValues = [];
 
     // Process each row of data
     values.forEach(function(row) {
-        // Ensure all values are numerical; if not, set them to 0
-        var gaugeValue = parseFloat(row[1]); // Corrected index to 1 for gauge_value column
-        var deltaValue = parseFloat(row[2]); // Column C (index 2)
-        var currentValue = parseFloat(row[3]); // Column D (index 3)
+        var gaugeName = row[0]; // Assuming the name is in the first column
+        var gaugeValue = parseFloat(row[1]);
+        var deltaValue = parseFloat(row[2]);
+        var currentValue = parseFloat(row[3]);
 
-        // Check if any value is NaN, and handle it
         if (!isNaN(gaugeValue) && !isNaN(deltaValue) && !isNaN(currentValue)) {
+            gaugeNames.push(gaugeName); // Add the name to the array
             gaugeValues.push(gaugeValue);
             deltaValues.push(deltaValue);
             currentValues.push(currentValue);
@@ -107,10 +107,14 @@ function processData(values) {
         }
     });
 
-    // Create data for Plotly charts
-    var data1 = createChartData(gaugeValues[0], deltaValues[0], currentValues[0]);
-    var data2 = createChartData(gaugeValues[1], deltaValues[1], currentValues[1]);
-    var data3 = createChartData(gaugeValues[2], deltaValues[2], currentValues[2], true); // Reversed colors for the last gauge
+    // Create and render charts using the names and values
+    var data1 = createChartData(gaugeValues[0], deltaValues[0], currentValues[0], gaugeNames[0]);
+    var data2 = createChartData(gaugeValues[1], deltaValues[1], currentValues[1], gaugeNames[1]);
+    var data3 = createChartData(gaugeValues[2], deltaValues[2], currentValues[2], gaugeNames[2], true); // Include name in the call
+
+    // The rest of your function remains the same...
+}
+
 
     // Define layout for the charts
     var layout = {
