@@ -70,7 +70,7 @@ function initClient() {
 function fetchSheetData() {
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: '1Em_4WKvdHbWu5WR2HCkd4JRVFaTsjJsqPHqDPRj8Gxs',
-        range: 'gauge_data'
+        range: 'gauge_data' // Fetch the named range 'gauge_data'
     }).then(function(response) {
         var range = response.result;
         if (range.values.length > 0) {
@@ -93,9 +93,9 @@ function processData(values) {
     // Process each row of data
     values.forEach(function(row) {
         // Ensure all values are numerical; if not, set them to 0
-        var gaugeValue = parseFloat(row[1]);
-        var deltaValue = parseFloat(row[2]);
-        var currentValue = parseFloat(row[3]);
+        var gaugeValue = parseFloat(row[1]); // Corrected index to 1 for gauge_value column
+        var deltaValue = parseFloat(row[2]); // Column C (index 2)
+        var currentValue = parseFloat(row[3]); // Column D (index 3)
 
         // Check if any value is NaN, and handle it
         if (!isNaN(gaugeValue) && !isNaN(deltaValue) && !isNaN(currentValue)) {
@@ -110,7 +110,7 @@ function processData(values) {
     // Create data for Plotly charts
     var data1 = createChartData(gaugeValues[0], deltaValues[0], currentValues[0]);
     var data2 = createChartData(gaugeValues[1], deltaValues[1], currentValues[1]);
-    var data3 = createChartData(gaugeValues[2], deltaValues[2], currentValues[2]);
+    var data3 = createChartData(gaugeValues[2], deltaValues[2], currentValues[2], true); // Reversed colors for the last gauge
 
     // Render the Plotly charts
     Plotly.newPlot('myDiv1', data1);
@@ -118,7 +118,12 @@ function processData(values) {
     Plotly.newPlot('myDiv3', data3);
 }
 
-function createChartData(gaugeValue, deltaValue, currentValue) {
+function createChartData(gaugeValue, deltaValue, currentValue, reversedColors = false) {
+    var steps = [
+        { range: [0, deltaValue], color: reversedColors ? "lightgreen" : "lightcoral" },
+        { range: [deltaValue, gaugeValue], color: reversedColors ? "lightcoral" : "lightgreen" }
+    ];
+
     return [{
         domain: { x: [0, 1], y: [0, 1] },
         value: currentValue,
@@ -129,12 +134,9 @@ function createChartData(gaugeValue, deltaValue, currentValue) {
         gauge: {
             axis: { range: [0, gaugeValue] },
             bar: { color: "darkblue" },
-            steps: [
-                { range: [0, deltaValue], color: "lightcoral" },
-                { range: [deltaValue, gaugeValue], color: "lightgreen" }
-            ],
+            steps: steps,
             threshold: {
-                line: { color: "darkblue", width: 2 },
+                line: { color: "red", width: 2 },
                 value: deltaValue
             }
         }
