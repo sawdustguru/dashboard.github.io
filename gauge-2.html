@@ -66,11 +66,11 @@ function initClient() {
         fetchSheetData();
     });
 }
-     
+
 function fetchSheetData() {
     gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: '1Em_4WKvdHbWu5WR2HCkd4JRVFaTsjJsqPHqDPRj8Gxs', 
-        range: 'gauge_data' // Fetch the named range 'gauge_data'
+        spreadsheetId: '1Em_4WKvdHbWu5WR2HCkd4JRVFaTsjJsqPHqDPRj8Gxs',
+        range: 'gauge_data'
     }).then(function(response) {
         var range = response.result;
         if (range.values.length > 0) {
@@ -84,7 +84,6 @@ function fetchSheetData() {
     });
 }
 
-
 function processData(values) {
     // Extracting required data from the fetched values
     var gaugeValues = [];
@@ -94,9 +93,9 @@ function processData(values) {
     // Process each row of data
     values.forEach(function(row) {
         // Ensure all values are numerical; if not, set them to 0
-        var gaugeValue = parseFloat(row[1]); // Corrected index to 1 for gauge_value column
-        var deltaValue = parseFloat(row[2]); // Column C (index 2)
-        var currentValue = parseFloat(row[3]); // Column D (index 3)
+        var gaugeValue = parseFloat(row[1]);
+        var deltaValue = parseFloat(row[2]);
+        var currentValue = parseFloat(row[3]);
 
         // Check if any value is NaN, and handle it
         if (!isNaN(gaugeValue) && !isNaN(deltaValue) && !isNaN(currentValue)) {
@@ -109,9 +108,9 @@ function processData(values) {
     });
 
     // Create data for Plotly charts
-    var data1 = createChartData(gaugeValues[0], deltaValues[0], currentValues[0], "Hours Per Day", [0, gaugeValues[0]], [0, deltaValues[0]], deltaValues[0]);
-    var data2 = createChartData(gaugeValues[1], deltaValues[1], currentValues[1], "% to Goal", [0, gaugeValues[1]], [0, deltaValues[1]], deltaValues[1]);
-    var data3 = createChartData(gaugeValues[2], deltaValues[2], currentValues[2], "SVC Policy Dollars", [0, gaugeValues[2]], [0, deltaValues[2]], deltaValues[2]);
+    var data1 = createChartData(gaugeValues[0], deltaValues[0], currentValues[0]);
+    var data2 = createChartData(gaugeValues[1], deltaValues[1], currentValues[1]);
+    var data3 = createChartData(gaugeValues[2], deltaValues[2], currentValues[2]);
 
     // Render the Plotly charts
     Plotly.newPlot('myDiv1', data1);
@@ -119,25 +118,24 @@ function processData(values) {
     Plotly.newPlot('myDiv3', data3);
 }
 
-function createChartData(gaugeValue, deltaValue, currentValue, titleText, axisRange, stepsRanges, thresholdValue) {
+function createChartData(gaugeValue, deltaValue, currentValue) {
     return [{
         domain: { x: [0, 1], y: [0, 1] },
         value: currentValue,
-        title: { text: titleText },
+        title: { text: "Gauge Chart" },
         type: "indicator",
         mode: "gauge+number+delta",
         delta: { reference: deltaValue },
         gauge: {
-            axis: { range: axisRange, tickwidth: 2, tickcolor: "darkblue" },
+            axis: { range: [0, gaugeValue] },
             bar: { color: "darkblue" },
             steps: [
-                { range: stepsRanges[0], color: "lightcoral" },
-                { range: stepsRanges[1], color: "lightgreen" }
+                { range: [0, deltaValue], color: "lightcoral" },
+                { range: [deltaValue, gaugeValue], color: "lightgreen" }
             ],
-            // Add a threshold line
             threshold: {
-                line: { color: "blue", width: 2 },
-                value: thresholdValue // Set the threshold value
+                line: { color: "red", width: 2 },
+                value: deltaValue
             }
         }
     }];
