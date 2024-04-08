@@ -86,9 +86,26 @@ function fetchSheetData() {
 
 function processData(values) {
     // Extracting required data from the fetched values
-    var gaugeValues = values.map(row => parseFloat(row[1]));
-    var deltaValues = values.map(row => parseFloat(row[2]));
-    var currentValues = values.map(row => parseFloat(row[3]));
+    var gaugeValues = [];
+    var deltaValues = [];
+    var currentValues = [];
+
+    // Process each row of data
+    values.forEach(function(row) {
+        // Ensure all values are numerical; if not, set them to 0
+        var gaugeValue = parseFloat(row[1]);
+        var deltaValue = parseFloat(row[2]);
+        var currentValue = parseFloat(row[3]);
+
+        // Check if any value is NaN, and handle it
+        if (!isNaN(gaugeValue) && !isNaN(deltaValue) && !isNaN(currentValue)) {
+            gaugeValues.push(gaugeValue);
+            deltaValues.push(deltaValue);
+            currentValues.push(currentValue);
+        } else {
+            console.log('Invalid data found in row: ', row);
+        }
+    });
 
     // Create data for Plotly charts
     var data1 = createChartData(gaugeValues[0], deltaValues[0], currentValues[0], "Hours Per Day<br><span style='font-size:0.8em;color:gray'>Higher is Better</span>");
