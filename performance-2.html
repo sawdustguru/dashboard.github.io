@@ -128,27 +128,6 @@
     </style>
     <script src="https://apis.google.com/js/api.js"></script>
     <script>
-        // JavaScript code to fetch and display Google Sheet data
-    </script>
-</head>
-<body>
-    <div class="content-container">
-        <p>Data Display</p>
-        <table id="dataTable"></table>
-        <p>Red = 19 hours or less - Orange = 27 hours or less<br>Gold = 32 hours or less - Green = more than 33 hours</p>
-        <p>YTD Performance is the percentage of Billed Time to On-Premise time</p>
-        <p>Average Shop Performance:</p>
-        <div id="averageGaugeContainer">                
-            <div id="averageGauge" class="new-gauge">
-                <div id="averagePercentageDisplay" class="percentage"></div>
-            </div>       
-        </div>
-    </div>
-</body>
-</html>
-
-    <script src="https://apis.google.com/js/api.js"></script>
-    <script>
         window.onload = function() {
             const table = document.getElementById('dataTable');
             let totalPercentage = 0;
@@ -158,7 +137,7 @@
             function loadGoogleSheetData(spreadsheetId) {
                 gapi.load('client:auth2', function() {
                     gapi.client.init({
-                        apiKey: "AIzaSyCFvX56uc0WNPz2ZTJhpg7Q2pFOgZxt7-0",
+                        apiKey: "YOUR_API_KEY",
                         discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
                         scope: 'https://www.googleapis.com/auth/spreadsheets.readonly'
                     }).then(function() {
