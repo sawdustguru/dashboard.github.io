@@ -30,43 +30,89 @@
             text-align: left;
         }
 
-        .percentage-bar {
-            width: 100%;
-            height: 20px;
+        .bar {
+            height: 15px;
+            width: 200px;
+            margin: 2px 0;
             border-radius: 5px;
+            transition: width 0.5s ease;
             overflow: hidden;
             position: relative;
-            background: linear-gradient(to right, red 0%, orange 35%, gold 45%, green 85%);
         }
 
-        .bar-segment {
+        .indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
             height: 100%;
-            float: left;
+            width: 3px;
+            background-color: white;
+            transform: translateX(-50%);
         }
 
-        .segment1 { width: 25%; background-color: red; }
-        .segment2 { width: 25%; background-color: orange; }
-        .segment3 { width: 25%; background-color: gold; }
-        .segment4 { width: 25%; background-color: green; }
+        .black-indicator {
+            position: absolute;
+            top: 0;
+            left: 100%;
+            width: 3px;
+            height: 100%;
+            background-color: black;
+        }
 
-        .percentage-indicator {
+        .column1 { width: 200px; }
+        .column2 { width: 200px; }
+        .column3 {
+            width: 200px;
+            background: linear-gradient(to right, red 0%, orange 35%, gold 45%, green 85%);
+            position: relative;
+            height: 20px;
+        }
+
+        .percentage {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
             color: white;
             padding-left: 5px;
         }
+        .column-header {
+            text-align: center;
+            font-weight: bold;
+        }
+        .segment {
+            height: 100%;
+            float: left;
+        }
+        .segment1 { width: 25%; background-color: red; }
+        .segment2 { width: 25%; background-color: orange; }
+        .segment3 { width: 25%; background-color: gold; }
+        .segment4 { width: 25%; background-color: green; }
+        
+        td {
+            vertical-align: middle;
+            text-align: left;
+        }
+        
+        table {
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            font-family: Arial, sans-serif;
+            border: 2px solid black;
+            padding: 2px;
+        }
 
         /* CSS for the new gauge */
         .new-gauge {
-            width: 600px; /* Set width to 600px */
-            height: 30px; /* Set height to 30px */
-            background: linear-gradient(to right, red 0%, orange 35%, gold 45%, green 85%); /* Gradient from red to green starting at 85% */
+            width: 600px;
+            height: 30px;
+            background: linear-gradient(to right, red 0%, orange 35%, gold 45%, green 85%);
             position: relative;
         }
         .new-gauge .indicator {
             height: 100%;
-            background-color: white; /* Color of the indicator line */
+            background-color: white;
             position: absolute;
             left: 0;
             top: 0;
@@ -80,6 +126,27 @@
             top: 0;
         }
     </style>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script>
+        // JavaScript code to fetch and display Google Sheet data
+    </script>
+</head>
+<body>
+    <div class="content-container">
+        <p>Data Display</p>
+        <table id="dataTable"></table>
+        <p>Red = 19 hours or less - Orange = 27 hours or less<br>Gold = 32 hours or less - Green = more than 33 hours</p>
+        <p>YTD Performance is the percentage of Billed Time to On-Premise time</p>
+        <p>Average Shop Performance:</p>
+        <div id="averageGaugeContainer">                
+            <div id="averageGauge" class="new-gauge">
+                <div id="averagePercentageDisplay" class="percentage"></div>
+            </div>       
+        </div>
+    </div>
+</body>
+</html>
+
     <script src="https://apis.google.com/js/api.js"></script>
     <script>
         window.onload = function() {
