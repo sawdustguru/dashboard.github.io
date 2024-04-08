@@ -112,10 +112,17 @@ function processData(values) {
     var data2 = createChartData(gaugeValues[1], deltaValues[1], currentValues[1]);
     var data3 = createChartData(gaugeValues[2], deltaValues[2], currentValues[2], true); // Reversed colors for the last gauge
 
-    // Render the Plotly charts
-    Plotly.newPlot('myDiv1', data1);
-    Plotly.newPlot('myDiv2', data2);
-    Plotly.newPlot('myDiv3', data3);
+    // Define layout for the charts
+    var layout = {
+        paper_bgcolor: "lightgray",
+        width: 400, 
+        height: 300
+    };
+
+    // Render the Plotly charts with layout
+    Plotly.newPlot('myDiv1', data1, layout);
+    Plotly.newPlot('myDiv2', data2, layout);
+    Plotly.newPlot('myDiv3', data3, layout);
 }
 
 function createChartData(gaugeValue, deltaValue, currentValue, reversedColors = false) {
