@@ -66,11 +66,11 @@ function initClient() {
         fetchSheetData();
     });
 }
-
+     
 function fetchSheetData() {
     gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: '1Em_4WKvdHbWu5WR2HCkd4JRVFaTsjJsqPHqDPRj8Gxs',
-        range: 'gauge_data' // Use the named range instead of A1:D
+        spreadsheetId: '1Em_4WKvdHbWu5WR2HCkd4JRVFaTsjJsqPHqDPRj8Gxs', 
+        range: 'gauge_data' // Fetch the named range 'gauge_data'
     }).then(function(response) {
         var range = response.result;
         if (range.values.length > 0) {
@@ -83,6 +83,7 @@ function fetchSheetData() {
         console.log('Error: ' + response.result.error.message);
     });
 }
+
 
 function processData(values) {
     // Extracting required data from the fetched values
