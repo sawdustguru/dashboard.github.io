@@ -58,26 +58,21 @@
         }
     </style>
     <script src="https://apis.google.com/js/api.js"></script>
-    <script src="config.json"></script>
     <script>
         window.onload = function() {
-            // Load configuration from JSON file
-            fetch('config.json')
-                .then(response => response.json())
-                .then(config => {
-                    const apiKey = config.apiKey;
-                    const spreadsheetId = config.spreadsheetId;
+            // Your Google Sheets API key and spreadsheet ID
+            const apiKey = "AIzaSyCFvX56uc0WNPz2ZTJhpg7Q2pFOgZxt7-0";
+            const spreadsheetId = "1Em_4WKvdHbWu5WR2HCkd4JRVFaTsjJsqPHqDPRj8Gxs";
 
-                    gapi.load('client:auth2', function() {
-                        gapi.client.init({
-                            apiKey: apiKey,
-                            discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
-                            scope: 'https://www.googleapis.com/auth/spreadsheets.readonly'
-                        }).then(function() {
-                            loadGoogleSheetData(spreadsheetId);
-                        });
-                    });
+            gapi.load('client:auth2', function() {
+                gapi.client.init({
+                    apiKey: apiKey,
+                    discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+                    scope: 'https://www.googleapis.com/auth/spreadsheets.readonly'
+                }).then(function() {
+                    loadGoogleSheetData(spreadsheetId);
                 });
+            });
         };
 
         function loadGoogleSheetData(spreadsheetId) {
