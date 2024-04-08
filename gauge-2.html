@@ -93,9 +93,9 @@ function processData(values) {
     // Process each row of data
     values.forEach(function(row) {
         // Ensure all values are numerical; if not, set them to 0
-        var gaugeValue = parseFloat(row[1]);
-        var deltaValue = parseFloat(row[2]);
-        var currentValue = parseFloat(row[3]);
+        var gaugeValue = parseFloat(row[1]); // Column B (index 1)
+        var deltaValue = parseFloat(row[2]); // Column C (index 2)
+        var currentValue = parseFloat(row[3]); // Column D (index 3)
 
         // Check if any value is NaN, and handle it
         if (!isNaN(gaugeValue) && !isNaN(deltaValue) && !isNaN(currentValue)) {
