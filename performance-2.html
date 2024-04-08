@@ -158,6 +158,25 @@
             function parseGoogleSheetData(values) {
                 table.innerHTML = ''; // Clear existing table content
                 
+                // Add column headers
+                const headerRow = document.createElement('tr');
+                const columnHeader1 = document.createElement('th');
+                columnHeader1.textContent = 'Name';
+                columnHeader1.classList.add('column-header');
+                headerRow.appendChild(columnHeader1);
+
+                const columnHeader2 = document.createElement('th');
+                columnHeader2.textContent = 'Weekly Hours';
+                columnHeader2.classList.add('column-header');
+                headerRow.appendChild(columnHeader2);
+
+                const columnHeader3 = document.createElement('th');
+                columnHeader3.textContent = 'YTD Performance';
+                columnHeader3.classList.add('column-header');
+                headerRow.appendChild(columnHeader3);
+
+                table.appendChild(headerRow);
+
                 // Parse data rows
                 values.forEach(rowData => {
                     if (rowData[0]) { // Check if data exists
@@ -173,7 +192,7 @@
                         // Create and style column 2
                         const cell2 = document.createElement('td');
                         const bar = document.createElement('div');
-                        bar.className = 'percentage-bar';
+                        bar.className = 'bar';
                         setColorSegments(bar, parseInt(rowData[1]));
                         cell2.appendChild(bar);
                         cell2.classList.add('column2');
@@ -231,37 +250,37 @@
             function setColorSegments(bar, value) {
                 if (value >= 0 && value < 19) {
                     const segment1 = document.createElement('div');
-                    segment1.className = 'bar-segment segment1';
+                    segment1.className = 'segment segment1';
                     bar.appendChild(segment1);
                 } else if (value >= 20 && value < 27) {
                     const segment1 = document.createElement('div');
-                    segment1.className = 'bar-segment segment1';
+                    segment1.className = 'segment segment1';
                     bar.appendChild(segment1);
                     const segment2 = document.createElement('div');
-                    segment2.className = 'bar-segment segment2';
+                    segment2.className = 'segment segment2';
                     bar.appendChild(segment2);
                 } else if (value >= 27 && value < 32) {
                     const segment1 = document.createElement('div');
-                    segment1.className = 'bar-segment segment1';
+                    segment1.className = 'segment segment1';
                     bar.appendChild(segment1);
                     const segment2 = document.createElement('div');
-                    segment2.className = 'bar-segment segment2';
+                    segment2.className = 'segment segment2';
                     bar.appendChild(segment2);
                     const segment3 = document.createElement('div');
-                    segment3.className = 'bar-segment segment3';
+                    segment3.className = 'segment segment3';
                     bar.appendChild(segment3);
                 } else if (value >= 33 && value <= 150) {
                     const segment1 = document.createElement('div');
-                    segment1.className = 'bar-segment segment1';
+                    segment1.className = 'segment segment1';
                     bar.appendChild(segment1);
                     const segment2 = document.createElement('div');
-                    segment2.className = 'bar-segment segment2';
+                    segment2.className = 'segment segment2';
                     bar.appendChild(segment2);
                     const segment3 = document.createElement('div');
-                    segment3.className = 'bar-segment segment3';
+                    segment3.className = 'segment segment3';
                     bar.appendChild(segment3);
                     const segment4 = document.createElement('div');
-                    segment4.className = 'bar-segment segment4';
+                    segment4.className = 'segment segment4';
                     bar.appendChild(segment4);
                 }
             }
