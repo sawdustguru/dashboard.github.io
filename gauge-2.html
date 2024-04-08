@@ -69,7 +69,7 @@ function initClient() {
 
 function fetchSheetData() {
     gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: '1Em_4WKvdHbWu5WR2HCkd4JRVFaTsjJsqPHqDPRj8Gxs',
+        spreadsheetId: 'YOUR_SPREADSHEET_ID',
         range: 'gauge_data' // Use the named range instead of A1:D
     }).then(function(response) {
         var range = response.result;
@@ -108,9 +108,9 @@ function processData(values) {
     });
 
     // Create data for Plotly charts
-    var data1 = createChartData(gaugeValues[0], deltaValues[0], currentValues[0], "Hours Per Day<br><span style='font-size:0.8em;color:gray'>Higher is Better</span>");
-    var data2 = createChartData(gaugeValues[1], deltaValues[1], currentValues[1], "% to Goal<br><span style='font-size:0.8em;color:gray'>Higher is Better</span>");
-    var data3 = createChartData(gaugeValues[2], deltaValues[2], currentValues[2], "SVC Policy Dollars<br><span style='font-size:0.8em;color:gray'>Lower is Better</span>");
+    var data1 = createChartData(gaugeValues[0], deltaValues[0], currentValues[0], "Hours Per Day", [0, gaugeValues[0]], [0, deltaValues[0]], deltaValues[0]);
+    var data2 = createChartData(gaugeValues[1], deltaValues[1], currentValues[1], "% to Goal", [0, gaugeValues[1]], [0, deltaValues[1]], deltaValues[1]);
+    var data3 = createChartData(gaugeValues[2], deltaValues[2], currentValues[2], "SVC Policy Dollars", [0, gaugeValues[2]], [0, deltaValues[2]], deltaValues[2]);
 
     // Render the Plotly charts
     Plotly.newPlot('myDiv1', data1);
@@ -118,7 +118,7 @@ function processData(values) {
     Plotly.newPlot('myDiv3', data3);
 }
 
-function createChartData(gaugeValue, deltaValue, currentValue, titleText) {
+function createChartData(gaugeValue, deltaValue, currentValue, titleText, axisRange, stepsRanges, thresholdValue) {
     return [{
         domain: { x: [0, 1], y: [0, 1] },
         value: currentValue,
@@ -127,16 +127,16 @@ function createChartData(gaugeValue, deltaValue, currentValue, titleText) {
         mode: "gauge+number+delta",
         delta: { reference: deltaValue },
         gauge: {
-            axis: { range: [null, gaugeValue], tickwidth: 2, tickcolor: "darkblue" },
+            axis: { range: axisRange, tickwidth: 2, tickcolor: "darkblue" },
             bar: { color: "darkblue" },
             steps: [
-                { range: [0, deltaValue], color: "lightcoral" },
-                { range: [deltaValue, gaugeValue], color: "lightgreen" }
+                { range: stepsRanges[0], color: "lightcoral" },
+                { range: stepsRanges[1], color: "lightgreen" }
             ],
             // Add a threshold line
             threshold: {
                 line: { color: "blue", width: 2 },
-                value: deltaValue // Set the threshold value to delta value
+                value: thresholdValue // Set the threshold value
             }
         }
     }];
