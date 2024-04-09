@@ -11,10 +11,20 @@
         margin-top: 50px;
     }
     
+    .container {
+        width: 300px;
+        height: 300px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
     .date {
         display: block;
         width: 140px;
-        margin: 30px auto;
+        margin-bottom: 30px;
         text-align: center;
         position: relative;
     }
@@ -66,10 +76,11 @@
 </style>
 </head>
 <body>
-    <p><b>Safety Record</b></p>
-    <div class="date">
-        <div class="month">Days</div>
-        <div class="day" id="daysSinceIncident">0</div>
+    <div class="container">
+        <div class="date">
+            <div class="month">Days</div>
+            <div class="day" id="daysSinceIncident">0</div>
+        </div>
     </div>
 
     <script>
@@ -100,6 +111,5 @@
         // Call the function to fetch incident date
         fetchIncidentDate();
     </script>
-    <p><b>Days Since Last Incident</b></p>
 </body>
 </html>
