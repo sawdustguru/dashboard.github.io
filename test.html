@@ -66,40 +66,51 @@
         <div class="day" id="daysSinceIncident">Loading...</div>
     </div>
 
-   <script>
-    async function getIncidentDate(apiKey, sheetId) {
-        try {
-            const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1!A8?key=${apiKey}`);
-            if (!response.ok) {
-                throw new Error('Failed to fetch data');
-            }
-            const data = await response.json();
-            console.log('Response from Google Sheets API:', data);
-            return data.values[0][0];
-        } catch (error) {
+  <script>
+    var daysSinceIncidentElement = document.getElementById('daysSinceIncident');
+
+    function fetchIncidentDate(spreadsheetId, apiKey) {
+        gapi.client.init({
+            apiKey: apiKey,
+            discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+        }).then(function() {
+            return gapi.client.sheets.spreadsheets.values.get({
+                spreadsheetId: spreadsheetId,
+                range: 'Sheet1!A8', // Assuming incident date is in cell A8 of Sheet1
+            });
+        }).then(function(response) {
+            var incidentDate = response.result.values[0][0];
+            daysSinceIncidentElement.textContent = incidentDate;
+        }).catch(function(error) {
             console.error('Error fetching incident date:', error);
-            return 'Error fetching incident date';
-        }
+            daysSinceIncidentElement.textContent = 'Error fetching incident date';
+        });
     }
 
-    async function updateIncidentDate() {
-        try {
-            const response = await fetch('config.json');
-            if (!response.ok) {
-                throw new Error('Failed to fetch config');
-            }
-            const config = await response.json();
-            console.log('Config:', config);
-            const incidentDate = await getIncidentDate(config.apiKey, config.sheetId);
-            console.log('Incident Date:', incidentDate);
-            document.getElementById('daysSinceIncident').textContent = incidentDate;
-        } catch (error) {
-            console.error('Error:', error);
-        }
+    // Load the Google Sheets API client
+    function init() {
+        fetch('config.json')
+            .then(response => response.json())
+            .then(config => {
+                fetchIncidentDate(config.sheetId, config.apiKey);
+            })
+            .catch(error => console.error('Error fetching config:', error));
     }
 
-    updateIncidentDate();
+    // Load the Google API client library
+    function loadClient() {
+        gapi.load('client', init);
+    }
+
+    // Load the Google API client library asynchronously
+    (function() {
+        var script = document.createElement('script');
+        script.src = 'https://apis.google.com/js/api.js';
+        script.onload = loadClient;
+        document.body.appendChild(script);
+    })();
 </script>
+
 
 </body>
 </html>
