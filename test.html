@@ -1,44 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Plotly.js Dynamic Color Gauge Example</title>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Days Since Last Safety Incident</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 50px;
+    }
+</style>
 </head>
 <body>
+    <h1>Days Since Last Safety Incident</h1>
+    <p id="daysSinceIncident"></p>
 
-<div id="gauge-chart" style="width:600px;height:400px;"></div>
-
-<script>
-    var gaugeValue = 350; // Example current value
-
-    var data = [{
-        type: "indicator",
-        mode: "gauge+number",
-        value: gaugeValue,
-        title: { text: "Dynamic Color Gauge", font: { size: 24 } },
-        gauge: {
-            axis: { range: [null, 500], tickwidth: 1, tickcolor: "darkblue" },
-            // The bar color does not dynamically change in this setup
-            bar: { color: "lightgray" }, // Use a neutral color for the bar itself
-            bgcolor: "white",
-            borderwidth: 2,
-            bordercolor: "gray",
-            steps: [
-                { range: [0, 300], color: "red" }, // Color before the threshold
-                { range: [300, 500], color: "green" } // Color after the threshold
-            ],
-            // Optionally, highlight the threshold with a line or thicker step
-            threshold: {
-                line: { color: "blue", width: 4 },
-                thickness: 0.75,
-                value: 300 // Your dynamic threshold
-            }
+    <script>
+        // Function to calculate the number of days between two dates
+        function calculateDays(startDate, endDate) {
+            const oneDay = 24 * 60 * 60 * 1000; // hours * minutes * seconds * milliseconds
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            const diffDays = Math.round(Math.abs((end - start) / oneDay));
+            return diffDays;
         }
-    }];
 
-    var layout = { width: 600, height: 400, margin: { t: 25, r: 25, l: 25, b: 25 } };
-    Plotly.newPlot('gauge-chart', data, layout);
-</script>
+        // Example dates (replace these with your actual incident date and today's date)
+        const incidentDate = new Date('2024-04-01'); // Example incident date
+        const todayDate = new Date(); // Today's date
 
+        const daysSinceIncident = calculateDays(incidentDate, todayDate);
+        document.getElementById('daysSinceIncident').textContent = `It has been ${daysSinceIncident} days since the last safety incident.`;
+    </script>
 </body>
 </html>
