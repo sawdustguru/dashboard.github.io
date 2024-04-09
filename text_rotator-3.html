@@ -44,10 +44,14 @@
         }
 
         function fetchTexts(spreadsheetId, apiKey) {
-            // Use the Google Sheets API to fetch data
-            gapi.client.sheets.spreadsheets.values.get({
-                spreadsheetId: spreadsheetId,
-                range: 'rotator!A:A', // Assuming texts are in column A of Sheet1
+            gapi.client.init({
+                apiKey: apiKey,
+                discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+            }).then(function() {
+                return gapi.client.sheets.spreadsheets.values.get({
+                    spreadsheetId: spreadsheetId,
+                    range: 'rotator!A:A', // Assuming texts are in column A of Sheet1
+                });
             }).then(function(response) {
                 var values = response.result.values;
                 var texts = values.map(function(row) {
@@ -56,8 +60,8 @@
                 setInterval(function() {
                     rotateText(texts);
                 }, 5000); // Change text every 5 seconds
-            }, function(response) {
-                console.error('Error fetching data:', response.result.error);
+            }).catch(function(error) {
+                console.error('Error fetching data:', error);
             });
         }
 
