@@ -38,9 +38,10 @@
             display: grid;
             grid-template-rows: auto; /* Auto height to adjust based on content */
         }
-        .right-column {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
+        .half-width {
+            width: 50%;
+            box-sizing: border-box;
+            padding: 0; /* Reset padding to avoid extra space */
         }
     </style>
 </head>
@@ -54,11 +55,15 @@
         </div>
     </div>
    <div class="right-column">
-        <div class="iframe-container">
-            <iframe src="https://www.tickcounter.com/widget/countdown/5051472" frameborder="0"></iframe>
+        <div class="half-width">
+            <div class="iframe-container">
+                <iframe src="https://www.tickcounter.com/widget/countdown/5051472" frameborder="0"></iframe>
+            </div>
         </div>
-        <div class="iframe-container">
-            <iframe src="test.html" frameborder="0"></iframe>
+        <div class="half-width">
+            <div class="iframe-container">
+                <iframe src="test.html" frameborder="0"></iframe>
+            </div>
         </div>
         <div class="iframe-container">
             <iframe src="text_rotator-3.html" frameborder="0"></iframe>
