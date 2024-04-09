@@ -22,10 +22,9 @@
         body {
             display: grid; /* Use CSS Grid for layout */
             grid-template-columns: repeat(2, minmax(0, 1fr)); /* Two equal-width columns */
+            grid-gap: 10px; /* Add gap between grid items */
         }
         .iframe-container {
-            box-sizing: border-box; /* Include padding and border in element's total width and height */
-            padding: 2px; /* Add padding */
             border: 2px solid black; /* Add black border */
             height: 100%; /* Ensure iframes fill their container */
         }
@@ -33,15 +32,6 @@
             width: 100%;
             height: 100%;
             border: none;
-        }
-        .left-column, .right-column {
-            display: grid;
-            grid-template-rows: auto; /* Auto height to adjust based on content */
-        }
-        .half-width {
-            width: 50%;
-            box-sizing: border-box;
-            padding: 0; /* Reset padding to avoid extra space */
         }
     </style>
 </head>
@@ -54,16 +44,12 @@
             <iframe src="performance-2.html" frameborder="0"></iframe>
         </div>
     </div>
-   <div class="right-column">
-        <div class="half-width">
-            <div class="iframe-container">
-                <iframe src="https://www.tickcounter.com/widget/countdown/5051472" frameborder="0"></iframe>
-            </div>
+    <div class="right-column">
+        <div class="iframe-container">
+            <iframe src="https://www.tickcounter.com/widget/countdown/5051472" frameborder="0"></iframe>
         </div>
-        <div class="half-width">
-            <div class="iframe-container">
-                <iframe src="test.html" frameborder="0"></iframe>
-            </div>
+        <div class="iframe-container">
+            <iframe src="test.html" frameborder="0"></iframe>
         </div>
         <div class="iframe-container">
             <iframe src="text_rotator-3.html" frameborder="0"></iframe>
