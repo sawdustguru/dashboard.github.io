@@ -66,33 +66,40 @@
         <div class="day" id="daysSinceIncident">Loading...</div>
     </div>
 
-    <script>
-        // Function to fetch incident date from Google Sheets
-        async function getIncidentDate(apiKey, sheetId) {
-            try {
-                const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1!A8?key=${apiKey}`);
-                const data = await response.json();
-                return data.values[0][0];
-            } catch (error) {
-                console.error('Error:', error);
-                return 'Error fetching incident date';
+   <script>
+    async function getIncidentDate(apiKey, sheetId) {
+        try {
+            const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1!A8?key=${apiKey}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch data');
             }
+            const data = await response.json();
+            console.log('Response from Google Sheets API:', data);
+            return data.values[0][0];
+        } catch (error) {
+            console.error('Error fetching incident date:', error);
+            return 'Error fetching incident date';
         }
+    }
 
-        // Function to update the incident date on the page
-        async function updateIncidentDate() {
-            try {
-                const response = await fetch('config.json');
-                const config = await response.json();
-                const incidentDate = await getIncidentDate(config.apiKey, config.sheetId);
-                document.getElementById('daysSinceIncident').textContent = incidentDate;
-            } catch (error) {
-                console.error('Error:', error);
+    async function updateIncidentDate() {
+        try {
+            const response = await fetch('config.json');
+            if (!response.ok) {
+                throw new Error('Failed to fetch config');
             }
+            const config = await response.json();
+            console.log('Config:', config);
+            const incidentDate = await getIncidentDate(config.apiKey, config.sheetId);
+            console.log('Incident Date:', incidentDate);
+            document.getElementById('daysSinceIncident').textContent = incidentDate;
+        } catch (error) {
+            console.error('Error:', error);
         }
+    }
 
-        // Call updateIncidentDate function when the page loads
-        updateIncidentDate();
-    </script>
+    updateIncidentDate();
+</script>
+
 </body>
 </html>
