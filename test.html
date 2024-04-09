@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Days Since Last Safety Incident</title>
 <style>
+        .text-size {
+        font-size: 20px; /* Adjust this value as needed */
+        color: #fff; /* Optional: change the text color */
+    }
+
     body {
         font-family: Arial, sans-serif;
         text-align: center;
@@ -67,7 +72,7 @@
 </style>
 </head>
 <body>
-    <p><b>Safety Record</b></p>
+     <p class="text-size"><b>Safety Record</b></p>
     <div class="date">
         <div class="month">Days</div>
         <div class="day" id="daysSinceIncident">0</div>
@@ -101,6 +106,6 @@
         // Call the function to fetch incident date
         fetchIncidentDate();
     </script>
-    <p><b>Days Since Last Incident</b></p>
+    <p class="text-size"><b>Days Since Last Incident</b></p>
 </body>
 </html>
