@@ -26,6 +26,54 @@
             return diffDays;
         }
 
+        // Function to fetch incident date from Google Sheets
+        async function fetchIncidentDate() {
+            try {
+                const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/1Em_4WKvdHbWu5WR2HCkd4JRVFaTsjJsqPHqDPRj8Gxs/values/Sheet1!A8?key=AIzaSyCFvX56uc0WNPz2ZTJhpg7Q2pFOgZxt7-0');
+                const data = await response.json();
+                const incidentDate = new Date(data.values[0][0]);
+                const todayDate = new Date();
+
+                const daysSinceIncident = calculateDays(incidentDate, todayDate);
+                document.getElementById('daysSinceIncident').textContent = `It has been ${daysSinceIncident} days since the last safety incident.`;
+            } catch (error) {
+                console.error('Error fetching incident date:', error);
+            }
+        }
+
+        // Call the function to fetch incident date
+        fetchIncidentDate();
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Days Since Last Safety Incident</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 50px;
+    }
+</style>
+</head>
+<body>
+    <h1>Days Since Last Safety Incident</h1>
+    <p id="daysSinceIncident"></p>
+
+    <script>
+        // Function to calculate the number of days between two dates
+        function calculateDays(startDate, endDate) {
+            const oneDay = 24 * 60 * 60 * 1000; // hours * minutes * seconds * milliseconds
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            const diffDays = Math.round(Math.abs((end - start) / oneDay));
+            return diffDays;
+        }
+
         // Example dates (replace these with your actual incident date and today's date)
         const incidentDate = new Date('2024-04-01'); // Example incident date
         const todayDate = new Date(); // Today's date
