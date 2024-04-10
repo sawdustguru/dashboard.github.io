@@ -161,7 +161,7 @@ ad<!DOCTYPE html>
                     }).then(function() {
                         console.log('Google API initialized successfully.');
                         gapi.client.sheets.spreadsheets.values.get({
-                            spreadspreadsheetId: spreadsheetId,
+                            spreadsheetId: spreadsheetId,
                             range: 'hours2'
                         }).then(function(response) {
                             console.log('Google Sheet data loaded successfully:', response);
