@@ -212,53 +212,58 @@
 
                 table.appendChild(headerRow);
 
-                values.forEach(rowData => {
-                    if (rowData[0]) {
-                        const row = document.createElement('tr');
-                        rowCount++;
+                // Inside the parseGoogleSheetData function
 
-                        const cell1 = document.createElement('td');
-                        cell1.textContent = rowData[0];
-                        cell1.classList.add('column1');
-                        row.appendChild(cell1);
+        values.forEach(rowData => {
+            if (rowData[0]) {
+                const row = document.createElement('tr');
+                rowCount++;
+        
+                const cell1 = document.createElement('td');
+                cell1.textContent = rowData[0];
+                cell1.classList.add('column1');
+                row.appendChild(cell1);
+        
+                const cell2 = document.createElement('td');
+                const bar2 = document.createElement('div');
+                bar2.className = 'bar';
+                setColorSegments(bar2, parseInt(rowData[1]));
+                cell2.appendChild(bar2);
+                cell2.classList.add('column2');
+                row.appendChild(cell2);
+        
+                const cell4 = document.createElement('td');
+                cell4.classList.add('column4');
+                if (rowData[3] !== null && parseFloat(rowData[3]) !== 0) { // Check if the value is not null or 0
+                    const bar4 = document.createElement('div');
+                    bar4.className = 'bar';
+                    setColorSegmentsForGoalProgress(bar4, parseFloat(rowData[3])); // Use setColorSegmentsForGoalProgress for Goal Progress
+                    cell4.appendChild(bar4);
+                }
+                row.appendChild(cell4);
+        
+                const cell3 = document.createElement('td');
+                cell3.classList.add('column3');
+                const gauge = document.createElement('div');
+                gauge.className = 'bar';
+                const percentage = document.createElement('div');
+                percentage.className = 'percentage';
+                const percentageValue = parseFloat(rowData[2]) * 100;
+                totalPercentage += percentageValue;
+                percentage.textContent = percentageValue.toFixed(2) + '%';
+                gauge.appendChild(percentage);
+                const indicator = document.createElement('div');
+                indicator.className = 'indicator';
+                const indicatorPosition = Math.min(percentageValue, 150);
+                indicator.style.left = (indicatorPosition / 150) * 100 + '%';
+                gauge.appendChild(indicator);
+                cell3.appendChild(gauge);
+                row.appendChild(cell3);
+        
+                table.appendChild(row);
+            }
+        });
 
-                        const cell2 = document.createElement('td');
-                        const bar2 = document.createElement('div');
-                        bar2.className = 'bar';
-                        setColorSegments(bar2, parseInt(rowData[1]));
-                        cell2.appendChild(bar2);
-                        cell2.classList.add('column2');
-                        row.appendChild(cell2);
-
-                        const cell4 = document.createElement('td');
-                        const bar4 = document.createElement('div');
-                        bar4.className = 'bar';
-                        setColorSegmentsForGoalProgress(bar4, parseFloat(rowData[3])); // Use setColorSegmentsForGoalProgress for Goal Progress
-                        cell4.appendChild(bar4);
-                        cell4.classList.add('column4');
-                        row.appendChild(cell4);
-
-                        const cell3 = document.createElement('td');
-                        cell3.classList.add('column3');
-                        const gauge = document.createElement('div');
-                        gauge.className = 'bar';
-                        const percentage = document.createElement('div');
-                        percentage.className = 'percentage';
-                        const percentageValue = parseFloat(rowData[2]) * 100;
-                        totalPercentage += percentageValue;
-                        percentage.textContent = percentageValue.toFixed(2) + '%';
-                        gauge.appendChild(percentage);
-                        const indicator = document.createElement('div');
-                        indicator.className = 'indicator';
-                        const indicatorPosition = Math.min(percentageValue, 150);
-                        indicator.style.left = (indicatorPosition / 150) * 100 + '%';
-                        gauge.appendChild(indicator);
-                        cell3.appendChild(gauge);
-                        row.appendChild(cell3);
-
-                        table.appendChild(row);
-                    }
-                });
 
                 const averagePercentage = totalPercentage / rowCount;
 
