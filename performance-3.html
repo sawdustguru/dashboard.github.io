@@ -233,7 +233,7 @@
                         const cell4 = document.createElement('td');
                         const bar4 = document.createElement('div');
                         bar4.className = 'bar';
-                        setColorSegments(bar4, parseFloat(rowData[3]));
+                        setColorSegmentsForGoalProgress(bar4, parseFloat(rowData[3])); // Use setColorSegmentsForGoalProgress for Goal Progress
                         cell4.appendChild(bar4);
                         cell4.classList.add('column4');
                         row.appendChild(cell4);
