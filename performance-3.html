@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ad<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -142,8 +142,8 @@
                     .then(data => {
                         console.log('Config.json:', data);
                         const apiKey = data.apiKey;
-                        const sheetId = data.sheetId;
-                        return { apiKey, sheetId };
+                        const spreadsheetId = data.spreadsheetId;
+                        return { apiKey, spreadsheetId };
                     })
                     .catch(error => {
                         console.error('Error fetching config:', error);
@@ -151,7 +151,7 @@
                     });
             }
 
-            function loadGoogleSheetData(apiKey, sheetId) {
+            function loadGoogleSheetData(apiKey, spreadsheetId) {
                 console.log('Loading Google Sheet data...');
                 gapi.load('client:auth2', function() {
                     gapi.client.init({
@@ -161,7 +161,7 @@
                     }).then(function() {
                         console.log('Google API initialized successfully.');
                         gapi.client.sheets.spreadsheets.values.get({
-                            spreadsheetId: sheetId,
+                            spreadspreadsheetId: spreadsheetId,
                             range: 'hours2'
                         }).then(function(response) {
                             console.log('Google Sheet data loaded successfully:', response);
@@ -276,9 +276,9 @@
             }
 
             fetchConfig()
-                .then(({ apiKey, sheetId }) => {
-                    console.log('Config fetched successfully. API Key:', apiKey, 'Sheet ID:', sheetId);
-                    loadGoogleSheetData(apiKey, sheetId);
+                .then(({ apiKey, spreadsheetId }) => {
+                    console.log('Config fetched successfully. API Key:', apiKey, 'Sheet ID:', spreadsheetId);
+                    loadGoogleSheetData(apiKey, spreadsheetId);
                 })
                 .catch(error => {
                     console.error('Error fetching configuration:', error);
