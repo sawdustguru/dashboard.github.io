@@ -229,19 +229,20 @@ function parseGoogleSheetData(values) {
 
                     const cell2 = document.createElement('td');
                     const bar = document.createElement('div');
-                    bar.className = 'bar';
+                    bar.className = 'bar'; // Use the 'bar' class for styling
                     setColorSegments(bar, parseInt(rowData[1]));
                     cell2.appendChild(bar);
-                    cell2.classList.add('column2');
+                    cell2.classList.add('column2'); // Add the 'column2' class for additional styling
                     row.appendChild(cell2);
-
+                    
                     const cell4 = document.createElement('td');
                     const goalBar = document.createElement('div');
-                    goalBar.className = 'bar';
+                    goalBar.className = 'bar'; // Use the 'bar' class for styling
                     setColorSegments(goalBar, parseFloat(rowData[3]));
                     cell4.appendChild(goalBar);
-                    cell4.classList.add('column4'); // Corrected class name
+                    cell4.classList.add('column4'); // Add the 'column4' class for additional styling
                     row.appendChild(cell4);
+
 
                     const cell3 = document.createElement('td');
                     cell3.classList.add('column3'); // Corrected class name
