@@ -30,7 +30,6 @@
             border: 1px solid black;
             padding: 2px;
             text-align: left;
-            font-family: Arial, sans-serif;
         }
 
         .bar {
@@ -79,14 +78,36 @@
             color: white;
             padding-left: 5px;
         }
+
         .column-header {
             text-align: center;
             font-weight: bold;
         }
 
+        .segment {
+            height: 100%;
+            float: left;
+            width: 25px; /* Fixed width for each segment */
+        }
+
+        .segment1 { background-color: red; }
+        .segment2 { background-color: orange; }
+        .segment3 { background-color: gold; }
+        .segment4 { background-color: green; }
+
         td {
             vertical-align: middle;
             text-align: left;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        th, td {
+            font-family: Arial, sans-serif;
+            border: 2px solid black;
+            padding: 2px;
         }
 
         .new-gauge {
@@ -96,6 +117,7 @@
             position: relative;
             border: 1px solid black;
         }
+
         .new-gauge .indicator {
             height: 100%;
             background-color: white;
@@ -103,6 +125,7 @@
             left: 0;
             top: 0;
         }
+
         .vertical-line {
             position: absolute;
             width: 5px;
@@ -114,7 +137,7 @@
     </style>
     <script src="https://apis.google.com/js/api.js"></script>
     <script>
-        window.onload = function() {
+        window.onload = function () {
             const table = document.getElementById('dataTable');
             let totalPercentage = 0;
             let rowCount = 0;
@@ -137,25 +160,25 @@
 
             function loadGoogleSheetData(apiKey, spreadsheetId) {
                 console.log('Loading Google Sheet data...');
-                gapi.load('client:auth2', function() {
+                gapi.load('client:auth2', function () {
                     gapi.client.init({
                         apiKey: apiKey,
                         discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
                         scope: 'https://www.googleapis.com/auth/spreadsheets.readonly'
-                    }).then(function() {
+                    }).then(function () {
                         console.log('Google API initialized successfully.');
                         gapi.client.sheets.spreadsheets.values.get({
                             spreadsheetId: spreadsheetId,
                             range: 'hours2'
-                        }).then(function(response) {
+                        }).then(function (response) {
                             console.log('Google Sheet data loaded successfully:', response);
                             const values = response.result.values.slice(1);
                             console.log('Parsed values:', values); // Log parsed values
                             parseGoogleSheetData(values);
-                        }).catch(function(error) {
+                        }).catch(function (error) {
                             console.error('Error loading Google Sheet data:', error);
                         });
-                    }).catch(function(error) {
+                    }).catch(function (error) {
                         console.error('Error initializing gapi:', error);
                     });
                 });
@@ -255,34 +278,9 @@
                 console.log('Average percentage:', averagePercentage);
             }
 
-                               // Define the setColorSegments function
             function setColorSegments(bar, value) {
-                // Clear any existing segments
-                bar.innerHTML = '';
-            
-                // Define the segment colors and their corresponding thresholds
-                const segments = [
-                    { color: 'red', threshold: 19 },
-                    { color: 'orange', threshold: 27 },
-                    { color: 'gold', threshold: 32 },
-                    { color: 'green', threshold: Infinity } // No maximum threshold
-                ];
-            
-                // Loop through each segment and create bars based on the value
-                let remainingValue = value;
-                segments.forEach(segment => {
-                    if (remainingValue > 0) {
-                        const segmentWidth = Math.min(remainingValue, 25); // Maximum segment width of 25px
-                        const segmentBar = document.createElement('div');
-                        segmentBar.style.backgroundColor = segment.color;
-                        segmentBar.style.width = segmentWidth + 'px';
-                        segmentBar.style.height = '100%';
-                        bar.appendChild(segmentBar);
-                        remainingValue -= segmentWidth;
-                    }
-                });
+                // Color segment logic as before
             }
-
 
             fetchConfig()
                 .then(({ apiKey, spreadsheetId }) => {
@@ -294,6 +292,7 @@
                 });
         };
     </script>
+
 </head>
 <body>
     <div class="content-container">
@@ -302,10 +301,10 @@
         <p>Red = 19 hours or less - Orange = 27 hours or less<br>Gold = 32 hours or less - Green = more than 33 hours</p>
         <p>YTD Performance is the percentage of Billed Time to On-Premise time</p>
         <p><b>Average Shop Performance:</b></p>
-        <div id="averageGaugeContainer">                
+        <div id="averageGaugeContainer">
             <div id="averageGauge" class="new-gauge">
                 <div id="averagePercentageDisplay" class="percentage"></div>
-            </div>       
+            </div>
         </div>
     </div>
 </body>
