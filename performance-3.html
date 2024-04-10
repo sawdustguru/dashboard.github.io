@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,10 +11,10 @@
             align-items: center;
             margin: 0;
             background-color: #9E9C9B;
-            font-family: Arial, sans-serif; /* Specify the font family */
-            font-size: 16px; /* Specify the font size */
+            font-family: Arial, sans-serif;
+            font-size: 16px;
         }
-        
+
         .content-container {
             width: auto;
             margin: 0 20px;
@@ -106,13 +105,12 @@
             padding: 2px;
         }
 
-        /* CSS for the new gauge */
         .new-gauge {
             width: 600px;
             height: 30px;
             background: linear-gradient(to right, red 0%, orange 35%, gold 45%, green 85%);
             position: relative;
-            border: 1px solid black; /* Add border */
+            border: 1px solid black;
         }
         .new-gauge .indicator {
             height: 100%;
@@ -137,19 +135,30 @@
             let totalPercentage = 0;
             let rowCount = 0;
 
+            // Function to fetch configuration from config.json
+            function fetchConfig() {
+                return fetch('config.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        const apiKey = data.apiKey;
+                        const sheetId = data.sheetId;
+                        return { apiKey, sheetId };
+                    });
+            }
+
             // Function to load Google Sheet data
-            function loadGoogleSheetData(spreadsheetId) {
+            function loadGoogleSheetData(apiKey, sheetId) {
                 gapi.load('client:auth2', function() {
                     gapi.client.init({
-                        apiKey: "AIzaSyCFvX56uc0WNPz2ZTJhpg7Q2pFOgZxt7-0",
+                        apiKey: apiKey,
                         discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
                         scope: 'https://www.googleapis.com/auth/spreadsheets.readonly'
                     }).then(function() {
                         gapi.client.sheets.spreadsheets.values.get({
-                            spreadsheetId: spreadsheetId,
-                            range: 'hours' // Named range in the Google Sheet
+                            spreadsheetId: sheetId,
+                            range: 'hours2'
                         }).then(function(response) {
-                            const values = response.result.values.slice(1); // Exclude the first row (column headings)
+                            const values = response.result.values.slice(1);
                             parseGoogleSheetData(values);
                         }, function(error) {
                             console.error('Error loading Google Sheet data:', error);
@@ -160,9 +169,8 @@
 
             // Function to parse Google Sheet data
             function parseGoogleSheetData(values) {
-                table.innerHTML = ''; // Clear existing table content
-                
-                // Add column headers
+                table.innerHTML = '';
+
                 const headerRow = document.createElement('tr');
                 const columnHeader1 = document.createElement('th');
                 columnHeader1.textContent = 'Name';
@@ -174,6 +182,11 @@
                 columnHeader2.classList.add('column-header');
                 headerRow.appendChild(columnHeader2);
 
+                const columnHeader4 = document.createElement('th');
+                columnHeader4.textContent = 'Goal Progress';
+                columnHeader4.classList.add('column-header');
+                headerRow.appendChild(columnHeader4);
+
                 const columnHeader3 = document.createElement('th');
                 columnHeader3.textContent = 'YTD Performance';
                 columnHeader3.classList.add('column-header');
@@ -181,19 +194,16 @@
 
                 table.appendChild(headerRow);
 
-                // Parse data rows
                 values.forEach(rowData => {
-                    if (rowData[0]) { // Check if data exists
+                    if (rowData[0]) {
                         const row = document.createElement('tr');
                         rowCount++;
 
-                        // Create and style column 1
                         const cell1 = document.createElement('td');
-                        cell1.textContent = rowData[0]; // Display value of column 1
+                        cell1.textContent = rowData[0];
                         cell1.classList.add('column1');
                         row.appendChild(cell1);
-                        
-                        // Create and style column 2
+
                         const cell2 = document.createElement('td');
                         const bar = document.createElement('div');
                         bar.className = 'bar';
@@ -202,7 +212,15 @@
                         cell2.classList.add('column2');
                         row.appendChild(cell2);
 
-                        // Create and style column 3
+                        // New column for Goal Progress
+                        const cell4 = document.createElement('td');
+                        const goalBar = document.createElement('div');
+                        goalBar.className = 'bar';
+                        setColorSegments(goalBar, parseFloat(rowData[3]));
+                        cell4.appendChild(goalBar);
+                        cell4.classList.add('column4');
+                        row.appendChild(cell4);
+
                         const cell3 = document.createElement('td');
                         cell3.classList.add('column3');
                         const gauge = document.createElement('div');
@@ -211,41 +229,33 @@
                         percentage.className = 'percentage';
                         const percentageValue = parseFloat(rowData[2]) * 100;
                         totalPercentage += percentageValue;
-                        percentage.textContent = percentageValue.toFixed(2) + '%'; // Convert decimal to percentage
+                        percentage.textContent = percentageValue.toFixed(2) + '%';
                         gauge.appendChild(percentage);
-                        // Add the black indicator here
-                        const indicatorBlack = document.createElement('div');
-                        indicatorBlack.className = 'indicator-black';
-                        gauge.appendChild(indicatorBlack);
                         const indicator = document.createElement('div');
                         indicator.className = 'indicator';
-                        const indicatorPosition = Math.min(percentageValue, 150); // Ensure indicator position does not exceed 150%
-                        indicator.style.left = (indicatorPosition / 150) * 100 + '%'; // Calculate left position based on percentage of 150%
+                        const indicatorPosition = Math.min(percentageValue, 150);
+                        indicator.style.left = (indicatorPosition / 150) * 100 + '%';
                         gauge.appendChild(indicator);
                         cell3.appendChild(gauge);
                         row.appendChild(cell3);
-                        
+
                         table.appendChild(row);
                     }
                 });
 
-                // Calculate the average of YTD Performance
                 const averagePercentage = totalPercentage / rowCount;
                 
-                // Display the average percentage gauge and its value
                 const averageGaugeContainer = document.getElementById('averageGaugeContainer');
                 const averageGauge = document.getElementById('averageGauge');
                 const averageIndicator = document.createElement('div');
                 averageIndicator.style.width = averagePercentage + '%';
                 averageGauge.appendChild(averageIndicator);
                 
-                // Add the vertical line to indicate the average percentage
                 const verticalLine = document.createElement('div');
                 verticalLine.className = 'vertical-line';
                 verticalLine.style.setProperty('--percentage', averagePercentage);
                 averageGauge.appendChild(verticalLine);
 
-                // Display the average percentage value
                 const averagePercentageDisplay = document.getElementById('averagePercentageDisplay');
                 averagePercentageDisplay.textContent = averagePercentage.toFixed(2) + '%';
             }
@@ -289,18 +299,24 @@
                 }
             }
 
-            // Load Google Sheet data on page load
-            loadGoogleSheetData("1Em_4WKvdHbWu5WR2HCkd4JRVFaTsjJsqPHqDPRj8Gxs");
+            // Fetch configuration and load Google Sheet data
+            fetchConfig()
+                .then(({ apiKey, sheetId }) => {
+                    loadGoogleSheetData(apiKey, sheetId);
+                })
+                .catch(error => {
+                    console.error('Error fetching configuration:', error);
+                });
         };
     </script>
 </head>
 <body>
     <div class="content-container">
-        <p><b></b>** Data Displayed is the  Previous Week **</b></p>
+        <p><b>Data Displayed is the Previous Week</b></p>
         <table id="dataTable"></table>
         <p>Red = 19 hours or less - Orange = 27 hours or less<br>Gold = 32 hours or less - Green = more than 33 hours</p>
         <p>YTD Performance is the percentage of Billed Time to On-Premise time</p>
-        <p><b></b>Average Shop Performance:</b></p>
+        <p><b>Average Shop Performance:</b></p>
         <div id="averageGaugeContainer">                
             <div id="averageGauge" class="new-gauge">
                 <div id="averagePercentageDisplay" class="percentage"></div>
