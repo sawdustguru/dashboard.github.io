@@ -160,9 +160,11 @@
                         }).then(function(response) {
                             const values = response.result.values.slice(1);
                             parseGoogleSheetData(values);
-                        }, function(error) {
+                        }).catch(function(error) {
                             console.error('Error loading Google Sheet data:', error);
                         });
+                    }).catch(function(error) {
+                        console.error('Error initializing gapi:', error);
                     });
                 });
             }
