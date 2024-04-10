@@ -296,12 +296,12 @@
                 }
             }
             function setColorSegmentsForGoalProgress(bar, value) {
-                if (value <= 25) {
+                if (value <= 0.25) {
                     bar.innerHTML = '<div class="segment segment1"></div>';
-                } else if (value <= 50) {
+                } else if (value <= 0.50) {
                     bar.innerHTML = '<div class="segment segment1"></div>' +
                                      '<div class="segment segment2"></div>';
-                } else if (value <= 75) {
+                } else if (value <= 0.94) {
                     bar.innerHTML = '<div class="segment segment1"></div>' +
                                      '<div class="segment segment2"></div>' +
                                      '<div class="segment segment3"></div>';
