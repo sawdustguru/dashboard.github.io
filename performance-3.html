@@ -255,9 +255,30 @@
                 console.log('Average percentage:', averagePercentage);
             }
 
-            function setColorSegments(bar, value) {
-                // Color segment logic as before
-            }
+            // Define the setColorSegments function
+        function setColorSegments(bar, value) {
+            // Clear any existing segments
+            bar.innerHTML = '';
+        
+            // Define the segment colors and their corresponding thresholds
+            const segments = [
+                { color: 'red', threshold: 19 },
+                { color: 'orange', threshold: 27 },
+                { color: 'gold', threshold: 32 },
+                { color: 'green', threshold: Infinity } // No maximum threshold
+            ];
+        
+            // Loop through each segment and create bars based on the value
+            segments.forEach(segment => {
+                if (value <= segment.threshold) {
+                    const segmentBar = document.createElement('div');
+                    segmentBar.style.backgroundColor = segment.color;
+                    segmentBar.style.width = '25px'; // Fixed segment width
+                    segmentBar.style.height = '100%';
+                    bar.appendChild(segmentBar);
+                }
+            });
+        }
 
             fetchConfig()
                 .then(({ apiKey, spreadsheetId }) => {
