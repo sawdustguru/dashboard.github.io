@@ -34,19 +34,14 @@
   <div class="clock-container">
     <div class="clock">
       <div id="time"></div>
-      <div id="date"></div>
     </div>
   </div>
   <script>
     function updateTime() {
       const now = new Date();
 
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      const date = now.toLocaleDateString('en-US', options);
-      
       const time = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
 
-      document.getElementById('date').textContent = date;
       document.getElementById('time').textContent = time;
     }
 
