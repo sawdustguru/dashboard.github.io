@@ -227,8 +227,10 @@
                 const cell2 = document.createElement('td');
                 const bar2 = document.createElement('div');
                 bar2.className = 'bar';
-                setColorSegments(bar2, parseInt(rowData[1]));
-                cell2.appendChild(bar2);
+                if (rowData[1] !== null && parseFloat(rowData[1]) !== 0) { // Check if the value is not null or 0
+                    setColorSegments(bar2, parseInt(rowData[1]));
+                    cell2.appendChild(bar2);
+                }
                 cell2.classList.add('column2');
                 row.appendChild(cell2);
         
