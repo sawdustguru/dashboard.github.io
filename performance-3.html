@@ -196,7 +196,7 @@
                 headerRow.appendChild(columnHeader1);
 
                 const columnHeader2 = document.createElement('th');
-                columnHeader2.textContent = 'Weekly Hours';
+                columnHeader2.textContent = 'Billed Hours';
                 columnHeader2.classList.add('column-header');
                 headerRow.appendChild(columnHeader2);
 
@@ -336,9 +336,9 @@
 </head>
 <body>
     <div class="content-container">
-        <p><b>Weekly Hours are for the Previous Week</b></p>
+        <p><b>Technician Progress</b></p>
         <table id="dataTable"></table>
-        <p>Red = 19 hours or less - Orange = 27 hours or less<br>Gold = 32 hours or less - Green = more than 33 hours</p>
+        <p>Red = 1 - 19 hours Orange = 20 - 27 hours Gold = 28 - 32 hours  Green = 33+ hours</p>
         <p>YTD Performance is the percentage of Billed Time to On-Premise time</p>
         <p><b>Average Shop Performance:</b></p>
         <div id="averageGaugeContainer">
