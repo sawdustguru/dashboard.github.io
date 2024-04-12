@@ -58,6 +58,24 @@
             border: none;
         }
     </style>
+    <script>
+        // Define the function to refresh iframes
+        function refreshIframes() {
+            // Get all iframe elements
+            var iframes = document.querySelectorAll('iframe');
+
+            // Loop through each iframe and reload its content
+            iframes.forEach(function(iframe) {
+                iframe.contentWindow.location.reload(true);
+            });
+        }
+
+        // Call the function initially to refresh iframes when the page loads
+        refreshIframes();
+
+        // Set up a setInterval to call the function every hour (in milliseconds)
+        setInterval(refreshIframes, 60 * 60 * 1000); // 60 minutes * 60 seconds * 1000 milliseconds
+    </script>
 </head>
 <body>
     <div class="column left-column">
