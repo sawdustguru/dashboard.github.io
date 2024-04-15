@@ -118,20 +118,19 @@
         // Call the function to fetch incident date
         fetchIncidentDate();
 
-        // Auto-refresh the data every 30 minutes
-        setInterval(fetchIncidentDate, 10000); // 1800000 milliseconds = 30 minutes
+        // Auto-refresh the data every 10 minutes
+        setInterval(fetchIncidentDate, 600000); // 600000 milliseconds = 10 minutes
 
         // Countdown timer for next refresh
         function updateCountdownTimer() {
             const currentTime = new Date();
-            const nextRefreshTime = new Date(currentTime.getTime() + 10000); // 30 minutes from now
+            const nextRefreshTime = new Date(currentTime.getTime() + 600000); // 10 minutes from now
             const timeDiff = nextRefreshTime - currentTime;
 
-            const hours = Math.floor(timeDiff / (1000 * 60 * 60)).toString().padStart(2, '0');
-            const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            const minutes = Math.floor(timeDiff / (1000 * 60)).toString().padStart(2, '0');
             const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000).toString().padStart(2, '0');
 
-            document.getElementById('countdownTimer').textContent = `Next refresh in: ${hours}:${minutes}:${seconds}`;
+            document.getElementById('countdownTimer').textContent = `Next refresh in: ${minutes}:${seconds}`;
         }
 
         // Update countdown timer immediately and then every second
