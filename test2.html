@@ -119,12 +119,12 @@
         fetchIncidentDate();
 
         // Auto-refresh the data every hour
-        setInterval(fetchIncidentDate, 200000); // 3600000 milliseconds = 1 hour
+        setInterval(fetchIncidentDate, 10000); // 3600000 milliseconds = 1 hour
 
         // Countdown timer for next refresh
         function updateCountdownTimer() {
             const currentTime = new Date();
-            const nextRefreshTime = new Date(currentTime.getTime() + 3600000); // 1 hour from now
+            const nextRefreshTime = new Date(currentTime.getTime() + 10000); // 1 hour from now
 
             const hours = nextRefreshTime.getHours().toString().padStart(2, '0');
             const minutes = nextRefreshTime.getMinutes().toString().padStart(2, '0');
