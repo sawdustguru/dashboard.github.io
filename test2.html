@@ -125,17 +125,24 @@
         function updateCountdownTimer() {
             const currentTime = new Date();
             const nextRefreshTime = new Date(currentTime.getTime() + 600000); // 10 minutes from now
-            const timeDiff = nextRefreshTime - currentTime;
+            let timeDiff = Math.floor((nextRefreshTime - currentTime) / 1000); // in seconds
 
-            const minutes = Math.floor(timeDiff / (1000 * 60)).toString().padStart(2, '0');
-            const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            const minutes = Math.floor(timeDiff / 60).toString().padStart(2, '0');
+            const seconds = (timeDiff % 60).toString().padStart(2, '0');
 
             document.getElementById('countdownTimer').textContent = `Next refresh in: ${minutes}:${seconds}`;
+
+            // Decrement time difference every second
+            setInterval(function() {
+                timeDiff--;
+                const minutes = Math.floor(timeDiff / 60).toString().padStart(2, '0');
+                const seconds = (timeDiff % 60).toString().padStart(2, '0');
+                document.getElementById('countdownTimer').textContent = `Next refresh in: ${minutes}:${seconds}`;
+            }, 1000);
         }
 
-        // Update countdown timer every second
+        // Update countdown timer
         updateCountdownTimer();
-        setInterval(updateCountdownTimer, 1000);
     </script>
     <p class="text-size"><b>Days Since Last Incident</b></p>
 </body>
