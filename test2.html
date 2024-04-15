@@ -118,8 +118,13 @@
         // Call the function to fetch incident date
         fetchIncidentDate();
 
+        // Function to reload the page
+        function reloadPage() {
+            location.reload();
+        }
+
         // Auto-refresh the data every 10 minutes
-        setInterval(fetchIncidentDate, 600000); // 600000 milliseconds = 10 minutes
+        setInterval(reloadPage, 600000); // 600000 milliseconds = 10 minutes
 
         // Countdown timer for next refresh
         function updateCountdownTimer() {
