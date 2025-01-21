@@ -56,19 +56,30 @@
 
     <script>
         const apiBase = "https://api.weather.gov";
-        const location = "40.8759,81.4023"; // Replace with the desired latitude and longitude 40.8759° N, 81.4023° W
+        const location = "39.7456,-97.0892"; // Ensure these coordinates match the desired location for a valid weather.gov API endpoint.
 
         async function fetchForecast() {
             try {
                 const response = await fetch(`${apiBase}/points/${location}`);
                 const data = await response.json();
+                if (!data.properties || !data.properties.forecast) {
+                    throw new Error("Forecast property not found in API response.");
+                }
                 const forecastUrl = data.properties.forecast;
+                console.log("Forecast URL:", forecastUrl); // Log the forecast URL for debugging.
+
                 const forecastResponse = await fetch(forecastUrl);
-                const forecastData = await forecastResponse.json();
+                let forecastData;
+                try {
+                    forecastData = await forecastResponse.json();
+                } catch (parseError) {
+                    throw new Error("Failed to parse forecast JSON response.");
+                }
 
                 displayForecast(forecastData.properties.periods);
             } catch (error) {
                 console.error("Error fetching weather data:", error);
+                displayErrorMessage("Unable to fetch weather data. Please try again later.");
             }
         }
 
@@ -86,6 +97,11 @@
                 `;
                 contentDiv.appendChild(dayDiv);
             });
+        }
+
+        function displayErrorMessage(message) {
+            const contentDiv = document.getElementById('content');
+            contentDiv.innerHTML = `<p style="color: red; text-align: center;">${message}</p>`;
         }
 
         document.addEventListener('DOMContentLoaded', fetchForecast);
