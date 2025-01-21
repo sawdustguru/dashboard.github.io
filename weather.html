@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Radar and Forecast</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        #content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .forecast-day {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+            width: 150px;
+        }
+        iframe {
+            border: 0;
+            width: 100%;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Weather Radar and 7-Day Forecast</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2 style="text-align: center;">Weather Radar</h2>
+            <iframe src="https://radar.weather.gov/ridge/standard" title="Weather Radar"></iframe>
+        </section>
+
+        <section>
+            <h2 style="text-align: center;">7-Day Forecast</h2>
+            <div id="content"></div>
+        </section>
+    </main>
+
+    <script>
+        const apiBase = "https://api.weather.gov";
+        const location = "39.7456,-97.0892"; // Replace with the desired latitude and longitude
+
+        async function fetchForecast() {
+            try {
+                const response = await fetch(`${apiBase}/points/${location}`);
+                const data = await response.json();
+                const forecastUrl = data.properties.forecast;
+                const forecastResponse = await fetch(forecastUrl);
+                const forecastData = await forecastResponse.json();
+
+                displayForecast(forecastData.properties.periods);
+            } catch (error) {
+                console.error("Error fetching weather data:", error);
+            }
+        }
+
+        function displayForecast(periods) {
+            const contentDiv = document.getElementById('content');
+            contentDiv.innerHTML = '';
+            periods.forEach(period => {
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'forecast-day';
+                dayDiv.innerHTML = `
+                    <h3>${period.name}</h3>
+                    <img src="${period.icon}" alt="${period.shortForecast}">
+                    <p><strong>${period.temperature}°${period.temperatureUnit}</strong></p>
+                    <p>${period.shortForecast}</p>
+                `;
+                contentDiv.appendChild(dayDiv);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchForecast);
+    </script>
+</body>
+</html>
