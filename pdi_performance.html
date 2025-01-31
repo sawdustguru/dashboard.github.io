@@ -323,10 +323,13 @@
                                      '<div class="segment segment3"></div>' +
                                      '<div class="segment segment4"></div>';
             
-                    // Create a percentage label and append it to the bar **added
+                   }
+            
+                    // Add percentage label if the value is >= 0.90
+                if (value >= 0.90) {
                     const percentageLabel = document.createElement('div');
                     percentageLabel.className = 'percentage';
-                    percentageLabel.textContent = (value * 100).toFixed(2) + '%';
+                    percentageLabel.textContent = (value * 100).toFixed(2) + '%'; // Display the actual value
                     bar.appendChild(percentageLabel);
                 }
             }
