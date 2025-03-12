@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webpage Framework</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            grid-template-rows: 70% 30%;
+            grid-template-columns: 50% 50%;
+        }
+        .frame {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid black;
+        }
+        #top-left, #top-right {
+            height: 100%;
+        }
+        #bottom {
+            grid-column: span 2;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .scrolling-text {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scroll 10s linear infinite;
+        }
+        @keyframes scroll {
+            from { transform: translateX(100%); }
+            to { transform: translateX(-100%); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="top-left" class="frame">Top Left Content</div>
+        <div id="top-right" class="frame">Top Right Content</div>
+        <div id="bottom" class="frame">
+            <span class="scrolling-text" id="news-text">Loading news...</span>
+        </div>
+    </div>
+    
+    <script>
+        // Sample Rotator Function
+        const contentTopLeft = ["Left Content 1", "Left Content 2", "Left Content 3"];
+        const contentTopRight = ["Right Content 1", "Right Content 2", "Right Content 3"];
+        let indexLeft = 0, indexRight = 0;
+
+        function rotateContent() {
+            document.getElementById("top-left").textContent = contentTopLeft[indexLeft];
+            document.getElementById("top-right").textContent = contentTopRight[indexRight];
+            indexLeft = (indexLeft + 1) % contentTopLeft.length;
+            indexRight = (indexRight + 1) % contentTopRight.length;
+        }
+        setInterval(rotateContent, 5000); // Change every 5 seconds
+
+        // Fetch Data from Google Sheets API (Placeholder Function)
+        function fetchGoogleSheetsData() {
+            // Replace with actual API request logic
+            document.getElementById("news-text").textContent = "Live scrolling text from Google Sheets";
+        }
+        fetchGoogleSheetsData();
+    </script>
+</body>
+</html>
 
