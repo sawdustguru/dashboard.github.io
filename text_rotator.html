@@ -50,7 +50,7 @@
             }).then(function() {
                 return gapi.client.sheets.spreadsheets.values.get({
                     spreadsheetId: spreadsheetId,
-                    range: 'rotator!A:A', // Assuming texts are in column A of Sheet1
+                    range: 'Text Rotator!A:A', // Assuming texts are in column A of Sheet1
                 });
             }).then(function(response) {
                 var values = response.result.values;
